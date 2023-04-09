@@ -21,13 +21,15 @@ class View2 extends React.Component {
             semester: '',
             faculty: '',
             course: '',
+            group: '',
         };
+        this.onlyNormativesChange = this.onlyNormativesChange.bind(this);
+        this.onlySectionsChange = this.onlySectionsChange.bind(this);
         this.yearChange = this.yearChange.bind(this);
         this.semesterChange = this.semesterChange.bind(this);
         this.facultyChange = this.facultyChange.bind(this);
         this.courseChange = this.courseChange.bind(this);
-        this.onlyNormativesChange = this.onlyNormativesChange.bind(this);
-        this.onlySectionsChange = this.onlySectionsChange.bind(this);
+        this.groupChange = this.groupChange.bind(this);
     }
 
     onlyNormativesChange() {
@@ -56,6 +58,10 @@ class View2 extends React.Component {
 
     courseChange(event) {
         this.setState({ course: event.target.value });
+    }
+
+    groupChange(event) {
+        this.setState({ group: event.target.value });
     }
 
     render() {
@@ -91,6 +97,11 @@ class View2 extends React.Component {
             return <option key={idx}>{course.NAME}</option>
         })
 
+        const groups = ["ПМ-72", "ПМ-91"];
+        const groupOptions = groups.map((group, idx) => {
+            return <option key={idx}>{group}</option>
+        })
+
         const normatives = [
             "Прыжок в длину, сантиметров",
             "Подъем туловища",
@@ -98,7 +109,7 @@ class View2 extends React.Component {
             "Гибкость, сантиметров",
             "Бег 1000м, секунд",
         ]
-        const normativesList = normatives.map((normative) => <th>{normative}</th>);
+        const normativeList = normatives.map((normative) => <th>{normative}</th>);
 
         return (
             <div>
@@ -133,7 +144,10 @@ class View2 extends React.Component {
                         </div>
                         <div className="col-sm-3">
                             <p>Группа</p>
-                            <ui-select ng-model="groups_selected"
+                            <select value={this.state.group} onChange={this.groupChange}>
+                                {groupOptions}
+                            </select>
+                            {/* <ui-select ng-model="groups_selected"
                                 theme="select2"
                                 ng-disabled="groups_disabled"
                                 on-select="change_group($item)"
@@ -143,7 +157,7 @@ class View2 extends React.Component {
                                 <ui-select-choices repeat="gr in groups | propsFilter: {NAME: $select.search}">
                                     <div ng-bind-html="gr.NAME"></div>
                                 </ui-select-choices>
-                            </ui-select>
+                            </ui-select> */}
                         </div>
 
                         <div className="col-sm-1">
@@ -178,7 +192,7 @@ class View2 extends React.Component {
                     </tr>
                     <tr>
                         {/* <th ng-repeat="n in normatives">n.NAME</th> */}
-                        {normativesList}
+                        {normativeList}
                         <th>Р.</th>
                         <th>В.</th>
                         <th>И</th>

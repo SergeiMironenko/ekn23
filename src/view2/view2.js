@@ -1,16 +1,45 @@
 import React from 'react';
 
+function ThRender(props) {
+    console.log(props);
+    if (props.show)
+        return <th
+            rowspan={props.rowspan}
+            colspan={props.colspan}
+        >
+            {props.value}
+        </th>;
+}
+
 class View2 extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            onlyNormatives: true,
+            onlySections: true,
             year: '',
             semester: '',
             faculty: '',
+            course: '',
         };
         this.yearChange = this.yearChange.bind(this);
         this.semesterChange = this.semesterChange.bind(this);
         this.facultyChange = this.facultyChange.bind(this);
+        this.courseChange = this.courseChange.bind(this);
+        this.onlyNormativesChange = this.onlyNormativesChange.bind(this);
+        this.onlySectionsChange = this.onlySectionsChange.bind(this);
+    }
+
+    onlyNormativesChange() {
+        this.setState(prevState => ({
+            onlyNormatives: !prevState.onlyNormatives,
+        }))
+    }
+
+    onlySectionsChange() {
+        this.setState(prevState => ({
+            onlySections: !prevState.onlySections,
+        }))
     }
 
     yearChange(event) {
@@ -22,7 +51,11 @@ class View2 extends React.Component {
     }
 
     facultyChange(event) {
-        this.setState({ semester: event.target.value });
+        this.setState({ faculty: event.target.value });
+    }
+
+    courseChange(event) {
+        this.setState({ course: event.target.value });
     }
 
     render() {
@@ -36,11 +69,36 @@ class View2 extends React.Component {
             return <option key={idx}>{semester.NAME}</option>
         })
 
-        const faculties = [{ "NSEM": 0, "NAME": "Весенний" }, { "NSEM": 1, "NAME": "Осенний" }];
-        // const facultyOptions = faculties.map((faculty, idx) => {
-        //     return <option key={idx}>{faculty.NAME}</option>
-        // })
+        const faculties = [
+            { "id": "ФМА", "type": "step" },
+            { "id": "ФБ", "type": "step" },
+            { "id": "АВТФ", "type": "step" },
+            { "id": "РЭФ", "type": "step" },
+            { "id": "МТФ", "type": "step" },
+            { "id": "ФЛА", "type": "step" },
+            { "id": "ФПМИ", "type": "step" },
+            { "id": "ФТФ", "type": "step" },
+            { "id": "ФЭН", "type": "step" },
+            { "id": "ФГО", "type": "step" },
+            { "id": "ЮФ", "type": "step" }
+        ];
+        const facultyOptions = faculties.map((faculty, idx) => {
+            return <option key={idx}>{faculty.id}</option>
+        })
 
+        const courses = [{ "PK": 1, "NAME": "1" }, { "PK": 2, "NAME": "2" }, { "PK": 3, "NAME": "3" }, { "PK": 4, "NAME": "4" }];
+        const courseOptions = courses.map((course, idx) => {
+            return <option key={idx}>{course.NAME}</option>
+        })
+
+        const normatives = [
+            "Прыжок в длину, сантиметров",
+            "Подъем туловища",
+            "Подтягивание, раз",
+            "Гибкость, сантиметров",
+            "Бег 1000м, секунд",
+        ]
+        const normativesList = normatives.map((normative) => <th>{normative}</th>);
 
         return (
             <div>
@@ -63,23 +121,15 @@ class View2 extends React.Component {
 
                         <div className="col-sm-3">
                             <p>Факультет</p>
-                            {/* <select value={this.state.faculty} onChange={this.facultyChange}>
+                            <select value={this.state.faculty} onChange={this.facultyChange}>
                                 {facultyOptions}
-                            </select> */}
+                            </select>
                         </div>
                         <div className="col-sm-3">
                             <p>Курс</p>
-                            <ui-select ng-model="courses_selected"
-                                theme="select2"
-                                ng-disabled="false"
-                                on-select="change_course($item)"
-                                style={{ minWidth: 200 }}
-                                title="Курс">
-                                <ui-select-match>$select.selected.NAME</ui-select-match>
-                                <ui-select-choices repeat="course in courses">
-                                    <div ng-bind-html="course.NAME"></div>
-                                </ui-select-choices>
-                            </ui-select>
+                            <select value={this.state.course} onChange={this.courseChange}>
+                                {courseOptions}
+                            </select>
                         </div>
                         <div className="col-sm-3">
                             <p>Группа</p>
@@ -98,13 +148,13 @@ class View2 extends React.Component {
 
                         <div className="col-sm-1">
                             <div className="checkbox">
-                                <label><input type="checkbox" ng-model="only_sections" ng-change="change_only_sections()" ng-true-value="1" ng-false-value="0" />Только мое отделение</label>
+                                <label><input type="checkbox" value={this.state.onlySections} onChange={this.onlySectionsChange} />Только мое отделение</label>
                             </div>
                         </div>
 
                         <div className="col-sm-3">
                             <div className="checkbox">
-                                <label><input type="checkbox" ng-model="only_normatives" ng-change="change_only_normatives()" ng-true-value="1" ng-false-value="0" />Показывать только нормативы</label>
+                                <label><input type="checkbox" value={this.state.onlyNormatives} onChange={this.onlyNormativesChange} />Показывать только нормативы</label>
                             </div>
                         </div>
 
@@ -113,15 +163,22 @@ class View2 extends React.Component {
                 {/* <!-- Список студентов --> */}
                 <table className="table table-hover">
                     <tr>
-                        <th rowspan="2">Студент</th>
-                        <th ng-if="!only_normatives" rowspan="2">Пол</th>
-                        <th ng-if="!only_normatives" rowspan="2">Отделение</th>
-                        <th ng-if="!only_normatives" rowspan="2">Преподаватель</th>
-                        <th colspan={3}>Нормативы</th>
-                        <th colspan={3}>Измерения</th>
+                        <ThRender show={true} rowspan={2} value="Студент" />
+                        <ThRender show={this.state.onlyNormatives} rowspan={2} value="Пол" />
+                        <ThRender show={this.state.onlyNormatives} rowspan={2} value="Отделение" />
+                        <ThRender show={this.state.onlyNormatives} rowspan={2} value="Преподаватель" />
+                        <ThRender show={true} colspan={3} value="Нормативы" />
+                        <ThRender show={true} colspan={3} value="Измерения" />
+                        {/* <th rowspan={2}>Студент</th> */}
+                        {/* <th ng-if="!only_normatives" rowspan={2}>Пол</th> */}
+                        {/* <th ng-if="!only_normatives" rowspan={2}>Отделение</th> */}
+                        {/* <th ng-if="!only_normatives" rowspan={2}>Преподаватель</th> */}
+                        {/* <th colspan={3}>Нормативы</th> */}
+                        {/* <th colspan={3}>Измерения</th> */}
                     </tr>
                     <tr>
-                        <th ng-repeat="n in normatives">n.NAME</th>
+                        {/* <th ng-repeat="n in normatives">n.NAME</th> */}
+                        {normativesList}
                         <th>Р.</th>
                         <th>В.</th>
                         <th>И</th>

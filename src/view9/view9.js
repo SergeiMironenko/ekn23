@@ -9,9 +9,9 @@ class View9 extends React.Component {
         return (
             <div>
                 {/* Панель выбора студентов */}
-                <div class="panel panel-default" >
-                    <div class="row">
-                        <div class="col-sm-1">
+                <div className="panel panel-default" >
+                    <div className="row">
+                        <div className="col-sm-1">
                             <p>Год</p>
                             <ui-select ng-model="years_selected"
                                 theme="select2"
@@ -26,7 +26,7 @@ class View9 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div className="col-sm-1">
                             <p>Семестр</p>
                             <ui-select ng-model="semesters_selected"
                                 theme="select2"
@@ -41,7 +41,7 @@ class View9 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                             <p>Факультет</p>
                             <ui-select ng-model="facultets_selected"
                                 theme="select2"
@@ -56,13 +56,13 @@ class View9 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-1">
-                            <div class="checkbox">
+                        <div className="col-sm-1">
+                            <div className="checkbox">
                                 <label><input type="checkbox" ng-model="only_sport" ng-change="change_only_sport()" ng-true-value="1" ng-false-value="0" />Только спортсмены</label>
                             </div>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                             <p>Курс</p>
                             <ui-select ng-model="courses_selected"
                                 theme="select2"
@@ -76,7 +76,7 @@ class View9 extends React.Component {
                                 </ui-select-choices>
                             </ui-select>
                         </div>
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                             <p>Группа</p>
                             <ui-select ng-model="groups_selected"
                                 theme="select2"
@@ -90,8 +90,8 @@ class View9 extends React.Component {
                                 </ui-select-choices>
                             </ui-select>
                         </div>
-                        <div class="col-sm-1">
-                            <div class="checkbox">
+                        <div className="col-sm-1">
+                            <div className="checkbox">
                                 <label><input type="checkbox" ng-model="only_sections" ng-change="change_only_sections()" ng-true-value="1" ng-false-value="0" />Только итоги</label>
                             </div>
                         </div>
@@ -104,15 +104,15 @@ class View9 extends React.Component {
                         onbeforesave="set_zachet_date($data)">
                         11 (zachet_date || "Не определено") | date:'yyyy.MM.dd' 22
                     </a>
-                    <button class="btn btn-success" ng-click="zach_to_dec()">Принять</button>
+                    <button className="btn btn-success" ng-click="zach_to_dec()">Принять</button>
                 </div>
 
                 <div ng-if="is_admin">
-                    <button class="btn btn-success" ng-click="load_test()">Тесты</button>
+                    <button className="btn btn-success" ng-click="load_test()">Тесты</button>
                 </div>
 
                 {/* Список студентов */}
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th rowspan="1">Студент</th>
@@ -141,11 +141,11 @@ class View9 extends React.Component {
                     </thead>
                     <tbody>
                         <tr ng-repeat="x in students" ng-context-menu="menuStudents">
-                            <td class="col-md-2" rowspan="11x.ROWSPAN22" ng-if="x.RN==1">11 x.FIO 22 <div ng-if="only_sport"><br />11 x.STUDY_GROUP 22</div></td>
-                            <td class="col-md-1" rowspan="11x.ROWSPAN22" ng-if="x.RN==1">11 x.SEX 22</td>
-                            <td class="col-md-1" rowspan="11x.ROWSPAN22" ng-if="x.RN==1">
+                            <td className="col-md-2" rowspan="11x.ROWSPAN22" ng-if="x.RN==1">11 x.FIO 22 <div ng-if="only_sport"><br />11 x.STUDY_GROUP 22</div></td>
+                            <td className="col-md-1" rowspan="11x.ROWSPAN22" ng-if="x.RN==1">11 x.SEX 22</td>
+                            <td className="col-md-1" rowspan="11x.ROWSPAN22" ng-if="x.RN==1">
                                 <div ng-if="x.RN==1">
-                                    <span ng-class="mo_classes[x.FK_EKN_STATUS || 0]">
+                                    <span ng-className="mo_classes[x.FK_EKN_STATUS || 0]">
                                         <a href="/"
                                             editable-select="x.ID_EKN_STATUS"
                                             edit-disabled="11x.IS_EKN_STATUS_DISABLED22"
@@ -164,19 +164,19 @@ class View9 extends React.Component {
                                 </div>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 11 x.SECTION || "Не определено" 22
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 11 x.PERSON || "Не определено" 22
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 11 x.PAYM 22
                             </td>
 
-                            <td class="col-md-1" ng-if="showg_attend  && !only_sections">
+                            <td className="col-md-1" ng-if="showg_attend  && !only_sections">
                                 <a href="/"
                                     editable-text="x.ATTEND"
                                     edit-disabled="x.IS_DISABLED"
@@ -186,7 +186,7 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED">11 x.ATTEND 22</span>
                             </td>
 
-                            <td class="col-md-1" ng-if="showg_referat && !only_sections">
+                            <td className="col-md-1" ng-if="showg_referat && !only_sections">
                                 <a href="/"
                                     editable-text="x.REFERAT"
                                     edit-disabled="x.IS_DISABLED"
@@ -196,7 +196,7 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED">11 x.REFERAT 22</span>
                             </td>
 
-                            <td class="col-md-1" ng-if="showg_normative1 && !only_sections">
+                            <td className="col-md-1" ng-if="showg_normative1 && !only_sections">
                                 <a href="/"
                                     editable-text="x.NORMATIVE1"
                                     edit-disabled="x.IS_DISABLED"
@@ -206,7 +206,7 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED">11 x.NORMATIVE1 22</span>
                             </td>
 
-                            <td class="col-md-1" ng-if="showg_normative2 && !only_sections">
+                            <td className="col-md-1" ng-if="showg_normative2 && !only_sections">
                                 <a href="/"
                                     editable-text="x.NORMATIVE2"
                                     edit-disabled="x.IS_DISABLED"
@@ -217,7 +217,7 @@ class View9 extends React.Component {
                             </td>
 
 
-                            <td class="col-md-1" ng-if="showg_ekn_ball && !only_sections">
+                            <td className="col-md-1" ng-if="showg_ekn_ball && !only_sections">
                                 <a href="/"
                                     editable-text="x.EKN_BALL"
                                     edit-disabled="x.IS_DISABLED_EKN"
@@ -227,7 +227,7 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED_EKN">11 x.EKN_BALL 22</span>
                             </td>
 
-                            <td class="col-md-1" ng-if="showg_gto_ball && !only_sections">
+                            <td className="col-md-1" ng-if="showg_gto_ball && !only_sections">
                                 <a href="/"
                                     editable-text="x.GTO_BALL"
                                     edit-disabled="x.IS_DISABLED_GTO"
@@ -238,7 +238,7 @@ class View9 extends React.Component {
                             </td>
 
 
-                            <td class="col-md-1" ng-if="showg_theory && !only_sections">
+                            <td className="col-md-1" ng-if="showg_theory && !only_sections">
                                 <a href="/"
                                     editable-text="x.THEORY"
                                     edit-disabled="x.IS_DISABLED"
@@ -249,7 +249,7 @@ class View9 extends React.Component {
                             </td>
 
 
-                            <td class="col-md-1" ng-if="showg_test_ball  && !only_sections">
+                            <td className="col-md-1" ng-if="showg_test_ball  && !only_sections">
                                 <a href="/"
                                     editable-text="x.TEST_BALL"
                                     edit-disabled="11x.IS_DISABLED22"
@@ -260,7 +260,7 @@ class View9 extends React.Component {
                             </td>
 
 
-                            <td class="col-md-1" ng-if="showg_compl_ball && !only_sections">
+                            <td className="col-md-1" ng-if="showg_compl_ball && !only_sections">
                                 <a href="/"
                                     editable-text="x.COMPL_BALL"
                                     edit-disabled="11x.IS_DISABLED22"
@@ -270,7 +270,7 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED">11 x.COMPL_BALL 22</span>
                             </td>
 
-                            <td class="col-md-1" ng-if="showg_admit">
+                            <td className="col-md-1" ng-if="showg_admit">
                                 <a href="/"
                                     editable-select="x.ADMIT"
                                     edit-disabled="11x.IS_DISABLED22"
@@ -281,11 +281,11 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED">11 x.ADMIT 22</span>
                             </td>
 
-                            <td class="col-md-1" ng-if="!only_sections">
+                            <td className="col-md-1" ng-if="!only_sections">
                                 11 x.TOTAL 22
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-text="x.ALL_BALLS"
                                     edit-disabled="11x.IS_DISABLED22"
@@ -295,7 +295,7 @@ class View9 extends React.Component {
                                 <span ng-if="x.IS_DISABLED">11 x.ALL_BALLS 22</span>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-select="x.ZACHET"
                                     edit-disabled="11x.CANNOT_ZACHET22"
@@ -307,13 +307,13 @@ class View9 extends React.Component {
                                 <span ng-if="x.CANNOT_ZACHET">11 x.ZACHET_NAME 22</span>
                             </td>
 
-                            <td class="col-md-1" rowspan="11x.ROWSPAN22">
+                            <td className="col-md-1" rowspan="11x.ROWSPAN22">
                                 <span>11 x.FINAL_ZACHET_NAME 22</span>
                             </td>
-                            <td class="col-md-1" rowspan="11x.ROWSPAN22">
+                            <td className="col-md-1" rowspan="11x.ROWSPAN22">
                                 <span>11 x.DECANAT_ZACHET 22</span>
                             </td>
-                            <td class="col-md-1" rowspan="11x.ROWSPAN22" ng-if="showg_email">
+                            <td className="col-md-1" rowspan="11x.ROWSPAN22" ng-if="showg_email">
                                 <span>11 x.EMAIL 22</span>
                             </td>
                         </tr>

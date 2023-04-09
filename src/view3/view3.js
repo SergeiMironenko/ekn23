@@ -8,7 +8,7 @@ class View3 extends React.Component {
     render() {
         return (
             <div>
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <tr>
                         <th rowspan="2">Факультет</th>
                         <th rowspan="2">Направление</th>
@@ -21,10 +21,10 @@ class View3 extends React.Component {
                         <th>№2</th>
                     </tr>
                     <tr ng-repeat="x in accr_groups">
-                        <td class="col-md-2">11 x.FACULTET 22</td>
-                        <td class="col-md-2">11 x.OKSO 22</td>
-                        <td class="col-md-2">11 x.STUDY_GROUP 22</td>
-                        <td class="col-md-2">
+                        <td className="col-md-2">11 x.FACULTET 22</td>
+                        <td className="col-md-2">11 x.OKSO 22</td>
+                        <td className="col-md-2">11 x.STUDY_GROUP 22</td>
+                        <td className="col-md-2">
                             <a href="/"
                                 editable-select="x.ID_PERSON0"
                                 e-ng-options="s.IDPERSON as s.FIO for s in persons"
@@ -32,7 +32,7 @@ class View3 extends React.Component {
                                 11 x.PERSON0 || "Не определено" 22
                             </a>
                         </td>
-                        <td class="col-md-2">
+                        <td className="col-md-2">
                             <a href="/"
                                 editable-select="x.ID_PERSON0"
                                 e-ng-options="s.IDPERSON as s.FIO for s in persons"
@@ -40,7 +40,7 @@ class View3 extends React.Component {
                                 11 x.PERSON1 || "Не определено" 22
                             </a>
                         </td>
-                        <td class="col-md-2">
+                        <td className="col-md-2">
                             <a href="/"
                                 editable-select="x.ID_PERSON0"
                                 e-ng-options="s.IDPERSON as s.FIO for s in persons"

@@ -9,9 +9,9 @@ class View5 extends React.Component {
         return (
             <div>
                 {/* Панель выбора студентов */}
-                <div class="panel panel-default" >
-                    <div class="row">
-                        <div class="col-sm-1">
+                <div className="panel panel-default" >
+                    <div className="row">
+                        <div className="col-sm-1">
                             <p>Год</p>
                             <ui-select ng-model="years_selected"
                                 theme="select2"
@@ -26,7 +26,7 @@ class View5 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-1">
+                        <div className="col-sm-1">
                             <p>Семестр</p>
                             <ui-select ng-model="semesters_selected"
                                 theme="select2"
@@ -41,7 +41,7 @@ class View5 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                             <p>Факультет</p>
                             <ui-select ng-model="facultets_selected"
                                 theme="select2"
@@ -56,13 +56,13 @@ class View5 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-1">
-                            <div class="checkbox">
+                        <div className="col-sm-1">
+                            <div className="checkbox">
                                 <label><input type="checkbox" ng-model="only_sport" ng-change="change_only_sport()" ng-true-value="1" ng-false-value="0" />Только спортсмены</label>
                             </div>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                             <p>Курс</p>
                             <ui-select ng-model="courses_selected"
                                 theme="select2"
@@ -76,7 +76,7 @@ class View5 extends React.Component {
                                 </ui-select-choices>
                             </ui-select>
                         </div>
-                        <div class="col-sm-3">
+                        <div className="col-sm-3">
                             <p>Группа</p>
                             <ui-select ng-model="groups_selected"
                                 theme="select2"
@@ -100,15 +100,15 @@ class View5 extends React.Component {
                         onbeforesave="set_zachet_date($data)">
                         11 (zachet_date || "Не определено") | date:'yyyy.MM.dd' 22
                     </a>
-                    <button class="btn btn-success" ng-click="zach_to_dec()">Принять</button>
+                    <button className="btn btn-success" ng-click="zach_to_dec()">Принять</button>
                 </div>
                 <div ng-if="is_admin">
-                    <button class="btn btn-success" ng-click="load_test()">Тесты</button>
+                    <button className="btn btn-success" ng-click="load_test()">Тесты</button>
                 </div>
 
 
                 {/* Список студентов */}
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th rowspan="3">Студент</th>
@@ -139,9 +139,9 @@ class View5 extends React.Component {
                     </thead>
                     <tbody>
                         <tr ng-repeat="x in students" ng-context-menu="menuStudents">
-                            <td class="col-md-2">11 x.FIO 22 <div ng-if="only_sport"><br />11 x.STUDY_GROUP 22</div></td>
-                            <td class="col-md-1">11 x.SEX 22</td>
-                            <td class="col-md-1">
+                            <td className="col-md-2">11 x.FIO 22 <div ng-if="only_sport"><br />11 x.STUDY_GROUP 22</div></td>
+                            <td className="col-md-1">11 x.SEX 22</td>
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-select="x.FK_EKN_SECTIONS"
                                     e-ng-options="s.PK as s.NAME for s in sections"
@@ -149,7 +149,7 @@ class View5 extends React.Component {
                                     11 x.SECTION || "Не определено" 22
                                 </a>
                             </td>
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-select="x.ID_PERSON"
                                     edit-disabled="11x.IS_PERSON_DISABLED22"
@@ -160,8 +160,8 @@ class View5 extends React.Component {
 
                             </td>
 
-                            <td class="col-md-1">
-                                <span ng-class="mo_classes[x.FK_EKN_STATUS || 0]">
+                            <td className="col-md-1">
+                                <span ng-className="mo_classes[x.FK_EKN_STATUS || 0]">
                                     <a href="/"
                                         editable-select="x.ID_EKN_STATUS"
                                         edit-disabled="11x.IS_EKN_STATUS_DISABLED22"
@@ -176,15 +176,15 @@ class View5 extends React.Component {
                                 </a>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 11 x.ANKETA 22
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 11 x.TEST_RES 22
                             </td>
 
-                            <td class="col-md-1" ng-if="show_oral">
+                            <td className="col-md-1" ng-if="show_oral">
                                 <a href="/"
                                     editable-select="x.ORAL_TEST"
                                     e-ng-options="s.PK as s.NAME for s in parts"
@@ -193,7 +193,7 @@ class View5 extends React.Component {
                                 </a>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-select="x.PART3"
                                     e-ng-options="s.PK as s.NAME for s in parts"
@@ -202,7 +202,7 @@ class View5 extends React.Component {
                                 </a>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-select="x.PART4"
                                     e-ng-options="s.PK as s.NAME for s in parts"
@@ -211,7 +211,7 @@ class View5 extends React.Component {
                                 </a>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     editable-select="x.ZACHET"
                                     e-ng-options="s.PK as s.NAME for s in parts"
@@ -222,7 +222,7 @@ class View5 extends React.Component {
 
                             </td>
 
-                            <td class="col-md-1" ng-if="false">
+                            <td className="col-md-1" ng-if="false">
                                 <a href="/"
                                     editable-text="x.ZACHET_DATE"
                                     onbeforesave="updateStudentZachetDate($data,x.FK_STUDENT)">
@@ -230,7 +230,7 @@ class View5 extends React.Component {
                                 </a>
                             </td>
 
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 11 x.DECANAT_ZACHET 22
                             </td>
 

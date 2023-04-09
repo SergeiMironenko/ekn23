@@ -9,10 +9,10 @@ class View7 extends React.Component {
         return (
             <div>
                 {/* Панель отображения записавшихся студентов и поиска*/}
-                <div class="panel panel-default" >
-                    <div class="row">
+                <div className="panel panel-default" >
+                    <div className="row">
 
-                        <div class="col-sm-2">
+                        <div className="col-sm-2">
                             <p>Семестр</p>
                             <ui-select ng-model="rec_sems_selected"
                                 theme="select2"
@@ -27,7 +27,7 @@ class View7 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div className="col-sm-2">
                             <p>Направление</p>
                             <ui-select ng-model="rec_sections_selected"
                                 theme="select2"
@@ -42,7 +42,7 @@ class View7 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div className="col-sm-2">
                             <p>Пара</p>
                             <ui-select ng-model="pairs_selected"
                                 theme="select2"
@@ -57,19 +57,19 @@ class View7 extends React.Component {
                             </ui-select>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div className="col-sm-2">
                             <a href="https://api.ciu.nstu.ru/v1.0/fvekn/get_blank?fk_ekn_sections=11idSection22&fk_ers=11idPairs22">
                                 Печать
                             </a>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div className="col-sm-2">
                             <a href="https://api.ciu.nstu.ru/v1.0/fvekn/get_jrn?fk_ekn_sections=11idSection22&fk_ers=11idPairs22">
                                 Журнал
                             </a>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div className="col-sm-2">
                             <p>Поиск</p>
                             <a href="/" editable-text="student_fio" e-label="ФИО для поиска" onbeforesave="change_fio($data)">11 student_fio || 'Поиск'22</a>
                         </div>
@@ -78,7 +78,7 @@ class View7 extends React.Component {
                 </div>
 
                 {/* Список студентов */}
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <thead>
                         <tr>
                             <th rowspan="1">№</th>
@@ -101,8 +101,8 @@ class View7 extends React.Component {
                     </thead>
                     <tbody>
                         <tr ng-repeat="x in students">
-                            <td class="col-md-1">11 x.RN 22</td>
-                            <td class="col-md-1">
+                            <td className="col-md-1">11 x.RN 22</td>
+                            <td className="col-md-1">
                                 <a href="/"
                                     ng-if="x.PAIR1=='Записать'"
                                     editable-select="x.PAIR1"
@@ -113,7 +113,7 @@ class View7 extends React.Component {
                                 </a>
                                 <div ng-if="x.PAIR1 && x.PAIR1 != 'Записать'">11 x.PAIR1 22</div>
                             </td>
-                            <td class="col-md-1">
+                            <td className="col-md-1">
                                 <a href="/"
                                     ng-if="x.PAIR2=='Записать'"
                                     editable-select="x.PAIR2"
@@ -124,22 +124,22 @@ class View7 extends React.Component {
                                 </a>
                                 <div ng-if="x.PAIR2 && x.PAIR2 != 'Записать'">11 x.PAIR2 22</div>
                             </td>
-                            <td class="col-md-1">11 x.FACULTET 22</td>
-                            <td class="col-md-1">11 x.COURSE 22</td>
-                            <td class="col-md-1"><a href="https://www.nstu.ru/studies/schedule/schedule_classes/schedule?group=11x.STUDY_GROUP22" target="_blank">11 x.STUDY_GROUP 22</a></td>
-                            <td class="col-md-2">11 x.FIO 22</td>
-                            <td class="col-md-2">11 x.DISTANT 22</td>
-                            <td class="col-md-1">11 x.SEX 22</td>
-                            <td class="col-md-1">11 x.STATUS 22</td>
-                            <td class="col-md-1">11 x.ZACHET 22</td>
-                            <td class="col-md-1">11 x.PAYD 22</td>
-                            {/*      <td class="col-md-1">11 x.LETTER 22</td>*/}
-                            <td class="col-md-1">
+                            <td className="col-md-1">11 x.FACULTET 22</td>
+                            <td className="col-md-1">11 x.COURSE 22</td>
+                            <td className="col-md-1"><a href="https://www.nstu.ru/studies/schedule/schedule_classes/schedule?group=11x.STUDY_GROUP22" target="_blank">11 x.STUDY_GROUP 22</a></td>
+                            <td className="col-md-2">11 x.FIO 22</td>
+                            <td className="col-md-2">11 x.DISTANT 22</td>
+                            <td className="col-md-1">11 x.SEX 22</td>
+                            <td className="col-md-1">11 x.STATUS 22</td>
+                            <td className="col-md-1">11 x.ZACHET 22</td>
+                            <td className="col-md-1">11 x.PAYD 22</td>
+                            {/*      <td className="col-md-1">11 x.LETTER 22</td>*/}
+                            <td className="col-md-1">
                                 <button ng-click="clkUnRec1(x.FK_STUDENT)" ng-if="x.CAN_UNREC1" ng-confirm-click="Уверены?">Отмена1</button>
                                 <button ng-click="clkUnRec2(x.FK_STUDENT)" ng-if="x.CAN_UNREC2" ng-confirm-click="Уверены?">Отмена2</button>
                             </td>
-                            <td class="col-md-1">11 x.WEEK_MARK_7 22</td>
-                            <td class="col-md-1">11 x.WEEK_MARK_12 22</td>
+                            <td className="col-md-1">11 x.WEEK_MARK_7 22</td>
+                            <td className="col-md-1">11 x.WEEK_MARK_12 22</td>
 
                         </tr>
                     </tbody>

@@ -13,7 +13,7 @@ class View1 extends React.Component {
                     <button ng-click="clickToOpen()">Войти под другим преподавателем</button>
                 </div>
 
-                <table class="table table-hover">
+                <table className="table table-hover">
                     <tr>
                         <th rowspan="2">Преподаватель</th>
                         <th colspan="3">Отделение</th>
@@ -25,8 +25,8 @@ class View1 extends React.Component {
                     </tr>
 
                     <tr ng-repeat="x in persons">
-                        <td class="col-md-1">11 x.FIO 22</td>
-                        <td class="col-md-1">
+                        <td className="col-md-1">11 x.FIO 22</td>
+                        <td className="col-md-1">
                             <a href="/"
                                 editable-select="x.FK_EKN_SECTIONS1"
                                 e-ng-options="s.PK as s.NAME for s in sections"
@@ -34,7 +34,7 @@ class View1 extends React.Component {
                                 11 x.SECTION1 || "Не определено" 22
                             </a>
                         </td>
-                        <td class="col-md-1">
+                        <td className="col-md-1">
                             <a href="/"
                                 editable-select="x.FK_EKN_SECTIONS2"
                                 e-ng-options="s.PK as s.NAME for s in sections"
@@ -42,7 +42,7 @@ class View1 extends React.Component {
                                 11 x.SECTION2 || "Не определено" 22
                             </a>
                         </td>
-                        <td class="col-md-1">
+                        <td className="col-md-1">
                             <a href="/"
                                 editable-select="x.FK_EKN_SECTIONS3"
                                 e-ng-options="s.PK as s.NAME for s in sections"
@@ -53,10 +53,10 @@ class View1 extends React.Component {
                     </tr>
                 </table>
                 {/* <br> */}
-                <div class="row">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="col-sm-1">
+                <div className="row">
+                    <div className="panel panel-default">
+                        <div className="panel-body">
+                            <div className="col-sm-1">
 
                                 <p>Год</p>
                                 <ui-select ng-model="years_selected"
@@ -73,7 +73,7 @@ class View1 extends React.Component {
                             </div>
 
 
-                            <div class="col-sm-1">
+                            <div className="col-sm-1">
                                 <p>Семестр</p>
                                 <ui-select ng-model="semesters_selected"
                                     theme="select2"
@@ -91,8 +91,8 @@ class View1 extends React.Component {
                     </div>
                 </div>
 
-                <h2><span class="label label-default">Сводка по секциям</span></h2>
-                <table class="table table-hover">
+                <h2><span className="label label-default">Сводка по секциям</span></h2>
+                <table className="table table-hover">
                     <tr>
                         <th>Секция</th>
                         <th>Студентов</th>
@@ -102,8 +102,8 @@ class View1 extends React.Component {
                         <td>11 x.CNT 22</td>
                     </tr>
                 </table>
-                <h2><span class="label label-default">Сводка по заполнению</span></h2>
-                <table class="table table-hover">
+                <h2><span className="label label-default">Сводка по заполнению</span></h2>
+                <table className="table table-hover">
                     <tr>
                         <th rowspan="2">Преподаватель</th>
                         <th rowspan="2">Секция</th>

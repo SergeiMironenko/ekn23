@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +35,63 @@
   to {
     transform: rotate(360deg);
   }
+} */
+
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+body {
+  padding-top: 80px;
+}
+
+.panel-default {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+
+.navbar-brand>img {
+  height: 50px;
+  padding: 1px;
+  width: 65px;
+}
+
+.top5>.row {
+  margin-top: 1rem;
+}
+
+.myGrid {
+  width: 99%;
+  height: 300px;
 }

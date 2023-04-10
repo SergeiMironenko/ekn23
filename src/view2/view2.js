@@ -1,14 +1,87 @@
 import React from 'react';
 
 function ThRender(props) {
-    console.log(props);
     if (props.show)
         return <th
-            rowspan={props.rowspan}
-            colspan={props.colspan}
+            rowSpan={props.rowSpan}
+            colSpan={props.colSpan}
         >
             {props.value}
         </th>;
+}
+
+function TdRender(props) {
+    if (props.show)
+        return <td
+            className={props.className}
+        >
+            {props.value}
+        </td>
+}
+
+function TrRender(props) {
+    let trList = Array(0);
+    props.students.forEach(student => {
+        trList.push(<tr ng-context-menu="menuStudents"
+        >
+            <TdRender show={true} className="col-md-2" value={student.FIO} />
+            <TdRender show={props.onlyNormatives} className="col-md-1" value={student.SEX} />
+            <TdRender
+                show={props.onlyNormatives}
+                className="col-md-1"
+                value={<a href="/"
+                    editable-select="x.FK_EKN_SECTIONS"
+                    e-ng-options="s.PK as s.NAME for s in sections"
+                    onbeforesave="updateStudentSections($data,x.FK_STUDENT)">
+                    {student.SECTION || "Не определено"}
+                </a>}
+            />
+            <TdRender
+                show={props.onlyNormatives}
+                className="col-md-2"
+                value={<a href="/"
+                    editable-select="x.ID_PERSON"
+                    edit-disabled="{{x.IS_PERSON_DISABLED}}"
+                    e-ng-options="s.IDPERSON as s.FIO for s in persons"
+                    onbeforesave="updateStudentPersons($data,x.FK_STUDENT)">
+                    {student.PERSON || "Не определено"}
+                </a>}
+            />
+            <TdRender
+                show={true}
+                className="col-md-1"
+                value={<a ng-if="!(x.SHOW_PRESS == 0 && n.PK == 2) && ! (x.SHOW_PODT == 0 && n.PK == 3)" href="/"
+                    editable-text="x[n.VAL_NAME]"
+                    onbeforesave="updateStudentsValue($data,x.FK_STUDENT,x[n.PK_NAME])">
+                    !(student[n.VAL_NAME] == null ) ? x[n.VAL_NAME]  : "не введено"
+                </a>}
+            />
+            <TdRender
+                show={true}
+                className="col-md-1"
+                value={<a href="/"
+                    editable-text="x.H"
+                    onbeforesave="updateStudentsH($data,x.FK_STUDENT)">
+                    !(student.H == null) ? (student.H).toFixed(2) : "не введено"
+                </a>}
+            />
+            <TdRender
+                show={true}
+                className="col-md-1"
+                value={<a href="/"
+                    editable-text="x.W"
+                    onbeforesave="updateStudentsW($data,x.FK_STUDENT)">
+                    {!(student.W == null) ? student.W : "не введено"}
+                </a>}
+            />
+            <TdRender
+                show={true}
+                className="col-md-1"
+                value={(student.W / (student.H * student.H)).toFixed(2)}
+            />
+        </tr>);
+    })
+    return trList;
 }
 
 class View2 extends React.Component {
@@ -111,6 +184,22 @@ class View2 extends React.Component {
         ]
         const normativeList = normatives.map((normative) => <th>{normative}</th>);
 
+        const students = [{
+            "FIO": "fio1",
+            "SEX": "sex1",
+            "SECTION": "section1",
+            "PERSON": "person1",
+            "H": "180",
+            "W": "80",
+        }, {
+            "FIO": "fio2",
+            "SEX": "sex2",
+            "SECTION": "section2",
+            "PERSON": "person2",
+            "H": "170",
+            "W": "70",
+        }]
+
         return (
             <div>
                 {/* <!-- Панель выбора студентов --> */}
@@ -177,81 +266,22 @@ class View2 extends React.Component {
                 {/* <!-- Список студентов --> */}
                 <table className="table table-hover">
                     <tr>
-                        <ThRender show={true} rowspan={2} value="Студент" />
-                        <ThRender show={this.state.onlyNormatives} rowspan={2} value="Пол" />
-                        <ThRender show={this.state.onlyNormatives} rowspan={2} value="Отделение" />
-                        <ThRender show={this.state.onlyNormatives} rowspan={2} value="Преподаватель" />
-                        <ThRender show={true} colspan={3} value="Нормативы" />
-                        <ThRender show={true} colspan={3} value="Измерения" />
-                        {/* <th rowspan={2}>Студент</th> */}
-                        {/* <th ng-if="!only_normatives" rowspan={2}>Пол</th> */}
-                        {/* <th ng-if="!only_normatives" rowspan={2}>Отделение</th> */}
-                        {/* <th ng-if="!only_normatives" rowspan={2}>Преподаватель</th> */}
-                        {/* <th colspan={3}>Нормативы</th> */}
-                        {/* <th colspan={3}>Измерения</th> */}
+                        <ThRender show={true} rowSpan={2} value="Студент" />
+                        <ThRender show={this.state.onlyNormatives} rowSpan={2} value="Пол" />
+                        <ThRender show={this.state.onlyNormatives} rowSpan={2} value="Отделение" />
+                        <ThRender show={this.state.onlyNormatives} rowSpan={2} value="Преподаватель" />
+                        <ThRender show={true} colSpan={3} value="Нормативы" />
+                        <ThRender show={true} colSpan={3} value="Измерения" />
                     </tr>
                     <tr>
-                        {/* <th ng-repeat="n in normatives">n.NAME</th> */}
                         {normativeList}
                         <th>Р.</th>
                         <th>В.</th>
                         <th>И</th>
                     </tr>
-                    <tr ng-repeat="x in students" ng-context-menu="menuStudents">
-                        <td className="col-md-2">x.FIO</td>
-                        <td ng-if="!only_normatives" className="col-md-1">x.SEX</td>
-                        <td ng-if="!only_normatives" className="col-md-1">
-                            <a href="/"
-                                editable-select="x.FK_EKN_SECTIONS"
-                                e-ng-options="s.PK as s.NAME for s in sections"
-                                onbeforesave="updateStudentSections($data,x.FK_STUDENT)">
-                                x.SECTION || "Не определено"
-                            </a>
-                        </td>
-                        <td ng-if="!only_normatives" className="col-md-2">
-                            <a href="/"
-                                editable-select="x.ID_PERSON"
-                                edit-disabled="{{x.IS_PERSON_DISABLED}}"
-                                e-ng-options="s.IDPERSON as s.FIO for s in persons"
-                                onbeforesave="updateStudentPersons($data,x.FK_STUDENT)">
-                                x.PERSON || "Не определено"
-                            </a>
-
-                        </td>
-
-                        <td className="col-md-1" ng-repeat="n in normatives">
-
-                            <a ng-if="!(x.SHOW_PRESS == 0 && n.PK == 2) && ! (x.SHOW_PODT == 0 && n.PK == 3)" href="/"
-                                editable-text="x[n.VAL_NAME]"
-                                onbeforesave="updateStudentsValue($data,x.FK_STUDENT,x[n.PK_NAME])">
-                                !(x[n.VAL_NAME] == null ) ? x[n.VAL_NAME]  : "не введено"
-                            </a>
-                        </td>
-                        <td className="col-md-1">
-                            <a href="/"
-                                editable-text="x.H"
-                                onbeforesave="updateStudentsH($data,x.FK_STUDENT)">
-                                !(x.H == null ) ? (x.H).toFixed(2)  : "не введено"
-                            </a>
-                        </td>
-                        <td className="col-md-1">
-                            <a href="/"
-                                editable-text="x.W"
-                                onbeforesave="updateStudentsW($data,x.FK_STUDENT)">
-                                !(x.W == null ) ? x.W  : "не введено"
-                            </a>
-                        </td>
-
-                        <td className="col-md-1">
-                            (x.W/(x.H*x.H)).toFixed(2)
-                        </td>
-
-                    </tr>
+                    <TrRender students={students} onlyNormatives={this.state.onlyNormatives} />
                 </table>
-
             </div>
-
-
         )
     }
 }

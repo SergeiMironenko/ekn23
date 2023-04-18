@@ -1,6 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import View1 from './view1/view1';
+import View2 from './view2/view2';
+import View3 from './view3/view3';
+import View4 from './view4/view4';
+import View5 from './view5/view5';
+import View6 from './view6/view6';
+import View7 from './view7/view7';
+import View8 from './view8/view8';
+import View9 from './view9/view9';
+import Links from './links/links';
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +54,20 @@ class App extends React.Component {
           </div>
         </header>
         <div className="content">
-          <div ng-view></div>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Links />} />
+              <Route path='view1' element={<View1 />} />
+              <Route path='view2' element={<View2 />} />
+              <Route path='view3' element={<View3 />} />
+              <Route path='view4' element={<View4 />} />
+              <Route path='view5' element={<View5 />} />
+              <Route path='view6' element={<View6 />} />
+              <Route path='view7' element={<View7 />} />
+              <Route path='view8' element={<View8 />} />
+              <Route path='view9' element={<View9 />} />
+            </Routes>
+          </BrowserRouter>
         </div>
       </div>
     );

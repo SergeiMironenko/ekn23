@@ -6,6 +6,7 @@ class View3 extends React.Component {
     }
 
     render() {
+        console.log(3);
         return (
             <div>
                 <table className="table table-hover">

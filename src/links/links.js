@@ -13,6 +13,7 @@ class Links extends React.Component {
                 <li><a href="view7">view7</a></li>
                 <li><a href="view8">view8</a></li>
                 <li><a href="view9">view9</a></li>
+                <li><a href="test">test</a></li>
             </ul>
         )
     }

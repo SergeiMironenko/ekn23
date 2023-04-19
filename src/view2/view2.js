@@ -119,121 +119,238 @@ class View2 extends React.Component {
             return <option key={idx}>{group}</option>
         })
 
-        // Нормативы
-        const normatives = [
-            "Прыжок в длину, сантиметров",
-            "Подъем туловища",
-            "Подтягивание, раз",
-            "Гибкость, сантиметров",
-            "Бег 1000м, секунд",
-        ]
-        const normativeList = normatives.map((normative) => <th>{normative}</th>);
-
         // Отделения
         const sections = this.state.sections;
 
         // Студенты
         const students = [{
-            "FIO": "fio1",
+            "FIO": "fio1aSdad dasdasdasdasd dasfweewwgw",
             "SEX": "м",
             "SECTION": sections[0],
-            "PERSON": "person1",
+            "PERSON": "teacher1",
             "H": "180",
             "W": "80",
         }, {
             "FIO": "fio2",
             "SEX": "ж",
             "SECTION": sections[1],
-            "PERSON": "person2",
+            "PERSON": "teacher2",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio3",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher3",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio4",
+            "SEX": "ж",
+            "SECTION": sections[0],
+            "PERSON": "teacher4",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio5",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher5",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio6",
+            "SEX": "ж",
+            "SECTION": sections[0],
+            "PERSON": "teacher6",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio2",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher 2",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio2",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher 2",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio2",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher 2",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio2",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher 2",
+            "H": "170",
+            "W": "70",
+        }, {
+            "FIO": "fio2",
+            "SEX": "ж",
+            "SECTION": sections[1],
+            "PERSON": "teacher 2",
             "H": "170",
             "W": "70",
         }]
+
+        // select
+        const selectFormClassName = "form-floating";
+        const selectClassName = "form-select form-select-sm";
+
+        // checkbox
+        const checkboxFormClassName = "form-check";
+        const checkboxInputClassName = "form-check-input";
+        const checkboxLabelClassName = "form-check-label";
 
         return (
             <div>
                 {/* <!-- Панель выбора студентов --> */}
                 <div className="panel panel-default" >
                     <div className="row">
-                        <div className="col-sm-1">
-                            <p>Год</p>
-                            <select value={this.state.year} onChange={this.yearChange}>
-                                {yearOptions}
-                            </select>
-                        </div>
 
+                        {/* Выбор года */}
                         <div className="col-sm-1">
-                            <p>Семестр</p>
-                            <select value={this.state.semester} onChange={this.semesterChange}>
-                                {semesterOptions}
-                            </select>
-                        </div>
-
-                        <div className="col-sm-3">
-                            <p>Факультет</p>
-                            <select value={this.state.faculty} onChange={this.facultyChange}>
-                                {facultyOptions}
-                            </select>
-                        </div>
-                        <div className="col-sm-3">
-                            <p>Курс</p>
-                            <select value={this.state.course} onChange={this.courseChange}>
-                                {courseOptions}
-                            </select>
-                        </div>
-                        <div className="col-sm-3">
-                            <p>Группа</p>
-                            <select value={this.state.group} onChange={this.groupChange}>
-                                {groupOptions}
-                            </select>
-                            {/* <ui-select ng-model="groups_selected"
-                                theme="select2"
-                                ng-disabled="groups_disabled"
-                                on-select="change_group($item)"
-                                style={{ minWidth: 200 }}
-                                title="Учебная группа">
-                                <ui-select-match>$select.selected.NAME</ui-select-match>
-                                <ui-select-choices repeat="gr in groups | propsFilter: {NAME: $select.search}">
-                                    <div ng-bind-html="gr.NAME"></div>
-                                </ui-select-choices>
-                            </ui-select> */}
-                        </div>
-
-                        <div className="col-sm-1">
-                            <div className="checkbox">
-                                <label><input type="checkbox" value={this.state.onlySections} onChange={this.onlySectionsChange} />Только мое отделение</label>
+                            <div className={selectFormClassName}>
+                                <select
+                                    value={this.state.year}
+                                    onChange={this.yearChange}
+                                    className={selectClassName}
+                                >
+                                    {yearOptions}
+                                </select>
+                                <label>Год</label>
                             </div>
                         </div>
 
-                        <div className="col-sm-3">
-                            <div className="checkbox">
-                                <label><input type="checkbox" value={this.state.onlyNormatives} onChange={this.onlyNormativesChange} />Показывать только нормативы</label>
+                        {/* Выбор семестра */}
+                        <div className="col-sm-2">
+                            <div className={selectFormClassName}>
+                                <select
+                                    value={this.state.semester}
+                                    onChange={this.semesterChange}
+                                    className={selectClassName}
+                                >
+                                    {semesterOptions}
+                                </select>
+                                <label>Семестр</label>
                             </div>
                         </div>
 
+                        {/* Выбор факультета */}
+                        <div className="col-sm-1">
+                            <div className={selectFormClassName}>
+                                <select
+                                    value={this.state.faculty}
+                                    onChange={this.facultyChange}
+                                    className={selectClassName}
+                                >
+                                    {facultyOptions}
+                                </select>
+                                <label>Факультет</label>
+                            </div>
+                        </div>
+
+                        {/* Выбор курса */}
+                        <div className="col-sm-1">
+                            <div className={selectFormClassName}>
+                                <select
+                                    value={this.state.course}
+                                    onChange={this.courseChange}
+                                    className={selectClassName}
+                                >
+                                    {courseOptions}
+                                </select>
+                                <label>Курс</label>
+                            </div>
+                        </div>
+
+                        {/* Выбор группы */}
+                        <div className="col-sm-1">
+                            <div className={selectFormClassName}>
+                                <select
+                                    value={this.state.group}
+                                    onChange={this.groupChange}
+                                    className={selectClassName}
+                                >
+                                    {groupOptions}
+                                </select>
+                                <label>Группа</label>
+                            </div>
+                        </div>
+
+                        {/* Флажок "Только мое отделение" */}
+                        <div className="col-sm-2">
+                            <div className={checkboxFormClassName}>
+                                <input
+                                    type="checkbox"
+                                    value={this.state.onlySections}
+                                    onChange={this.onlySectionsChange}
+                                    className={checkboxInputClassName}
+                                />
+                                <label className={checkboxLabelClassName}>
+                                    Только мое отделение
+                                </label>
+                            </div>
+                        </div>
+
+                        {/* Флажок "Показывать только нормативы" */}
+                        <div className="col-sm-2">
+                            <div className={checkboxFormClassName}>
+                                <input
+                                    type="checkbox"
+                                    value={this.state.onlyNormatives}
+                                    onChange={this.onlyNormativesChange}
+                                    className={checkboxInputClassName}
+                                />
+                                <label className={checkboxLabelClassName}>
+                                    Показывать только нормативы
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {/* <!-- Список студентов --> */}
-                <table className="table table-hover">
-                    <tr>
-                        <ThRender show={true} rowSpan={2} value="Студент" />
-                        <ThRender show={!this.state.onlyNormatives} rowSpan={2} value="Пол" />
-                        <ThRender show={!this.state.onlyNormatives} rowSpan={2} value="Отделение" />
-                        <ThRender show={!this.state.onlyNormatives} rowSpan={2} value="Преподаватель" />
-                        <ThRender show={true} colSpan={3} value="Нормативы" />
-                        <ThRender show={true} colSpan={3} value="Измерения" />
-                    </tr>
-                    <tr>
-                        {normativeList}
-                        <th>Р.</th>
-                        <th>В.</th>
-                        <th>И</th>
-                    </tr>
-                    <TrRender
-                        students={students}
-                        onlyNormatives={this.state.onlyNormatives}
-                        onlySections={this.state.onlySections}
-                        mySection={this.state.mySection}
-                    />
+                <table className="table table-sm table-striped table-hover">
+                    <thead className="table-light">
+                        <tr>
+                            <ThRender show={true} rowSpan={2} value="Студент" className="align-top" />
+                            <ThRender show={!this.state.onlyNormatives} rowSpan={2} value="Пол" className="align-top" />
+                            <ThRender show={!this.state.onlyNormatives} rowSpan={2} value="Отделение" className="align-top" />
+                            <ThRender show={!this.state.onlyNormatives} rowSpan={2} value="Преподаватель" className="align-top" />
+                            <ThRender show={true} colSpan={5} value="Нормативы" className="align-top" />
+                            <ThRender show={true} colSpan={3} value="Измерения" className="align-top" />
+                        </tr>
+                        <tr>
+                            <ThRender show={true} value="Прыжок в длину (сантиметров)" className="align-top" />
+                            <ThRender show={true} value="Подъем туловища (раз)" className="align-top" />
+                            <ThRender show={true} value="Подтягивание (раз)" className="align-top" />
+                            <ThRender show={true} value="Гибкость (сантиметров)" className="align-top" />
+                            <ThRender show={true} value="Бег 1000м (секунд)" className="align-top" />
+                            <ThRender show={true} value="Р." className="align-top" />
+                            <ThRender show={true} value="В." className="align-top" />
+                            <ThRender show={true} value="И" className="align-top" />
+                        </tr>
+                    </thead>
+                    <tbody className="table-group-divider">
+                        <TrRender
+                            students={students}
+                            onlyNormatives={this.state.onlyNormatives}
+                            onlySections={this.state.onlySections}
+                            mySection={this.state.mySection}
+                        />
+                    </tbody>
+                    <tfoot>
+                        footer
+                    </tfoot>
                 </table>
             </div>
         )
@@ -243,6 +360,7 @@ class View2 extends React.Component {
 function ThRender(props) {
     if (props.show)
         return <th
+            className={props.className}
             rowSpan={props.rowSpan}
             colSpan={props.colSpan}
         >
@@ -295,16 +413,34 @@ function TrRender(props) {
                     value={<a ng-if="!(x.SHOW_PRESS == 0 && n.PK == 2) && ! (x.SHOW_PODT == 0 && n.PK == 3)" href="/"
                         editable-text="x[n.VAL_NAME]"
                         onbeforesave="updateStudentsValue($data,x.FK_STUDENT,x[n.PK_NAME])">
-                        !(student[n.VAL_NAME] == null ) ? x[n.VAL_NAME]  : "не введено"
+                        "не введено"
                     </a>}
                 />
                 <TdRender
                     show={true}
+                    value="0"
+                />
+                <TdRender
+                    show={true}
+                    value="0"
+                />
+                <TdRender
+                    show={true}
+                    value="0"
+                />
+                <TdRender
+                    show={true}
+                    value="0"
+                />
+                <TdRender
+                    show={true}
                     className="col-md-1"
-                    value={<a href="/"
+                    value={<a
+                        href="/"
                         editable-text="x.H"
-                        onbeforesave="updateStudentsH($data,x.FK_STUDENT)">
-                        !(student.H == null) ? (student.H).toFixed(2) : "не введено"
+                        onbeforesave="updateStudentsH($data,x.FK_STUDENT)"
+                    >
+                        {/* {!(student.H == null) ? (student.H).toFixed(2) : "не введено"} */}0
                     </a>}
                 />
                 <TdRender

@@ -1,10 +1,11 @@
 import React from 'react';
 import { getData } from '../functions/data';
-import Select from '../components/select';
+import SelectPanel from '../components/selectpanel';
 import Checkbox from '../components/checkbox';
 import Th from '../components/th';
 import Td from '../components/td';
 import SwapDivInput from '../components/swapdivinput';
+import SwapDivSelect from '../components/swapdivselect';
 
 
 class View2 extends React.Component {
@@ -42,7 +43,6 @@ class View2 extends React.Component {
 
     // Изменение чекбокса "Только мое отделение"
     onlySectionsChange() {
-        console.log("change!!!");
         this.setState(prevState => ({
             onlySections: !prevState.onlySections,
         }))
@@ -87,10 +87,12 @@ class View2 extends React.Component {
     render() {
         // Объявление массива студентов
         let trList = Array(0);
+        const sections = this.state.data.sections.map((section, i) => {
+            return <option key={i}>{section}</option>
+        })
 
         // Заполнение массива студентов
         this.state.data.students.forEach((student, idx) => {
-            student.H = 100;
             if (!this.state.onlySections || student.SECTION === this.state.mySection) {
                 trList.push(
                     // ng-context-menu="menuStudents"
@@ -100,55 +102,44 @@ class View2 extends React.Component {
                         <Td
                             show={!this.state.onlyNormatives}
                             className="col-md-1"
-                            value={<a href="/">{student.SECTION || "Не определено"}</a>}
+                            value={<SwapDivSelect list={sections} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={!this.state.onlyNormatives}
                             className="col-md-2"
-                            value={<a href="/"> {student.PERSON || "Не определено"}</a>}
+                            value={<SwapDivSelect list={this.state.data.teachers} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
                             className="col-md-1"
                             // ng-if="!(x.SHOW_PRESS == 0 && n.PK == 2) && ! (x.SHOW_PODT == 0 && n.PK == 3)" 
-                            value={<a href="/">"не введено"</a>}
+                            value={<SwapDivInput value={0} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
-                            value="0"
+                            value={<SwapDivInput value={0} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
-                            value="0"
+                            value={<SwapDivInput value={0} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
-                            value="0"
+                            value={<SwapDivInput value={0} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
-                            value="0"
-                        />
-                        <Td
-                            show={true}
-                            className="col-md-1"
-                            value={
-                                // <input type="text" />
-                                <div href=".">
-                                    <SwapDivInput value={student.H} studentsChange={this.studentsChange} />
-                                    {/* <div>0</div>
-                                    <input type="text" /> */}
-                                    {/* {!(student.H == null) ? (student.H).toFixed(2) : "не введено"} */}
-                                </div>
-                            }
+                            value={<SwapDivInput value={0} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
                             className="col-md-1"
-                            value={<a href="/"
-                            >
-                                {!(student.W == null) ? student.W : "не введено"}
-                            </a>}
+                            value={<SwapDivInput value={student.H} studentsChange={this.studentsChange} />}
+                        />
+                        <Td
+                            show={true}
+                            className="col-md-1"
+                            value={<SwapDivInput value={student.W} studentsChange={this.studentsChange} />}
                         />
                         <Td
                             show={true}
@@ -167,47 +158,47 @@ class View2 extends React.Component {
                     <div className="row">
 
                         {/* Выбор года */}
-                        <Select
+                        <SelectPanel
                             outerDivClassName="col-sm-1"
                             value={this.state.year}
                             change={this.yearChange}
-                            dataKey={this.state.data.years}
+                            options={this.state.data.years}
                             label="Год"
                         />
 
                         {/* Выбор семестра */}
-                        <Select
+                        <SelectPanel
                             outerDivClassName="col-sm-2"
                             value={this.state.semester}
                             change={this.semesterChange}
-                            dataKey={this.state.data.semesters}
+                            options={this.state.data.semesters}
                             label="Семестр"
                         />
 
                         {/* Выбор факультета */}
-                        <Select
+                        <SelectPanel
                             outerDivClassName="col-sm-1"
                             value={this.state.faculty}
                             change={this.facultyChange}
-                            dataKey={this.state.data.faculties}
+                            options={this.state.data.faculties}
                             label="Факультет"
                         />
 
                         {/* Выбор курса */}
-                        <Select
+                        <SelectPanel
                             outerDivClassName="col-sm-1"
                             value={this.state.course}
                             change={this.courseChange}
-                            dataKey={this.state.data.courses}
+                            options={this.state.data.courses}
                             label="Курс"
                         />
 
                         {/* Выбор группы */}
-                        <Select
+                        <SelectPanel
                             outerDivClassName="col-sm-1"
                             value={this.state.group}
                             change={this.groupChange}
-                            dataKey={this.state.data.groups}
+                            options={this.state.data.groups}
                             label="Группа"
                         />
 

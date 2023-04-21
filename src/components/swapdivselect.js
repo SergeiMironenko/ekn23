@@ -1,12 +1,13 @@
 import React from "react";
+import Select from "./select";
 
-// Смена div на input при изменении данных
-class SwapDivInput extends React.Component {
+// Смена div на select при изменении данных
+class SwapDivSelect extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             idx: 0,
-            value: this.props.value,
+            value: '',
         }
         this.changeElem = this.changeElem.bind(this);
         this.stopFocusOnKey = this.stopFocusOnKey.bind(this);
@@ -32,22 +33,30 @@ class SwapDivInput extends React.Component {
         })
     }
 
+    componentDidMount() {
+        if (this.props.list && this.props.list.length > 0) {
+            this.setState({
+                value: this.props.list[0],
+            })
+        }
+    }
+
     render() {
+        // console.log(this.props.list);
         if (this.state.idx)
-            return (
-                <div>
-                    <input
-                        type="number"
-                        onBlur={this.changeElem}
-                        onKeyDown={this.stopFocusOnKey}
-                        onChange={this.handleChange}
-                        autoFocus
-                        value={this.state.value}
-                        className="form-control"
-                        style={{ minWidth: 70 }}
-                    />
-                </div>
-            )
+            return <div>
+                <Select
+                    onBlur={this.changeElem}
+                    onKeyDown={this.stopFocusOnKey}
+                    onChange={this.handleChange}
+                    autoFocus={true}
+                    // value={this.state.value}
+                    // className="form-control"
+                    // style={{ minWidth: 70 }}
+                
+                    options={this.props.list}
+                />
+            </div>
         else
             return <div style={{ display: "flex" }}>
                 <div
@@ -60,4 +69,4 @@ class SwapDivInput extends React.Component {
     }
 }
 
-export default SwapDivInput;
+export default SwapDivSelect;

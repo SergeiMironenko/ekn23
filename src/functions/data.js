@@ -53,6 +53,12 @@ function getData() {
     // Отделения
     const sections = ["Легкая атлетика", "Баскетбол"];
 
+    // Преподаватели
+    const teachersList = ["teacher1", "teacher2"];
+    const teachers = teachersList.map((teacher, idx) => {
+        return <option key={idx}>{teacher}</option>
+    })
+
     // Студенты
     const students = [{
         "FIO": "fio1aSdad dasdasdasdasd dasfweewwgw",
@@ -141,6 +147,7 @@ function getData() {
         "groups": groups,
         "sections": sections,
         "students": students,
+        "teachers": teachers,
     };
 }
 

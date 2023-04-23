@@ -2,11 +2,13 @@ import React from "react"
 
 // тег таблицы td с параметрами
 function Td(props) {
-    if (props.show)
+    if (!props.hide)
         return <td
             className={props.className}
+            rowSpan={props.rowSpan}
+            colSpan={props.colSpan}
         >
-            {props.value}
+            {props.children}
         </td>
 }
 

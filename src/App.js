@@ -2,17 +2,17 @@ import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import View1 from './view1/view1';
-import View2 from './view2/view2';
-import View3 from './view3/view3';
-import View4 from './view4/view4';
-import View5 from './view5/view5';
-import View6 from './view6/view6';
-import View7 from './view7/view7';
-import View8 from './view8/view8';
-import View9 from './view9/view9';
+import View1 from './views/view1';
+import View2 from './views/view2';
+import View3 from './views/view3';
+import View4 from './views/view4';
+import View5 from './views/view5';
+import View6 from './views/view6';
+import View7 from './views/view7';
+import View8 from './views/view8';
+import View9 from './views/view9';
 import Links from './functions/links';
-import Test from './functions/test';
+import Test from './views/test';
 
 class App extends React.Component {
   // constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
 // import logo from './logo.svg';
 // import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import View1 from './views/view1';
 import View2 from './views/view2';
 import View3 from './views/view3';
@@ -56,7 +56,7 @@ class App extends React.Component {
       <div>
         {/* {header} */}
         <div className="content">
-          <BrowserRouter>
+          <HashRouter>
             <Routes>
               <Route path='/' element={<Links />} />
               <Route path='view1' element={<View1 />} />
@@ -69,7 +69,7 @@ class App extends React.Component {
               <Route path='view8' element={<View8 />} />
               <Route path='view9' element={<View9 />} />
             </Routes>
-          </BrowserRouter>
+          </HashRouter>
         </div>
       </div>
     );

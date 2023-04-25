@@ -1,7 +1,4 @@
-import React from "react";
-
-// тег таблицы th с параметрами
-function Th(props) {
+export default function Th(props) {
     if (!props.hide)
         return <th
             className={props.className}
@@ -11,5 +8,3 @@ function Th(props) {
             {props.children}
         </th>;
 }
-
-export default Th;

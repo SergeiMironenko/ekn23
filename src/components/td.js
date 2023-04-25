@@ -1,7 +1,4 @@
-import React from "react"
-
-// тег таблицы td с параметрами
-function Td(props) {
+export default function Td(props) {
     if (!props.hide)
         return <td
             className={props.className}
@@ -11,5 +8,3 @@ function Td(props) {
             {props.children}
         </td>
 }
-
-export default Td;

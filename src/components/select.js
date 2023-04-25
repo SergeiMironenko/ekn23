@@ -1,6 +1,4 @@
-import React from "react";
-
-function Select(props) {
+export default function Select(props) {
     const selectClassName = "form-select form-select-sm";
     return (
         <select
@@ -10,10 +8,9 @@ function Select(props) {
             onBlur={props.onBlur}
             onKeyDown={props.onKeyDown}
             autoFocus={props.autoFocus}
+            style={props.style}
         >
             {props.options}
         </select>
     )
 }
-
-export default Select;

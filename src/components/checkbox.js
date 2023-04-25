@@ -1,7 +1,4 @@
-import React from "react";
-
-// Чекбокс
-function Checkbox(props) {
+export default function Checkbox(props) {
     const checkboxFormClassName = "form-check";
     const checkboxInputClassName = "form-check-input";
     const checkboxLabelClassName = "form-check-label";
@@ -11,7 +8,7 @@ function Checkbox(props) {
             <div className={checkboxFormClassName}>
                 <input
                     type="checkbox"
-                    value={props.value}
+                    value={props.children}
                     onChange={props.onChange}
                     className={checkboxInputClassName}
                 />
@@ -22,5 +19,3 @@ function Checkbox(props) {
         </div>
     )
 }
-
-export default Checkbox;

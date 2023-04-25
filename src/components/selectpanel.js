@@ -1,8 +1,7 @@
-import React from "react";
-import Select from "./select";
+import Select from "./Select";
 
 // Выпадающий список на панели инструментов
-function SelectPanel(props) {
+export default function SelectPanel(props) {
     const selectFormClassName = "form-floating";
     const selectClassName = "form-select form-select-sm";
 
@@ -11,7 +10,7 @@ function SelectPanel(props) {
             <div className={selectFormClassName}>
                 <Select
                     value={props.value}
-                    onChange={props.change}
+                    onChange={props.onChange}
                     className={selectClassName}
                     options={props.options}
                 />
@@ -20,5 +19,3 @@ function SelectPanel(props) {
         </div>
     )
 }
-
-export default SelectPanel;

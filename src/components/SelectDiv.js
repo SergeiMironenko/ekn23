@@ -1,75 +1,49 @@
-import React from "react";
-import Select from "./select";
+import { useState } from "react";
+import Select from "./Select";
 
 // Смена div на select при изменении данных
-class SelectDiv extends React.Component {
-    constructor(props) {
-        super(props);
-        // elemIdx: 0 (div), 1 (select)
-        this.state = {
-            elemIdx: 0,
-            value: '',
-        }
-        this.changeElem = this.changeElem.bind(this);
-        this.stopFocusOnKey = this.stopFocusOnKey.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+export default function SelectDiv(props) {
+    const [value, setValue] = useState(props.children);
+    const [idx, setIdx] = useState(0);
+
+    // idx: 0 (div), 1 (input)
+    function changeIdx() {
+        setIdx(idx => (idx + 1) % 2);
+        props.updateMethod(props.id, value);
     }
 
-    // select <-> div
-    changeElem(event) {
-        this.setState((state, props) => ({
-            elemIdx: (state.elemIdx + 1) % 2,
-        }))
-    }
-
-    // select -> div при нажатии 'esc' или 'enter'
-    stopFocusOnKey(event) {
+    // Сценарий при нажатии "esc" или "enter"
+    function stopFocusOnKey(event) {
         if (event.keyCode === 27 || event.keyCode === 13) {
-            this.changeElem(event);
-            this.props.studentsChange(this.state.value);
+            changeIdx();
         }
     }
 
-    // Изменение выбранного значения
-    handleChange(event) {
-        this.setState({
-            value: event.target.value,
-        })
-    }
-
-    // Установка первого значения списка по умолчанию
-    componentDidMount() {
-        if (this.props.list && this.props.list.length > 0) {
-            this.setState({
-                value: this.props.list[0],
-            })
-        }
-    }
-
-    render() {
-        if (this.state.elemIdx)
-            return <div>
+    if (idx)
+        return (
+            <div>
                 <Select
-                    onBlur={this.changeElem}
-                    onKeyDown={this.stopFocusOnKey}
-                    onChange={this.handleChange}
+                    value={value}
+                    onChange={e => setValue(e.target.value)}
+                    onBlur={changeIdx}
+                    onKeyDown={stopFocusOnKey}
                     autoFocus={true}
-                    // value={this.state.value}
                     // className="form-control"
                     // style={{ minWidth: 70 }}
-                    options={this.props.list}
+                    options={props.list}
+                    style={{ "minWidth": 100 }}
                 />
             </div>
-        else
-            return <div style={{ display: "flex" }}>
+        )
+    else
+        return (
+            <div style={{ display: "flex" }}>
                 <div
                     style={{ borderBottom: "1px dashed black" }}
-                    onClick={this.changeElem}
+                    onClick={changeIdx}
                 >
-                    {this.state.value}
+                    {value}
                 </div>
             </div>
-    }
+        )
 }
-
-export default SelectDiv;

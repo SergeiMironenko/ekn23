@@ -1,7 +1,5 @@
-import React from "react";
-
 // Панель выбора студентов
-function Panel(props) {
+export default function Panel(props) {
     return (
         <div className="" >
             <div className="row">
@@ -9,7 +7,4 @@ function Panel(props) {
             </div>
         </div>
     )
-
 }
-
-export default Panel;

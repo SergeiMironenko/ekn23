@@ -1,6 +1,4 @@
-import React from "react";
-
-function Table(props) {
+export default function Table(props) {
     return (
         <table className="table table-sm table-striped table-hover">
             <thead className="table-light">
@@ -15,5 +13,3 @@ function Table(props) {
         </table>
     )
 }
-
-export default Table;

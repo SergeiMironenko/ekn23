@@ -11,8 +11,7 @@ import View6 from './views/view6';
 import View7 from './views/view7';
 import View8 from './views/view8';
 import View9 from './views/view9';
-import Links from './functions/links';
-import Test from './views/test';
+import Links from './views/links';
 
 class App extends React.Component {
   // constructor(props) {
@@ -69,7 +68,6 @@ class App extends React.Component {
               <Route path='view7' element={<View7 />} />
               <Route path='view8' element={<View8 />} />
               <Route path='view9' element={<View9 />} />
-              <Route path='test' element={<Test />} />
             </Routes>
           </BrowserRouter>
         </div>

@@ -99,7 +99,7 @@ const pairsOptions = pairs.map((pair, i) => {
 
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 213; i++) {
+for (let i = 0; i < 1065; i++) {
     studentsList.push({
         "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",
         "SEX": i % 2 === 0 ? "М" : "Ж",

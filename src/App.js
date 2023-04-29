@@ -12,6 +12,7 @@ import View7 from './views/view7';
 import View8 from './views/view8';
 import View9 from './views/view9';
 import Links from './views/links';
+// const logo = require('./NSTU_Logo_grey.png');
 
 class App extends React.Component {
   // constructor(props) {
@@ -22,7 +23,8 @@ class App extends React.Component {
     // const header =
     //   <header className="navbar navbar-default navbar-fixed-top navbar-inner">
 
-    //     <div className="container" ng-controller="mainCtl" ng-cloak>
+    //     {/* ng-cloak */}
+    //     <div className="container" ng-controller="mainCtl">
     //       <nav className="navbar navbar-fixed-top">
 
     //         <div className="container-fluid">
@@ -33,11 +35,12 @@ class App extends React.Component {
     //               <span className="icon-bar"></span>
     //               <span className="icon-bar"></span>
     //             </button>
-    //             <a className="navbar-brand" href="/"><img src="img/NSTU_Logo_grey.png" alt="img/NSTU_Logo_grey.png" /></a>
+    //             <a className="navbar-brand" href="/"><img src={logo} alt="logo" style={{ "maxWidth": 80 }} /></a>
     //           </div>
 
 
-    //           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="mainCtl" ng-cloak>
+    //           {/* ng-cloak */}
+    //           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1" ng-controller="mainCtl" >
     //             <ul className="nav navbar-nav">
     //               <li ng-repeat="x in menu">
     //                 <a href="11x.PATH22">11 x.NAME 22</a>

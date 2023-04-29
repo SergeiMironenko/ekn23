@@ -59,7 +59,7 @@ class App extends React.Component {
       <div>
         {/* {header} */}
         <div className="content">
-          <HashRouter>
+          <HashRouter >
             <Routes>
               <Route path='/' element={<Links />} />
               <Route path='/view1' element={<View1 />} />

@@ -98,7 +98,7 @@ export default function View2(props) {
             <Panel>
                 {/* Выбор года */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-2"
                     value={year}
                     onChange={e => setYear(e.target.value)}
                     options={data.yearsOptions}
@@ -116,7 +116,7 @@ export default function View2(props) {
 
                 {/* Выбор факультета */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-2"
                     value={faculty}
                     onChange={e => setFaculty(e.target.value)}
                     options={data.facultiesOptions}
@@ -134,30 +134,32 @@ export default function View2(props) {
 
                 {/* Выбор группы */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-2"
                     value={group}
                     onChange={e => setGroup(e.target.value)}
                     options={data.groupsOptions}
                     label="Группа"
                 />
 
-                {/* Чекбокс "Только мое отделение" */}
-                <Checkbox
-                    outerDivClassName="col-sm-2"
-                    onChange={() => setOnlySections(value => !value)}
-                    label="Только мое отделение"
-                >
-                    {onlySections}
-                </Checkbox>
+                <div className="col-sm-3">
+                    {/* Чекбокс "Только мое отделение" */}
+                    <Checkbox
+                        // outerDivClassName="col-sm-3"
+                        onChange={() => setOnlySections(value => !value)}
+                        label="Только мое отделение"
+                    >
+                        {onlySections}
+                    </Checkbox>
 
-                {/* Чекбокс "Показывать только нормативы" */}
-                <Checkbox
-                    outerDivClassName="col-sm-2"
-                    onChange={() => setOnlyNormatives(value => !value)}
-                    label="Показывать только нормативы"
-                >
-                    {onlyNormatives}
-                </Checkbox>
+                    {/* Чекбокс "Показывать только нормативы" */}
+                    <Checkbox
+                        // outerDivClassName="col-sm-3"
+                        onChange={() => setOnlyNormatives(value => !value)}
+                        label="Показывать только нормативы"
+                    >
+                        {onlyNormatives}
+                    </Checkbox>
+                </div>
             </Panel>
 
             {/* <!-- Список студентов --> */}

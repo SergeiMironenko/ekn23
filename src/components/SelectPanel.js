@@ -13,6 +13,7 @@ export default function SelectPanel(props) {
                     onChange={props.onChange}
                     className={selectClassName}
                     options={props.options}
+                // style={{ "minWidth": 150 }}
                 />
                 <label>{props.label}</label>
             </div>

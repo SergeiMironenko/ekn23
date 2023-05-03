@@ -43,6 +43,9 @@ export default function App() {
         </div>
       </nav>
     </header>;
+
+  // setInterval(() => { if (headerRef && headerRef.current) console.log(headerRef.current.offsetWidth); else console.log('no'); }, 2000);
+
   return (
     <div>
       {header}

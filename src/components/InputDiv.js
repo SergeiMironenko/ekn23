@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // Смена div на input при изменении данных
 export default function InputDiv(props) {
-    const [value, setValue] = useState(props.children);
+    const [value, setValue] = useState(props.value);
     const [idx, setIdx] = useState(0);
 
     // idx: 0 (div), 1 (input)
@@ -36,7 +36,7 @@ export default function InputDiv(props) {
     else
         return <div style={{ display: "flex" }}>
             <div
-                style={{ borderBottom: "1px dashed black" }}
+                style={{ borderBottom: "1px dashed black", cursor: "pointer" }}
                 onClick={changeIdx}
             >
                 {value}

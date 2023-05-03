@@ -7,15 +7,19 @@ import SelectPanel from '../components/SelectPanel';
 import Checkbox from '../components/Checkbox';
 import * as st from '../functions/data';
 import SelectDiv from '../components/SelectDiv';
+import Datepicker from '../components/Datepicker';
+import Button from '../components/Button';
+import CheckboxDiv from '../components/CheckboxDiv';
 
 export default function View6(props) {
     const [data] = useState(st.getData());
-    const [year, setYear] = useState('');
-    const [semester, setSemester] = useState('');
+    const [year, setYear] = useState(data.years[0].NAME);
+    const [semester, setSemester] = useState(data.semesters[0].NAME);
     const [faculty, setFaculty] = useState(data.faculties[0].id);
     const [course, setCourse] = useState(data.courses[0].NAME);
     const [group, setGroup] = useState(data.groups[0]);
     const [onlySportsmen, setOnlySportsmen] = useState(false);
+    const [zach, setZach] = useState("2017-06-01");
 
     const tableHead = [
         <tr key={1}>
@@ -35,6 +39,7 @@ export default function View6(props) {
             {/* ng-if="false" */}
             <Th className="align-top" rowSpan="3">Дата</Th>
             <Th className="align-top" rowSpan="3">Деканат</Th>
+            <Th className="align-top" rowSpan="3">Сам. работа</Th>
         </tr>,
         <tr key={2}>
             <Th className="align-top" rowSpan="2">Анкеты</Th>
@@ -43,7 +48,6 @@ export default function View6(props) {
             {/* ng-if="!show_oral" */}
             <Th className="align-top" rowSpan="2">Тест</Th>
             <Th className="align-top" rowSpan="2">3 вопроса</Th>
-            <Th className="align-top" rowSpan="2">Сам. работа</Th>
         </tr>,
         // ng-if="show_oral"
         <tr key={3}>
@@ -54,37 +58,41 @@ export default function View6(props) {
 
     const tableBody = Array(0);
     data.students.forEach((student, i) => {
-        if (student.FACULTET === faculty &&
+        if (student.YEAR === year &&
+            student.SEMESTER === semester &&
+            student.FACULTET === faculty &&
             student.COURSE === course &&
             student.STUDY_GROUP === group &&
             (!onlySportsmen || student.IS_SPORT === true)) {
             tableBody.push(
-                // ng-repeat="x in students" ng-context-menu="menuStudents"
                 <tr key={i}>
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td className="col-md-1">{student.SEX}</Td>
                     <Td className="col-md-1">
-                        {<SelectDiv id={i} list={data.sectionsOptions} updateMethod={st.updateStudentSection}>{student.SECTION}</SelectDiv>}
+                        {<SelectDiv id={i} list={data.sectionsOptions} updateMethod={st.updateStudentSection} value={student.SECTION} />}
                     </Td>
                     <Td className="col-md-1">
-                        {<SelectDiv id={i} list={data.teachersOptions} updateMethod={st.updateStudentTeacher}>{student.PERSON}</SelectDiv>}
+                        {<SelectDiv id={i} list={data.teachersOptions} updateMethod={st.updateStudentTeacher} value={student.PERSON} />}
                     </Td>
                     <Td className="col-md-1">
                         <span className="mo_classes[x.FK_EKN_STATUS || 0]">
-                            <SelectDiv id={i} list={data.eknStatusesOptions} updateMethod={st.updateStudentEknStatus}>{student.FK_EKN_STATUS}</SelectDiv>
+                            <SelectDiv id={i} list={data.eknStatusesOptions} updateMethod={st.updateStudentEknStatus} value={student.FK_EKN_STATUS} />
                             <br />
                             {student.DATE_STATUS}
                         </span>
                         <br />
                         {/* checkbox edit */}
-                        {/* <a href="/" editable-checkbox="x.IS_SPORT" e-title="Спортсмен?" onbeforesave="updateStudentEKNStatus2($data,x.FK_STUDENT)"> */}
-                        11 x.IS_SPORT && "Спортсмен" || "-" 22
-                        {/* </a> */}
+                        <CheckboxDiv
+                            id={i}
+                            updateMethod={st.updateStudentIsSport}
+                            value={student.IS_SPORT}
+                        />
                     </Td>
                     <Td className="col-md-1">ANKETA</Td>
                     <Td className="col-md-1">TEST_RES</Td>
                     {/* ng-if="show_oral" */}
                     <Td className="col-md-1">ORAL_NAME
+                        {/* || "Не определено" */}
                         {/* <a href="/"
                                     editable-select="x.ORAL_TEST"
                                     edit-disabled="11x.CANNOT_ZACHET22"
@@ -94,6 +102,7 @@ export default function View6(props) {
                                 </a> */}
                     </Td>
                     <Td className="col-md-1">PART3_NAME
+                        {/* || "Не определено" */}
                         {/* <a href="/"
                                     editable-select="x.PART3"
                                     edit-disabled="11x.CANNOT_ZACHET22"
@@ -103,6 +112,7 @@ export default function View6(props) {
                                 </a> */}
                     </Td>
                     <Td className="col-md-1">PART4_NAME
+                        {/* || "Не определено" */}
                         {/* <a href="/"
                                     editable-select="x.PART4"
                                     edit-disabled="11x.CANNOT_ZACHET22"
@@ -112,6 +122,7 @@ export default function View6(props) {
                                 </a> */}
                     </Td>
                     <Td className="col-md-1">ZACH_PERSON
+                        {/* || "Не определено" */}
                         {/* <a href="/"
                                     editable-select="x.ZACHET"
                                     edit-disabled="11x.CANNOT_ZACHET22"
@@ -123,6 +134,7 @@ export default function View6(props) {
                     </Td>
                     {/* ng-if="false" */}
                     <Td className="col-md-1">ZACHET_DATE
+                        {/* || "Не определено" */}
                         {/* <a href="/"
                                     editable-text="x.ZACHET_DATE"
                                     onbeforesave="updateStudentZachetDate($data,x.FK_STUDENT)">
@@ -130,6 +142,7 @@ export default function View6(props) {
                                 </a> */}
                     </Td>
                     <Td className="col-md-1">DECANAT_ZACHET</Td>
+                    <Td>???</Td>
                 </tr>
             );
         }
@@ -166,14 +179,6 @@ export default function View6(props) {
                     label="Факультет"
                 />
 
-                {/* Чекбокс "Только спортсмены" */}
-                <Checkbox
-                    outerDivClassName="col-sm-2"
-                    value={onlySportsmen}
-                    onChange={() => setOnlySportsmen(value => !value)}
-                    label="Только спортсмены"
-                />
-
                 {/* Выбор курса */}
                 <SelectPanel
                     outerDivClassName="col-sm-1"
@@ -191,21 +196,33 @@ export default function View6(props) {
                     options={data.groupsOptions}
                     label="Группа"
                 />
+
+                <div className="col-sm-3">
+                    {/* Дата зачета для группы */}
+                    {/* Из выбора даты вызывается zach_to_dec() */}
+                    <Datepicker
+                        // outerDivClassName="col-sm-2"
+                        value={zach}
+                        onChange={e => setZach(e.target.value)}
+                        label="Дата зачета"
+                    />
+
+                    {/* Чекбокс "Только спортсмены" */}
+                    <Checkbox
+                        // outerDivClassName="col-sm-2"
+                        onChange={() => setOnlySportsmen(value => !value)}
+                        label="Только спортсмены"
+                    >
+                        {onlySportsmen}
+                    </Checkbox>
+                </div>
+
+                {/* load_test() */}
+                <Button
+                    outerDivClassName="col-sm-1"
+                    value="Тесты"
+                />
             </Panel>
-            <div>Дата зачета для группы:</div>
-            {/* <div ng-if="students[0].IS_ZAM_DEC">
-                    Дата зачета для группы:
-                    <a href="/"
-                        editable-date="zachet_date"
-                        onbeforesave="set_zachet_date($data)">
-                        11 (zachet_date || "Не определено") | date:'yyyy.MM.dd' 22
-                    </a>
-                    <button className="btn btn-success" ng-click="zach_to_dec()">Принять</button>
-                </div> */}
-            <div>Тесты</div>
-            {/* <div ng-if="is_admin">
-                    <button className="btn btn-success" ng-click="load_test()">Тесты</button>
-                </div> */}
 
             {/* Список студентов */}
             <Table thead={tableHead} tbody={tableBody} />

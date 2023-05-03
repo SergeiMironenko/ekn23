@@ -8,6 +8,8 @@ import Td from '../components/Td';
 import Th from '../components/Th';
 import SelectDiv from '../components/SelectDiv';
 import InputDiv from '../components/InputDiv';
+import Datepicker from '../components/Datepicker';
+import Button from '../components/Button';
 
 export default function View9(props) {
     const [data] = useState(st.getData());
@@ -18,6 +20,7 @@ export default function View9(props) {
     const [group, setGroup] = useState('');
     const [onlyResults, setOnlyResults] = useState(false);
     const [onlySportsmen, setOnlySportsmen] = useState(false);
+    const [zach, setZach] = useState("2017-06-01");
 
     const tableHead =
         <tr>
@@ -87,7 +90,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentAttend}>{student.ATTEND}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentAttend} value={student.ATTEND || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_referat && !only_sections" */}
@@ -95,7 +98,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentReferat}>{student.REFERAT}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentReferat} value={student.REFERAT || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_normative1 && !only_sections" */}
@@ -103,7 +106,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentNormative1}>{student.NORMATIVE1}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentNormative1} value={student.NORMATIVE1 || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_normative2 && !only_sections" */}
@@ -111,7 +114,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentNormative2}>{student.NORMATIVE2}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentNormative2} value={student.NORMATIVE2 || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_ekn_ball && !only_sections" */}
@@ -119,7 +122,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentEknBall}>{student.EKN_BALL}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentEknBall} value={student.EKN_BALL || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_gto_ball && !only_sections" */}
@@ -127,7 +130,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentGTOBall}>{student.GTO_BALL}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentGTOBall} value={student.GTO_BALL || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_theory && !only_sections" */}
@@ -135,7 +138,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentTheory}>{student.THEORY}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentTheory} value={student.THEORY || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_test_ball  && !only_sections" */}
@@ -143,7 +146,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentTest}>{student.TEST}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentTest} value={student.TEST || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_compl_ball && !only_sections" */}
@@ -151,7 +154,7 @@ export default function View9(props) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} updateMethod={st.updateStudentComplex}>{student.COMPLEX}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentComplex} value={student.COMPLEX || "Не определено"} />
                     </Td>
 
                     {/* ng-if="showg_admit" */}
@@ -163,7 +166,7 @@ export default function View9(props) {
                     <Td hide={onlyResults} className="col-md-1" >TOTAL</Td>
 
                     <Td className="col-md-1">
-                        <InputDiv id={i} updateMethod={st.updateStudentAllBalls}>{student.ALL_BALLS}</InputDiv>
+                        <InputDiv id={i} updateMethod={st.updateStudentAllBalls} value={student.ALL_BALLS || "Не определено"} />
                     </Td>
 
                     <Td className="col-md-1">
@@ -193,7 +196,7 @@ export default function View9(props) {
 
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-1"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
                     options={data.semestersOptions}
@@ -207,14 +210,6 @@ export default function View9(props) {
                     onChange={e => setFaculty(e.target.value)}
                     options={data.facultiesOptions}
                     label="Факультет"
-                />
-
-                {/* Чекбокс "Только спортсмены" */}
-                <Checkbox
-                    outerDivClassName="col-sm-2"
-                    value={onlySportsmen}
-                    onChange={() => setOnlySportsmen(value => !value)}
-                    label="Только спортсмены"
                 />
 
                 {/* Выбор курса */}
@@ -235,30 +230,36 @@ export default function View9(props) {
                     label="Группа"
                 />
 
-                {/* Чекбокс "Только итоги" */}
-                <Checkbox
-                    outerDivClassName="col-sm-2"
-                    value={onlyResults}
-                    onChange={() => setOnlyResults(value => !value)}
-                    label="Только итоги"
+                <div className="col-sm-3">
+                    {/* Чекбокс "Только итоги" */}
+                    <Checkbox
+                        value={onlyResults}
+                        onChange={() => setOnlyResults(value => !value)}
+                        label="Только итоги"
+                    />
+
+                    {/* Чекбокс "Только спортсмены" */}
+                    <Checkbox
+                        value={onlySportsmen}
+                        onChange={() => setOnlySportsmen(value => !value)}
+                        label="Только спортсмены"
+                    />
+                </div>
+
+                <Datepicker
+                    outerDivClassName="col-sm-3"
+                    value={zach}
+                    onChange={e => setZach(e.target.value)}
+                    label="Дата зачета"
                 />
+
+                {/* load_test() */}
+                <Button
+                    outerDivClassName="col-sm-1"
+                    value="Тесты"
+                />
+
             </Panel>
-
-            <div>дата зачета для группы</div>
-            {/* <div ng-if="students[0].IS_ZAM_DEC">
-                    Дата зачета для группы:
-                    <a href="/"
-                        editable-date="zachet_date"
-                        onbeforesave="set_zachet_date($data)">
-                        11 (zachet_date || "Не определено") | date:'yyyy.MM.dd' 22
-                    </a>
-                    <button className="btn btn-success" ng-click="zach_to_dec()">Принять</button>
-                </div> */}
-
-            <div>тесты</div>
-            {/* <div ng-if="is_admin">
-                    <button className="btn btn-success" ng-click="load_test()">Тесты</button>
-                </div> */}
 
             {/* Список студентов */}
             <Table thead={tableHead} tbody={tableBody} />

@@ -48,7 +48,9 @@ export default function View2(props) {
 
     // Заполнение массива студентов
     data.students.forEach((student, i) => {
-        if (student.FACULTET === faculty &&
+        if (student.YEAR === year &&
+            student.SEMESTER === semester &&
+            student.FACULTET === faculty &&
             student.COURSE === course &&
             student.STUDY_GROUP === group &&
             (!onlySections || student.SECTION === section)) {
@@ -66,26 +68,21 @@ export default function View2(props) {
                         hide={onlyNormatives}
                         className="col-md-1"
                     >
-                        {<SelectDiv id={i} list={data.sectionsOptions} updateMethod={st.updateStudentSection}>{student.SECTION}</SelectDiv>}
+                        {<SelectDiv id={i} list={data.sectionsOptions} updateMethod={st.updateStudentSection} value={student.SECTION || "Не определено"} />}
                     </Td>
                     <Td
                         hide={onlyNormatives}
                         className="col-md-2"
                     >
-                        {<SelectDiv id={i} list={data.teachersOptions} updateMethod={st.updateStudentTeacher}>{student.PERSON}</SelectDiv>}
+                        {<SelectDiv id={i} list={data.teachersOptions} updateMethod={st.updateStudentTeacher} value={student.PERSON || "Не определено"} />}
                     </Td>
-                    <Td
-                        className="col-md-1"
-                    // ng-if="!(x.SHOW_PRESS == 0 && n.PK == 2) && ! (x.SHOW_PODT == 0 && n.PK == 3)"
-                    >
-                        {<InputDiv id={i} updateMethod={st.updateStudentNorm1}>{student.Norm1}</InputDiv>}
-                    </Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm2}>{student.Norm2}</InputDiv>}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm3}>{student.Norm3}</InputDiv>}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm4}>{student.Norm4}</InputDiv>}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm5}>{student.Norm5}</InputDiv>}</Td>
-                    <Td className="col-md-1">{<InputDiv id={i} updateMethod={st.updateStudentH}>{student.H}</InputDiv>}</Td>
-                    <Td className="col-md-1">{<InputDiv id={i} updateMethod={st.updateStudentW}>{student.W}</InputDiv>}</Td>
+                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm1} value={student.Norm1 || "не введено"} />}</Td>
+                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm2} value={student.Norm2 || "не введено"} />}</Td>
+                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm3} value={student.Norm3 || "не введено"} />}</Td>
+                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm4} value={student.Norm4 || "не введено"} />}</Td>
+                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm5} value={student.Norm5 || "не введено"} />}</Td>
+                    <Td className="col-md-1">{<InputDiv id={i} updateMethod={st.updateStudentH} value={student.H || "не введено"} />}</Td>
+                    <Td className="col-md-1">{<InputDiv id={i} updateMethod={st.updateStudentW} value={student.W || "не введено"} />}</Td>
                     <Td className="col-md-1">{(student.W / (student.H * student.H)).toFixed(4)}</Td>
                 </tr>
             );
@@ -144,21 +141,17 @@ export default function View2(props) {
                 <div className="col-sm-3">
                     {/* Чекбокс "Только мое отделение" */}
                     <Checkbox
-                        // outerDivClassName="col-sm-3"
+                        value={onlySections}
                         onChange={() => setOnlySections(value => !value)}
                         label="Только мое отделение"
-                    >
-                        {onlySections}
-                    </Checkbox>
+                    />
 
                     {/* Чекбокс "Показывать только нормативы" */}
                     <Checkbox
-                        // outerDivClassName="col-sm-3"
+                        value={onlyNormatives}
                         onChange={() => setOnlyNormatives(value => !value)}
                         label="Показывать только нормативы"
-                    >
-                        {onlyNormatives}
-                    </Checkbox>
+                    />
                 </div>
             </Panel>
 

@@ -8,9 +8,9 @@ export default function Checkbox(props) {
             <div className={checkboxFormClassName}>
                 <input
                     type="checkbox"
-                    value={props.children}
                     onChange={props.onChange}
                     className={checkboxInputClassName}
+                    checked={props.value}
                 />
                 <label className={checkboxLabelClassName}>
                     {props.label}

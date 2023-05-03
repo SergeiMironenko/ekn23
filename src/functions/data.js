@@ -92,30 +92,35 @@ const pair2Options = pair2.map((pair2, i) => {
 })
 
 // Пары
-const pairs = ["пара 8 00", "пара 12 00"];
+const pairs = ["8:30", "12:00", "14:00"];
 const pairsOptions = pairs.map((pair, i) => {
     return <option key={i}>{pair}</option>
 })
 
+// Случайное целое число
+function getRandomInt(i) {
+    return Math.floor(Math.random() * i);
+}
+
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 1065; i++) {
+for (let i = 0; i < 105; i++) {
     studentsList.push({
         "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",
-        "SEX": i % 2 === 0 ? "М" : "Ж",
-        "SECTION": sections[i % sections.length],
-        "PERSON": teachers[i % teachers.length],
-        "Norm1": "0",
+        "SEX": getRandomInt(2) ? "М" : "Ж",
+        "SECTION": sections[getRandomInt(sections.length)],
+        "PERSON": teachers[getRandomInt(teachers.length)],
+        "Norm1": null,
         "Norm2": "0",
         "Norm3": "0",
         "Norm4": "0",
         "Norm5": "0",
         "H": "180",
         "W": "80",
-        "FK_EKN_STATUS": eknStatuses[i % eknStatuses.length],
-        "DATE_STATUS": "data format",
-        "IS_SPORT": i % 2 === 0 ? true : false,
-        "IS_DIST": i % 2 === 0 ? false : true,
+        "FK_EKN_STATUS": eknStatuses[getRandomInt(eknStatuses.length)],
+        "DATE_STATUS": "DATE_STATUS",
+        "IS_SPORT": getRandomInt(3) ? true : false,
+        "IS_DIST": getRandomInt(2) ? false : true,
         "PAYM": "paym",
         "ATTEND": 0,
         "REFERAT": 0,
@@ -126,19 +131,21 @@ for (let i = 0; i < 1065; i++) {
         "THEORY": 0,
         "TEST": 0,
         "COMPLEX": 0,
-        "ADMIT": admits[i % admits.length],
+        "ADMIT": admits[getRandomInt(admits.length)],
         "ALL_BALLS": 0,
-        "ZACHET_NAME": zachetNames[i % zachetNames.length],
+        "ZACHET_NAME": zachetNames[getRandomInt(zachetNames.length)],
         "FINAL_ZACHET_NAME": "FINAL_ZACHET_NAME",
         "DECANAT_ZACHET": "DECANAT_ZACHET",
         "EMAIL": "EMAIL",
-        "PAIR1": pair1[i % pair1.length],
-        "PAIR2": pair2[i % pair2.length],
-        "FACULTET": faculties[i % faculties.length].id,
-        "COURSE": courses[i % courses.length].NAME,
-        "STUDY_GROUP": groups[i % groups.length],
+        "PAIR1": pairs[getRandomInt(pairs.length)],
+        "PAIR2": pairs[getRandomInt(pairs.length)],
+        "FACULTET": faculties[getRandomInt(faculties.length)].id,
+        "COURSE": courses[getRandomInt(courses.length)].NAME,
+        "STUDY_GROUP": groups[getRandomInt(groups.length)],
         "WEEK_MARK_7": 2,
         "WEEK_MARK_12": 2,
+        "YEAR": years[getRandomInt(years.length)].NAME,
+        "SEMESTER": semesters[getRandomInt(semesters.length)].NAME,
     })
 }
 

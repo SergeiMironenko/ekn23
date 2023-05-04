@@ -13,11 +13,11 @@ import Button from '../components/Button';
 
 export default function View9(props) {
     const [data] = useState(st.getData());
-    const [year, setYear] = useState('');
-    const [semester, setSemester] = useState('');
-    const [faculty, setFaculty] = useState('');
-    const [course, setCourse] = useState('');
-    const [group, setGroup] = useState('');
+    const [year, setYear] = useState(data.years[0].NAME);
+    const [semester, setSemester] = useState(data.semesters[0].NAME);
+    const [faculty, setFaculty] = useState(data.faculties[0].id);
+    const [course, setCourse] = useState(data.courses[0].NAME);
+    const [group, setGroup] = useState(data.groups[0]);
     const [onlyResults, setOnlyResults] = useState(false);
     const [onlySportsmen, setOnlySportsmen] = useState(false);
     const [zach, setZach] = useState("2017-06-01");
@@ -54,31 +54,37 @@ export default function View9(props) {
             <Th hide={onlyResults}>Всего</Th>
             <Th>Баллы</Th>
             <Th>Зачет</Th>
-            <Th>Итоговый зачет</Th>
+            {/* <Th>Итоговый зачет</Th> */}
             <Th>Пред. сем.</Th>
             {/* ng-if="showg_email" */}
-            <Th>e-mail</Th>
+            {/* <Th>e-mail</Th> */}
         </tr>;
 
     const tableBody = Array(0);
     data.students.forEach((student, i) => {
-        if (!onlySportsmen)  // проверка отдельного студента, является ли он спортсменом
+        if (student.YEAR === year &&
+            student.SEMESTER === semester &&
+            student.FACULTET === faculty &&
+            student.COURSE === course &&
+            student.STUDY_GROUP === group &&
+            !onlySportsmen)  // проверка отдельного студента, является ли он спортсменом
             tableBody.push(
                 <tr key={i}>
                     {/* ng-if="x.RN==1" для 4 следующих,  ng-if="only_sport" для 1 следующей */}
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td className="col-md-1">{student.SEX}</Td>
-                    <Td className="col-md-1">???
+                    <Td className="col-md-1">
                         <div ng-if="x.RN==1">
                             <span className="mo_classes[x.FK_EKN_STATUS || 0]">
-                                <SelectDiv id={i} list={data.eknStatusesOptions} updateMethod={st.updateStudentEknStatus}>{student.FK_EKN_STATUS}</SelectDiv>
-                                <br />
+                                <SelectDiv id={i} list={data.eknStatusesOptions} updateMethod={st.updateStudentEknStatus} value={student.FK_EKN_STATUS || "Не определено"} />
+                                {/* <br /> */}
                                 {student.DATE_STATUS}
                             </span>
                             <br />
                             {/* CheckboxDiv */}
-                            {student.IS_SPORT}
-                            {student.IS_DIST}
+                            {student.IS_SPORT ? "Спортсмен" : "-"}
+                            <br />
+                            {student.IS_DIST ? "Дист." : "-"}
                         </div>
                     </Td>
                     <Td className="col-md-1">{student.SECTION || "Не определено"}</Td>
@@ -173,10 +179,10 @@ export default function View9(props) {
                         <SelectDiv id={i} list={data.zachetNamesOptions} updateMethod={st.updateStudentZachet}>{student.ZACHET_NAME}</SelectDiv>
                     </Td>
 
-                    <Td className="col-md-1">{student.FINAL_ZACHET_NAME}</Td>
+                    {/* <Td className="col-md-1">{student.FINAL_ZACHET_NAME}</Td> */}
                     <Td className="col-md-1">{student.DECANAT_ZACHET}</Td>
                     {/* ng-if="showg_email" */}
-                    <Td className="col-md-1">{student.EMAIL}</Td>
+                    {/* <Td className="col-md-1">{student.EMAIL}</Td> */}
                 </tr>
             );
     });

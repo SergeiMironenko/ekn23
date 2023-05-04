@@ -28,14 +28,24 @@ export default function View7(props) {
             <Th>Пол</Th>
             <Th>Статус</Th>
             <Th>Зачёт</Th>
-            <Th>Оплата</Th>
             {/* <th rowspan="1">Написал письмо</th> */}
             <Th>Действия</Th>
             <Th>К.Н. 7</Th>
             <Th>К.Н. 12</Th>
+            <Th>Оплата</Th>
         </tr>
 
     const tableBody = Array(0);
+
+    function comp(a, b) {
+        if (a > b) return 1;
+        else if (a < b) return -1;
+        return 0;
+    }
+
+    data.students.sort(function (a, b) {
+        return comp(a.FACULTET, b.FACULTET) || comp(a.COURSE, b.COURSE) || comp(a.STUDY_GROUP, b.STUDY_GROUP);
+    });
 
     data.students.forEach((student, i) => {
         if (student.FIO.toLowerCase().match(search.toLowerCase()) &&
@@ -43,8 +53,7 @@ export default function View7(props) {
             student.SECTION === section &&
             (student.PAIR1 === pair || student.PAIR2 === pair)) {
             tableBody.push(
-                <tr key={i}>
-                    {/* RN */}
+                <tr key={i} className={(() => { if (tableBody.length === 0 && false) return "table-danger" })()}>
                     <Td className="col-md-1">{i + 1}</Td>
                     <Td className="col-md-1">
                         <SelectDiv id={i} list={data.pairsOptions} updateMethod={st.updateStudentPair1} value={student.PAIR1} />
@@ -58,11 +67,10 @@ export default function View7(props) {
                         <a href={"https://www.nstu.ru/studies/schedule/schedule_classes/schedule?group=" + student.STUDY_GROUP}>{student.STUDY_GROUP}</a>
                     </Td>
                     <Td className="col-md-2">{student.FIO}</Td>
-                    <Td className="col-md-2">{student.IS_DIST ? "да" : "нет"}</Td>
+                    <Td className="col-md-2">{student.IS_DIST ? "Дист." : "-"}</Td>
                     <Td className="col-md-1">{student.SEX}</Td>
                     <Td className="col-md-1">{student.FK_EKN_STATUS}</Td>
                     <Td className="col-md-1">ZACHET</Td>
-                    <Td className="col-md-1">{student.PAYM}</Td>
                     {/* <td className="col-md-1">11 x.LETTER 22</td> */}
                     <Td className="col-md-1">
                         ???
@@ -71,6 +79,11 @@ export default function View7(props) {
                     </Td>
                     <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
                     <Td className="col-md-1">{student.WEEK_MARK_12}</Td>
+                    <Td className="col-md-1">
+                        {student.PAY_SUMM}
+                        <br />
+                        {student.PAY_DATE}
+                    </Td>
                 </tr>
             );
         }

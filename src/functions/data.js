@@ -104,9 +104,9 @@ function getRandomInt(i) {
 
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 105; i++) {
+for (let i = 0; i < 1056; i++) {
     studentsList.push({
-        "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",
+        "FIO": "fio " + Math.floor(i / 2) + " aSdad dasdasdasdasd dasfweewwgw",
         "SEX": getRandomInt(2) ? "М" : "Ж",
         "SECTION": sections[getRandomInt(sections.length)],
         "PERSON": teachers[getRandomInt(teachers.length)],
@@ -118,10 +118,11 @@ for (let i = 0; i < 105; i++) {
         "H": "180",
         "W": "80",
         "FK_EKN_STATUS": eknStatuses[getRandomInt(eknStatuses.length)],
-        "DATE_STATUS": "DATE_STATUS",
+        "DATE_STATUS": "01.05.2023",
         "IS_SPORT": getRandomInt(3) ? true : false,
         "IS_DIST": getRandomInt(2) ? false : true,
-        "PAYM": "paym",
+        "PAY_SUMM": 299,
+        "PAY_DATE": "01.05.2023",
         "ATTEND": 0,
         "REFERAT": 0,
         "NORMATIVE1": 1,
@@ -145,7 +146,7 @@ for (let i = 0; i < 105; i++) {
         "WEEK_MARK_7": 2,
         "WEEK_MARK_12": 2,
         "YEAR": years[getRandomInt(years.length)].NAME,
-        "SEMESTER": semesters[getRandomInt(semesters.length)].NAME,
+        "SEMESTER": semesters[i % semesters.length].NAME,
     })
 }
 

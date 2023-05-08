@@ -97,6 +97,12 @@ const pairsOptions = pairs.map((pair, i) => {
     return <option key={i}>{pair}</option>
 })
 
+// Зачет
+const zachets = ["да", "нет", "не определено"];
+const zachetsOptions = zachets.map((zachet, i) => {
+    return <option key={i}>{zachet}</option>
+})
+
 // Случайное целое число
 function getRandomInt(i) {
     return Math.floor(Math.random() * i);
@@ -104,7 +110,7 @@ function getRandomInt(i) {
 
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 1056; i++) {
+for (let i = 0; i < 106; i++) {
     studentsList.push({
         "FIO": "fio " + Math.floor(i / 2) + " aSdad dasdasdasdasd dasfweewwgw",
         "SEX": getRandomInt(2) ? "М" : "Ж",
@@ -139,7 +145,9 @@ for (let i = 0; i < 1056; i++) {
         "DECANAT_ZACHET": "DECANAT_ZACHET",
         "EMAIL": "EMAIL",
         "PAIR1": pairs[getRandomInt(pairs.length)],
+        "HAVE_PAIR1": getRandomInt(2) ? true : false,
         "PAIR2": pairs[getRandomInt(pairs.length)],
+        "HAVE_PAIR2": getRandomInt(2) ? true : false,
         "FACULTET": faculties[getRandomInt(faculties.length)].id,
         "COURSE": courses[getRandomInt(courses.length)].NAME,
         "STUDY_GROUP": groups[getRandomInt(groups.length)],
@@ -147,6 +155,8 @@ for (let i = 0; i < 1056; i++) {
         "WEEK_MARK_12": 2,
         "YEAR": years[getRandomInt(years.length)].NAME,
         "SEMESTER": semesters[i % semesters.length].NAME,
+        "ZACHET": zachets[getRandomInt(zachets.length)],
+        "ZACHET_DATE": "date",  // НАСТРОИТЬ ФОРМАТ ДАТЫ и ВРЕМЕНИ
     })
 }
 
@@ -171,6 +181,7 @@ function getData() {
         "pair1": pair1,
         "pair2": pair2,
         "pairs": pairs,
+        "zachets": zachets,
 
         "yearsOptions": yearsOptions,
         "semestersOptions": semestersOptions,
@@ -186,6 +197,7 @@ function getData() {
         "pair1Options": pair1Options,
         "pair2Options": pair2Options,
         "pairsOptions": pairsOptions,
+        "zachetsOptions": zachetsOptions,
     };
 }
 
@@ -371,8 +383,8 @@ function updateStudentAllBalls(i, ALL_BALLS) {
     })
 }
 
-function updateStudentZachet(i, ZACHET_NAME) {
-    students[i].ZACHET_NAME = ZACHET_NAME;
+function updateStudentZachet(i, ZACHET) {
+    students[i].ZACHET = ZACHET;
     studentsOptions = students.map((student, i) => {
         return <option key={i}>{student}</option>
     })
@@ -388,6 +400,21 @@ function updateStudentPair1(i, PAIR1) {
 function updateStudentPair2(i, PAIR2) {
     students[i].PAIR2 = PAIR2;
     studentsOptions = students.map((student, i) => {
+        return <option key={i}>{student}</option>
+    })
+}
+
+function updateZachet(i, ZACHET) {
+    students[i].ZACHET = ZACHET;
+    students.options = students.map((student, i) => {
+        return <option key={i}>{student}</option>
+    })
+}
+
+function update2(i, HAVE_PAIR1) {
+    console.log("asd");
+    students[i].HAVE_PAIR1 = HAVE_PAIR1;
+    students.options = students.map((student, i) => {
         return <option key={i}>{student}</option>
     })
 }
@@ -423,4 +450,6 @@ export {
     updateStudentZachet,
     updateStudentPair1,
     updateStudentPair2,
+    updateZachet,
+    update2,
 };

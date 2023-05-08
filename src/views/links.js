@@ -10,6 +10,7 @@ export default function Links(props) {
             <li className="nav-item"><a href="#/view7" className="nav-link">view7(Запись студентов)</a></li>
             {/* <li><a href="/#/view8">view8</a></li> */}
             <li className="nav-item"><a href="#/view9" className="nav-link">view9(Ведомости)</a></li>
+            <li className="nav-item"><a href="#/test" className="nav-link">test</a></li>
         </ul>
     )
 }

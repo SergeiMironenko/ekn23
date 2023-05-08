@@ -11,9 +11,15 @@ import View7 from './views/view7';
 import View8 from './views/view8';
 import View9 from './views/view9';
 import Links from './views/links';
+import Test from './views/test';
+import { useState } from 'react';
+import { getData, updateData } from './functions/data2';
 const logo = require('./NSTU_Logo_grey.png');
 
 export default function App() {
+  const [data, setData] = useState(getData());
+  const [testData, setTestData] = useState({ main: [{ id: 1, dt: "root" }, { id: 2, dt: "door" }], other: 45 });
+
   const header =
     <header style={{ position: "sticky", top: 0 }}>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -54,14 +60,15 @@ export default function App() {
           <Routes>
             <Route path='/' element={<></>} />
             <Route path='/view1' element={<View1 />} />
-            <Route path='/view2' element={<View2 />} />
+            <Route path='/view2' element={<View2 data={data} setData={setData} />} />
             <Route path='/view3' element={<View3 />} />
             <Route path='/view4' element={<View4 />} />
             <Route path='/view5' element={<View5 />} />
             <Route path='/view6' element={<View6 />} />
-            <Route path='/view7' element={<View7 />} />
+            <Route path='/view7' element={<View7 data={data} setData={setData} />} />
             <Route path='/view8' element={<View8 />} />
             <Route path='/view9' element={<View9 />} />
+            <Route path='/test' element={<Test testData={testData} setTestData={setTestData} />} />
           </Routes>
         </HashRouter>
       </div>

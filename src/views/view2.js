@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import * as st from '../functions/data';
 import SelectPanel from '../components/SelectPanel';
 import Checkbox from '../components/Checkbox';
 import Th from '../components/Th';
@@ -10,16 +9,34 @@ import Table from '../components/Table';
 import Panel from '../components/Panel';
 
 
-export default function View2(props) {
-    const [data] = useState(st.getData());
-    const [year, setYear] = useState(data.years[0].NAME);
-    const [semester, setSemester] = useState(data.semesters[0].NAME);
-    const [faculty, setFaculty] = useState(data.faculties[0].id);
-    const [course, setCourse] = useState(data.courses[0].NAME);
+export default function View2({ data, setData }) {
+    const [year, setYear] = useState(data.years[0]);
+    const [semester, setSemester] = useState(data.semesters[0]);
+    const [faculty, setFaculty] = useState(data.faculties[0]);
+    const [course, setCourse] = useState(data.courses[0]);
     const [group, setGroup] = useState(data.groups[0]);
     const [onlyNormatives, setOnlyNormatives] = useState(false);
     const [onlySections, setOnlySections] = useState(false);
     const [section] = useState(data.sections[0]);
+
+    // Получение списка для select
+    function opt(list) {
+        return list.map((elem, i) => {
+            return <option key={i}>{elem}</option>
+        })
+    }
+
+    // Обновление значений
+    function upd(updKey, i) {
+        return (updValue) => {
+            setData({
+                ...data, students: data.students.map((item, idx) => {
+                    if (idx === i) return { ...item, [updKey]: updValue };
+                    else return item;
+                })
+            })
+        }
+    }
 
     // Заглавная часть таблицы
     const tableHead = [
@@ -44,18 +61,16 @@ export default function View2(props) {
     ];
 
     // Объявление массива студентов, тело таблицы
-    let tableBody = Array(0);
-
-    // Заполнение массива студентов
-    data.students.forEach((student, i) => {
-        if (student.YEAR === year &&
-            student.SEMESTER === semester &&
-            student.FACULTET === faculty &&
-            student.COURSE === course &&
-            student.STUDY_GROUP === group &&
-            (!onlySections || student.SECTION === section)) {
-            tableBody.push(
-                // ng-context-menu="menuStudents"
+    const tableBody = data.students
+        .map((student, i) => {
+            if (
+                student.YEAR === year &&
+                student.SEMESTER === semester &&
+                student.FACULTET === faculty &&
+                student.COURSE === course &&
+                student.STUDY_GROUP === group &&
+                (!onlySections || student.SECTION === section)
+            ) return (
                 <tr key={i}>
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td
@@ -68,26 +83,26 @@ export default function View2(props) {
                         hide={onlyNormatives}
                         className="col-md-1"
                     >
-                        {<SelectDiv id={i} list={data.sectionsOptions} updateMethod={st.updateStudentSection} value={student.SECTION || "Не определено"} />}
+                        <SelectDiv id={i} list={opt(data.sections)} upd={upd("SECTION", i)} value={student.SECTION} />
                     </Td>
                     <Td
                         hide={onlyNormatives}
                         className="col-md-2"
                     >
-                        {<SelectDiv id={i} list={data.teachersOptions} updateMethod={st.updateStudentTeacher} value={student.PERSON || "Не определено"} />}
+                        {<SelectDiv id={i} list={opt(data.teachers)} upd={upd("PERSON", i)} value={student.PERSON} />}
                     </Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm1} value={student.Norm1 || "не введено"} />}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm2} value={student.Norm2 || "не введено"} />}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm3} value={student.Norm3 || "не введено"} />}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm4} value={student.Norm4 || "не введено"} />}</Td>
-                    <Td>{<InputDiv id={i} updateMethod={st.updateStudentNorm5} value={student.Norm5 || "не введено"} />}</Td>
-                    <Td className="col-md-1">{<InputDiv id={i} updateMethod={st.updateStudentH} value={student.H || "не введено"} />}</Td>
-                    <Td className="col-md-1">{<InputDiv id={i} updateMethod={st.updateStudentW} value={student.W || "не введено"} />}</Td>
+                    <Td>{<InputDiv id={i} upd={upd("Norm1", i)} value={student.Norm1} />}</Td>
+                    <Td>{<InputDiv id={i} upd={upd("Norm2", i)} value={student.Norm2} />}</Td>
+                    <Td>{<InputDiv id={i} upd={upd("Norm3", i)} value={student.Norm3} />}</Td>
+                    <Td>{<InputDiv id={i} upd={upd("Norm4", i)} value={student.Norm4} />}</Td>
+                    <Td>{<InputDiv id={i} upd={upd("Norm5", i)} value={student.Norm5} />}</Td>
+                    <Td className="col-md-1">{<InputDiv id={i} upd={upd("H", i)} value={student.H} />}</Td>
+                    <Td className="col-md-1">{<InputDiv id={i} upd={upd("W", i)} value={student.W} />}</Td>
                     <Td className="col-md-1">{(student.W / (student.H * student.H)).toFixed(4)}</Td>
                 </tr>
-            );
-        }
-    });
+            )
+            else return null;
+        })
 
     return (
         <div>
@@ -98,7 +113,7 @@ export default function View2(props) {
                     outerDivClassName="col-sm-2"
                     value={year}
                     onChange={e => setYear(e.target.value)}
-                    options={data.yearsOptions}
+                    options={opt(data.years)}
                     label="Год"
                 />
 
@@ -107,7 +122,7 @@ export default function View2(props) {
                     outerDivClassName="col-sm-2"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
-                    options={data.semestersOptions}
+                    options={opt(data.semesters)}
                     label="Семестр"
                 />
 
@@ -116,7 +131,7 @@ export default function View2(props) {
                     outerDivClassName="col-sm-2"
                     value={faculty}
                     onChange={e => setFaculty(e.target.value)}
-                    options={data.facultiesOptions}
+                    options={opt(data.faculties)}
                     label="Факультет"
                 />
 
@@ -125,7 +140,7 @@ export default function View2(props) {
                     outerDivClassName="col-sm-1"
                     value={course}
                     onChange={e => setCourse(e.target.value)}
-                    options={data.coursesOptions}
+                    options={opt(data.courses)}
                     label="Курс"
                 />
 
@@ -134,7 +149,7 @@ export default function View2(props) {
                     outerDivClassName="col-sm-2"
                     value={group}
                     onChange={e => setGroup(e.target.value)}
-                    options={data.groupsOptions}
+                    options={opt(data.groups)}
                     label="Группа"
                 />
 

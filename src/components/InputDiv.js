@@ -14,7 +14,7 @@ export default function InputDiv(props) {
     function stopFocusOnKey(event) {
         if (event.keyCode === 27 || event.keyCode === 13) {
             changeIdx();
-            props.updateMethod(props.id, value);
+            props.upd?.(value || "не введено");
         }
     }
 
@@ -39,7 +39,7 @@ export default function InputDiv(props) {
                 style={{ borderBottom: "1px dashed black", cursor: "pointer" }}
                 onClick={changeIdx}
             >
-                {value}
+                {value || "не введено"}
             </div>
         </div>
 }

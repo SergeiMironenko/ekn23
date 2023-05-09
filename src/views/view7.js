@@ -69,8 +69,8 @@ export default function View7({ data, setData }) {
         if (
             student.FIO.toLowerCase().match(search.toLowerCase()) &&
             student.SEMESTER === semester &&
-            student.SECTION === section &&
-            (student.PAIR1 === pair || student.PAIR2 === pair)
+            student.SECTION === section
+            // (student.PAIR1 === pair || student.PAIR2 === pair)
         ) return (
             <tr key={i}
             // className={(() => { if (tableBody.length === 0 && false) return "table-danger" })()}
@@ -79,8 +79,8 @@ export default function View7({ data, setData }) {
                 <Td className="col-md-1">
                     <SelectDivMod1 id={i} list={opt(data.pairs)} upd={upd("PAIR1", i)} value={student.PAIR1} />
                 </Td>
-                <Td className="col-md-1">{student.PAIR1}
-                    {/* <SelectDiv id={i} list={data.pairsOptions} updateMethod={st.updateStudentPair2} value={student.PAIR2} /> */}
+                <Td className="col-md-1">
+                    <SelectDivMod1 id={i} list={opt(data.pairs)} upd={upd("PAIR2", i)} value={student.PAIR2} />
                 </Td>
                 <Td className="col-md-1">{student.FACULTET}</Td>
                 <Td className="col-md-1">{student.COURSE}</Td>
@@ -99,10 +99,8 @@ export default function View7({ data, setData }) {
                 </Td>
                 {/* <td className="col-md-1">11 x.LETTER 22</td> */}
                 <Td className="col-md-1">
-                    {/* ??? */}
-                    <button type="button" className="btn btn-primary btn-sm" onClick={() => { console.log("отмена"); upd("PAIR1", i)(""); }}>Отмена1</button>
-                    {/* <button ng-click="clkUnRec1(x.FK_STUDENT)" ng-if="x.CAN_UNREC1" ng-confirm-click="Уверены?">Отмена1</button>
-                        <button ng-click="clkUnRec2(x.FK_STUDENT)" ng-if="x.CAN_UNREC2" ng-confirm-click="Уверены?">Отмена2</button> */}
+                    <button type="button" className="btn btn-primary btn-sm" onClick={() => upd("PAIR1", i)("")}>Отмена1</button>
+                    <button type="button" className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")}>Отмена2</button>
                 </Td>
                 <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
                 <Td className="col-md-1">{student.WEEK_MARK_12}</Td>

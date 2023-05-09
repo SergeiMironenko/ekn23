@@ -20,6 +20,7 @@ export default function SelectDiv(props) {
             setIdx(idx => (idx + 1) % 2);
             props.upd?.(selectValue);
         }
+        console.log('stop');
     }
 
     if (idx)
@@ -28,7 +29,7 @@ export default function SelectDiv(props) {
                 <Select
                     value={selectValue}
                     onChange={e => setValue(e.target.value)}
-                    onBlur={changeIdx}
+                    onBlur={() => { setIdx(idx => (idx + 1) % 2); props.upd?.(selectValue); }}
                     onKeyDown={stopFocusOnKey}
                     autoFocus={true}
                     options={props.list}
@@ -42,7 +43,6 @@ export default function SelectDiv(props) {
                 <div
                     style={{ borderBottom: props.value ? "" : "1px dashed black", cursor: "pointer" }}
                     onClick={changeIdx}
-                    onChange={() => console.log('ok')}
                 >
                     {props.value || "Записать"}
                 </div>

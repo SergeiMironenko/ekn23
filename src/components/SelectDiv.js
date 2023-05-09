@@ -26,7 +26,7 @@ export default function SelectDiv(props) {
                 <Select
                     value={value}
                     onChange={e => setValue(e.target.value)}
-                    onBlur={changeIdx}
+                    onBlur={() => { changeIdx(); props.upd?.(value || "не введено"); }}
                     onKeyDown={stopFocusOnKey}
                     autoFocus={true}
                     // className="form-control"

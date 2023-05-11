@@ -15,7 +15,14 @@ export default function InputDiv(props) {
         if (event.keyCode === 27 || event.keyCode === 13) {
             changeIdx();
             props.upd?.(value || "не введено");
+        } else if (event.keyCode === 109) {
+            event.preventDefault();
         }
+    }
+
+    // Сценарий при отпускании клавиши
+    function checkNumber(event) {
+
     }
 
     if (idx)
@@ -25,11 +32,13 @@ export default function InputDiv(props) {
                     type="number"
                     onBlur={changeIdx}
                     onKeyDown={stopFocusOnKey}
+                    onKeyUp={checkNumber}
                     onChange={e => setValue(e.target.value)}
                     autoFocus
                     value={value}
                     className="form-control"
                     style={{ minWidth: 70 }}
+                    pattern="[0-9]"
                 />
             </div>
         )

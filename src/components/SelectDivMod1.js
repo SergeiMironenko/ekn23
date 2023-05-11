@@ -20,7 +20,6 @@ export default function SelectDiv(props) {
             setIdx(idx => (idx + 1) % 2);
             props.upd?.(selectValue);
         }
-        console.log('stop');
     }
 
     if (idx)

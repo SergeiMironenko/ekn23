@@ -1,16 +1,15 @@
-import { useState } from "react";
+// import { useState } from "react";
 import Checkbox from "./Checkbox";
 
 // Смена div на select при изменении данных
 export default function CheckboxDiv(props) {
-    const [value, setValue] = useState(props.value);
-    const [idx, setIdx] = useState(1);
+    // const [idx, setIdx] = useState(1);
 
     // idx: 0 (div), 1 (input)
-    function changeIdx() {
-        setIdx(idx => (idx + 1) % 2);
-        if (props.updateMethod) props.updateMethod(props.id, value);
-    }
+    // function changeIdx() {
+    //     setIdx(idx => (idx + 1) % 2);
+    //     if (props.updateMethod) props.updateMethod(props.id, value);
+    // }
 
     // Сценарий при нажатии "esc" или "enter"
     // function stopFocusOnKey(event) {
@@ -19,13 +18,13 @@ export default function CheckboxDiv(props) {
     //     }
     // }
 
-    if (idx)
+    if (true)
         return (
             <div>
                 <Checkbox
-                    onChange={() => setValue(value => { props.updateMethod(props.id, !value); return !value })}
+                    onChange={() => props.upd?.(!props.value)}
                     label="Спортсмен"
-                    value={value}
+                    value={props.value}
                 />
                 {/* <Select
                     value={value}
@@ -40,15 +39,15 @@ export default function CheckboxDiv(props) {
                 /> */}
             </div>
         )
-    else
-        return (
-            <div style={{ display: "flex" }}>
-                <div
-                    style={{ borderBottom: "1px dashed black", cursor: "pointer" }}
-                    onClick={changeIdx}
-                >
-                    {value}
-                </div>
-            </div>
-        )
+    // else
+    //     return (
+    //         <div style={{ display: "flex" }}>
+    //             <div
+    //                 style={{ borderBottom: "1px dashed black", cursor: "pointer" }}
+    //                 onClick={changeIdx}
+    //             >
+    //                 {value}
+    //             </div>
+    //         </div>
+    //     )
 }

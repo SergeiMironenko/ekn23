@@ -5,21 +5,38 @@ import Th from '../components/Th';
 import Td from '../components/Td';
 import SelectPanel from '../components/SelectPanel';
 import Checkbox from '../components/Checkbox';
-import * as st from '../functions/data';
 import SelectDiv from '../components/SelectDiv';
 import Datepicker from '../components/Datepicker';
 import Button from '../components/Button';
 import CheckboxDiv from '../components/CheckboxDiv';
 
-export default function View6(props) {
-    const [data] = useState(st.getData());
-    const [year, setYear] = useState(data.years[0].NAME);
-    const [semester, setSemester] = useState(data.semesters[0].NAME);
-    const [faculty, setFaculty] = useState(data.faculties[0].id);
-    const [course, setCourse] = useState(data.courses[0].NAME);
+export default function View6({ data, setData }) {
+    const [year, setYear] = useState(data.years[0]);
+    const [semester, setSemester] = useState(data.semesters[0]);
+    const [faculty, setFaculty] = useState(data.faculties[0]);
+    const [course, setCourse] = useState(data.courses[0]);
     const [group, setGroup] = useState(data.groups[0]);
     const [onlySportsmen, setOnlySportsmen] = useState(false);
     const [zach, setZach] = useState("2017-06-01");
+
+    // Получение списка для select
+    function opt(list) {
+        return list.map((elem, i) => {
+            return <option key={i}>{elem}</option>
+        })
+    }
+
+    // Обновление значений
+    function upd(updKey, i) {
+        return (updValue) => {
+            setData({
+                ...data, students: data.students.map((item, idx) => {
+                    if (idx === i) return { ...item, [updKey]: updValue };
+                    else return item;
+                })
+            })
+        }
+    }
 
     const tableHead = [
         <tr key={1}>
@@ -56,27 +73,28 @@ export default function View6(props) {
         </tr>
     ];
 
-    const tableBody = Array(0);
-    data.students.forEach((student, i) => {
-        if (student.YEAR === year &&
-            student.SEMESTER === semester &&
-            student.FACULTET === faculty &&
-            student.COURSE === course &&
-            student.STUDY_GROUP === group &&
-            (!onlySportsmen || student.IS_SPORT === true)) {
-            tableBody.push(
+    const tableBody = data.students
+        .map((student, i) => {
+            if (
+                student.YEAR === year &&
+                student.SEMESTER === semester &&
+                student.FACULTET === faculty &&
+                student.COURSE === course &&
+                student.STUDY_GROUP === group &&
+                (!onlySportsmen || student.IS_SPORT === true)
+            ) return (
                 <tr key={i}>
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td className="col-md-1">{student.SEX}</Td>
                     <Td className="col-md-1">
-                        {<SelectDiv id={i} list={data.sectionsOptions} updateMethod={st.updateStudentSection} value={student.SECTION} />}
+                        {<SelectDiv id={i} list={opt(data.sections)} upd={upd("SECTION", i)} value={student.SECTION} />}
                     </Td>
                     <Td className="col-md-1">
-                        {<SelectDiv id={i} list={data.teachersOptions} updateMethod={st.updateStudentTeacher} value={student.PERSON} />}
+                        {<SelectDiv id={i} list={opt(data.teachers)} upd={upd("PERSON", i)} value={student.PERSON} />}
                     </Td>
                     <Td className="col-md-1">
                         <span className="mo_classes[x.FK_EKN_STATUS || 0]">
-                            <SelectDiv id={i} list={data.eknStatusesOptions} updateMethod={st.updateStudentEknStatus} value={student.FK_EKN_STATUS} />
+                            <SelectDiv id={i} list={opt(data.eknStatuses)} upd={upd("FK_EKN_STATUS", i)} value={student.FK_EKN_STATUS} />
                             <br />
                             {student.DATE_STATUS}
                         </span>
@@ -84,7 +102,7 @@ export default function View6(props) {
                         {/* checkbox edit */}
                         <CheckboxDiv
                             id={i}
-                            updateMethod={st.updateStudentIsSport}
+                            upd={upd("IS_SPORT", i)}
                             value={student.IS_SPORT}
                         />
                     </Td>
@@ -144,9 +162,9 @@ export default function View6(props) {
                     <Td className="col-md-1">DECANAT_ZACHET</Td>
                     <Td>???</Td>
                 </tr>
-            );
-        }
-    })
+            )
+            else return null;
+        })
 
     return (
         <div>
@@ -154,10 +172,10 @@ export default function View6(props) {
             <Panel>
                 {/* Выбор года */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-2"
                     value={year}
                     onChange={e => setYear(e.target.value)}
-                    options={data.yearsOptions}
+                    options={opt(data.years)}
                     label="Год"
                 />
 
@@ -166,16 +184,16 @@ export default function View6(props) {
                     outerDivClassName="col-sm-2"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
-                    options={data.semestersOptions}
+                    options={opt(data.semesters)}
                     label="Семестр"
                 />
 
                 {/* Выбор факультета */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-2"
                     value={faculty}
                     onChange={e => setFaculty(e.target.value)}
-                    options={data.facultiesOptions}
+                    options={opt(data.faculties)}
                     label="Факультет"
                 />
 
@@ -184,16 +202,16 @@ export default function View6(props) {
                     outerDivClassName="col-sm-1"
                     value={course}
                     onChange={e => setCourse(e.target.value)}
-                    options={data.coursesOptions}
+                    options={opt(data.courses)}
                     label="Курс"
                 />
 
                 {/* Выбор группы */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-2"
                     value={group}
                     onChange={e => setGroup(e.target.value)}
-                    options={data.groupsOptions}
+                    options={opt(data.groups)}
                     label="Группа"
                 />
 
@@ -207,21 +225,21 @@ export default function View6(props) {
                         label="Дата зачета"
                     />
 
-                    {/* Чекбокс "Только спортсмены" */}
-                    <Checkbox
-                        // outerDivClassName="col-sm-2"
-                        onChange={() => setOnlySportsmen(value => !value)}
-                        label="Только спортсмены"
-                    >
-                        {onlySportsmen}
-                    </Checkbox>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        {/* Чекбокс "Только спортсмены" */}
+                        <Checkbox
+                            // outerDivClassName="col-sm-2"
+                            onChange={() => setOnlySportsmen(value => !value)}
+                            label="Только спортсмены"
+                        >
+                            {onlySportsmen}
+                        </Checkbox>
+
+                        {/* load_test() */}
+                        <Button className="btn btn-success btn-sm" onClick={() => console.log('Тесты')} value="Тесты" />
+                    </div>
                 </div>
 
-                {/* load_test() */}
-                <Button
-                    outerDivClassName="col-sm-1"
-                    value="Тесты"
-                />
             </Panel>
 
             {/* Список студентов */}

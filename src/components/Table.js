@@ -5,8 +5,12 @@ export default function Table(props) {
                 style={{ position: "sticky", top: 174 }}
             >
                 {props.thead}
+                <tr><th
+                    style={{ height: 3, padding: 0, backgroundColor: "black" }}
+                    colSpan={props.thead?.props?.children?.length || 20}
+                ></th></tr>
             </thead>
-            <tbody className="table-group-divider">
+            <tbody>
                 {props.tbody}
             </tbody>
             <tfoot>

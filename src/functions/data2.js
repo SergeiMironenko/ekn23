@@ -110,6 +110,7 @@ function getData() {
 }
 
 function updateData(_data) {
+    console.log('update');
     // data = _data;
 }
 

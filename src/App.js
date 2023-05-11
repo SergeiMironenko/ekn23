@@ -12,7 +12,7 @@ import View8 from './views/view8';
 import View9 from './views/view9';
 import Links from './views/links';
 import Test from './views/test';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getData, updateData } from './functions/data2';
 const logo = require('./NSTU_Logo_grey.png');
 
@@ -50,7 +50,11 @@ export default function App() {
       </nav>
     </header>;
 
-  // setInterval(() => { if (headerRef && headerRef.current) console.log(headerRef.current.offsetWidth); else console.log('no'); }, 2000);
+  useEffect(() => {
+    updateData(data);
+  }, [data])
+
+  console.log(data);
 
   return (
     <div>
@@ -64,7 +68,7 @@ export default function App() {
             <Route path='/view3' element={<View3 />} />
             <Route path='/view4' element={<View4 />} />
             <Route path='/view5' element={<View5 />} />
-            <Route path='/view6' element={<View6 />} />
+            <Route path='/view6' element={<View6 data={data} setData={setData} />} />
             <Route path='/view7' element={<View7 data={data} setData={setData} />} />
             <Route path='/view8' element={<View8 />} />
             <Route path='/view9' element={<View9 />} />

@@ -1,12 +1,12 @@
 export default function Button(props) {
     return (
-        <div className={props.outerDivClassName}>
-            <button
-                type="button"
-                className="btn btn-success"
-            >
-                {props.value}
-            </button>
-        </div>
+        <button
+            type="button"
+            className={props.className}
+            onClick={props.onClick}
+            style={{ '--bs-btn-padding-y': '.25rem', '--bs-btn-padding-x': '.5rem', '--bs-btn-font-size': '.75rem' }}
+        >
+            {props.value}
+        </button>
     )
 }

@@ -3,7 +3,6 @@ import Select from "./Select";
 // Выпадающий список на панели инструментов
 export default function SelectPanel(props) {
     const selectFormClassName = "form-floating";
-    const selectClassName = "form-select form-select-sm";
 
     return (
         <div className={props.outerDivClassName}>
@@ -11,9 +10,7 @@ export default function SelectPanel(props) {
                 <Select
                     value={props.value}
                     onChange={props.onChange}
-                    className={selectClassName}
                     options={props.options}
-                // style={{ "minWidth": 150 }}
                 />
                 <label>{props.label}</label>
             </div>

@@ -8,6 +8,7 @@ import SelectDiv from '../components/SelectDiv';
 import SelectDivMod1 from '../components/SelectDivMod1';
 import Input from '../components/Input';
 import Checkbox from '../components/Checkbox';
+import Button from '../components/Button';
 
 export default function View7({ data, setData }) {
     const [semester, setSemester] = useState(data.semesters[0]);
@@ -99,8 +100,8 @@ export default function View7({ data, setData }) {
                 </Td>
                 {/* <td className="col-md-1">11 x.LETTER 22</td> */}
                 <Td className="col-md-1">
-                    <button type="button" className="btn btn-primary btn-sm" onClick={() => upd("PAIR1", i)("")}>Отмена1</button>
-                    <button type="button" className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")}>Отмена2</button>
+                    <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR1", i)("")} value="Отмена1" />
+                    <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")} value="Отмена2" />
                 </Td>
                 <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
                 <Td className="col-md-1">{student.WEEK_MARK_12}</Td>
@@ -182,7 +183,10 @@ export default function View7({ data, setData }) {
             </Panel>
 
             {/* Список студентов */}
-            <Table thead={tableHead} tbody={tableBody} />
+            <Table
+                thead={tableHead}
+                tbody={tableBody}
+            />
         </div>
     )
 }

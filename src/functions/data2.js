@@ -41,7 +41,7 @@ function getRandomInt(i) {
 
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 10635; i++) {
+for (let i = 0; i < 10653; i++) {
     studentsList.push({
         "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",
         "SEX": getRandomInt(2) ? "М" : "Ж",

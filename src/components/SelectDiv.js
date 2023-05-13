@@ -20,6 +20,8 @@ export default function SelectDiv(props) {
         }
     }
 
+    const style = props.disabled ? null : { borderBottom: "1px dashed black", cursor: "pointer" };
+
     if (idx)
         return (
             <div>
@@ -40,8 +42,8 @@ export default function SelectDiv(props) {
         return (
             <div style={{ display: "flex" }}>
                 <div
-                    style={{ borderBottom: "1px dashed black", cursor: "pointer" }}
-                    onClick={changeIdx}
+                    style={style}
+                    onClick={() => { if (!props.disabled) changeIdx() }}
                 >
                     {value || "не введено"}
                 </div>

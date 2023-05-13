@@ -4,6 +4,7 @@ export default function Datepicker(props) {
             <div className="input-group input-group-sm">
                 <span className="input-group-text">{props.label}</span>
                 <input
+                    disabled={props.disabled}
                     type="date"
                     className="form-control"
                     style={{ minWidth: 80 }}

@@ -12,6 +12,8 @@ import View8 from './views/view8';
 import View9 from './views/view9';
 import Links from './views/links';
 import Test from './views/test';
+import View10 from './views/view10';
+import View11 from './views/view11';
 import { useEffect, useRef, useState } from 'react';
 import { getData, updateData } from './functions/data2';
 const logo = require('./NSTU_Logo_grey.png');
@@ -72,8 +74,10 @@ export default function App() {
                         <Route path='/view6' element={<View6 data={data} setData={setData} />} />
                         <Route path='/view7' element={<View7 data={data} setData={setData} />} />
                         <Route path='/view8' element={<View8 />} />
-                        <Route path='/view9' element={<View9 />} />
+                        <Route path='/view9' element={<View9 data={data} setData={setData} />} />
                         <Route path='/test' element={<Test testData={testData} setTestData={setTestData} />} />
+                        <Route path='/view10' element={<View10 data={data} setData={setData} />} />
+                        <Route path='/view11' element={<View11 />} />
                     </Routes>
                 </HashRouter>
             </div>

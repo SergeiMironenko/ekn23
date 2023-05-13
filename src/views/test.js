@@ -1,27 +1,24 @@
-import { useState } from "react"
-import { getData, update, show } from "../functions/testdata"
-
 export default function Test({ testData, setTestData }) {
-    const lst = testData.main.map((elem, i) => {
-        return <div key={i}>{elem.id} : {elem.dt}</div>
-    })
+    const subelem = Array(15)
+        .fill()
+        .map(
+            (el, i) =>
+                <div className="col">
+                    Col
+                </div>
+        );
 
-    function upd(updVal) {
-        return () => setTestData({
-            ...testData, main: testData.main.map((elem, i) => {
-                if (i === 1) return { ...elem, [updVal]: 'new' }
-                else return elem
-            })
-        })
-    }
+    const elem = (
+        <div className="container text-center">
+            <div className="row">
+                {subelem}
+            </div>
+        </div>
+    );
 
     return (
         <>
-            {lst}
-            <br />
-            <button onClick={upd("dt")}>
-                but
-            </button>
+            {elem}
         </>
     )
 }

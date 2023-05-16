@@ -4,6 +4,8 @@ import { useState } from "react";
 export default function InputDiv(props) {
     const [value, setValue] = useState(props.value);
     const [idx, setIdx] = useState(0);
+    const style = props.disabled ? null : { borderBottom: "1px dashed black", cursor: "pointer" };
+    const min = 0, max = 50;
 
     // idx: 0 (div), 1 (input)
     function changeIdx() {
@@ -15,42 +17,39 @@ export default function InputDiv(props) {
         if (event.keyCode === 27 || event.keyCode === 13) {
             changeIdx();
             props.upd?.(value || "не введено");
-        } else if (event.keyCode === 109) {
-            event.preventDefault();
         }
     }
 
     // Сценарий при отпускании клавиши
-    function checkNumber(event) {
-
+    function onChange(e) {
+        if (e.target.value >= min && e.target.value <= max)
+            setValue(e.target.value);
+        else
+            alert(`Значение должно быть в диапазоне от ${min} до ${max}`);
     }
 
-    const style = props.disabled ? null : { borderBottom: "1px dashed black", cursor: "pointer" };
-
-    if (idx)
-        return (
+    return (
+        idx ?
             <div>
                 <input
                     type="number"
                     onBlur={changeIdx}
                     onKeyDown={stopFocusOnKey}
-                    onKeyUp={checkNumber}
-                    onChange={e => setValue(e.target.value)}
-                    autoFocus
+                    onChange={onChange}
+                    autoFocus={true}
                     value={value}
                     className="form-control"
                     style={{ minWidth: 70 }}
-                    pattern="[0-9]"
                 />
             </div>
-        )
-    else
-        return <div style={{ display: "flex" }}>
-            <div
-                style={style}
-                onClick={() => { if (!props.disabled) changeIdx() }}
-            >
-                {value || "не введено"}
+            :
+            <div style={{ display: "flex" }}>
+                <div
+                    style={style}
+                    onClick={() => { if (!props.disabled) changeIdx() }}
+                >
+                    {value || "не введено"}
+                </div>
             </div>
-        </div>
+    )
 }

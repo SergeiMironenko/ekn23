@@ -1,15 +1,16 @@
-import { useState } from 'react';
-import Panel from '../components/Panel';
-import SelectPanel from '../components/SelectPanel';
-import Table from '../components/Table';
-import Checkbox from '../components/Checkbox';
-import Td from '../components/Td';
-import Th from '../components/Th';
-import SelectDiv from '../components/SelectDiv';
-import InputDiv from '../components/InputDiv';
-import Datepicker from '../components/Datepicker';
+// Ведомости
+import { useState } from 'react'
+import Panel from '../components/Panel'
+import SelectPanel from '../components/SelectPanel'
+import Table from '../components/Table'
+import Checkbox from '../components/Checkbox'
+import Td from '../components/Td'
+import Th from '../components/Th'
+import SelectDiv from '../components/SelectDiv'
+import InputDiv from '../components/InputDiv'
+import Datepicker from '../components/Datepicker'
 
-export default function View9({ data, setData }) {
+export default function View9({ data, setData, opt, upd }) {
     const [year, setYear] = useState(data.years[0]);
     const [semester, setSemester] = useState(data.semesters[0]);
     const [faculty, setFaculty] = useState(data.faculties[0]);
@@ -57,25 +58,6 @@ export default function View9({ data, setData }) {
             {/* ng-if="showg_email" */}
             {/* <Th>e-mail</Th> */}
         </tr>;
-
-    // Получение списка для select
-    function opt(list) {
-        return list.map((elem, i) => {
-            return <option key={i}>{elem}</option>
-        })
-    }
-
-    // Обновление значений
-    function upd(updKey, i) {
-        return (updValue) => {
-            setData({
-                ...data, students: data.students.map((item, idx) => {
-                    if (idx === i) return { ...item, [updKey]: updValue };
-                    else return item;
-                })
-            })
-        }
-    }
 
     const tableBody = Array(0);
     data.students.forEach((student, i) => {
@@ -214,7 +196,7 @@ export default function View9({ data, setData }) {
             <Panel>
                 {/* Выбор года */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={year}
                     onChange={e => setYear(e.target.value)}
                     options={opt(data.years)}
@@ -223,7 +205,7 @@ export default function View9({ data, setData }) {
 
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
                     options={opt(data.semesters)}
@@ -232,7 +214,7 @@ export default function View9({ data, setData }) {
 
                 {/* Выбор факультета */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={faculty}
                     onChange={e => setFaculty(e.target.value)}
                     options={opt(data.faculties)}
@@ -241,7 +223,7 @@ export default function View9({ data, setData }) {
 
                 {/* Выбор курса */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-auto"
                     value={course}
                     onChange={e => setCourse(e.target.value)}
                     options={opt(data.courses)}
@@ -250,14 +232,14 @@ export default function View9({ data, setData }) {
 
                 {/* Выбор группы */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={group}
                     onChange={e => setGroup(e.target.value)}
                     options={opt(data.groups)}
                     label="Группа"
                 />
 
-                <div className="col-sm-3">
+                <div className="col-sm-auto">
                     {/* Чекбокс "Только итоги" */}
                     <Checkbox
                         value={onlyResults}
@@ -275,7 +257,7 @@ export default function View9({ data, setData }) {
 
                 <Datepicker
                     disabled={onlyRead}
-                    outerDivClassName="col-sm-3"
+                    outerDivClassName="col-sm-auto"
                     value={zach}
                     onChange={e => setZach(e.target.value)}
                     label="Дата зачета"

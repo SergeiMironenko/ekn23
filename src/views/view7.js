@@ -1,3 +1,4 @@
+// Запись студентов
 import { useState } from 'react';
 import SelectPanel from '../components/SelectPanel';
 import Td from '../components/Td';
@@ -10,7 +11,7 @@ import Input from '../components/Input';
 import Checkbox from '../components/Checkbox';
 import Button from '../components/Button';
 
-export default function View7({ data, setData }) {
+export default function View7({ data, setData, opt, upd }) {
     const [semester, setSemester] = useState(data.semesters[0]);
     const [section, setSection] = useState(data.sections[0]);
     const [pair, setPair] = useState(data.pairs[0]);
@@ -41,25 +42,6 @@ export default function View7({ data, setData }) {
         if (a > b) return 1;
         else if (a < b) return -1;
         return 0;
-    }
-
-    // Получение списка для select
-    function opt(list) {
-        return list.map((elem, i) => {
-            return <option key={i}>{elem}</option>
-        })
-    }
-
-    // Обновление значений
-    function upd(updKey, i) {
-        return (updValue) => {
-            setData({
-                ...data, students: data.students.map((item, idx) => {
-                    if (idx === i) return { ...item, [updKey]: updValue };
-                    else return item;
-                })
-            })
-        }
     }
 
     data.students.sort(function (a, b) {
@@ -138,7 +120,7 @@ export default function View7({ data, setData }) {
             <Panel>
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
                     options={opt(data.semesters)}
@@ -147,7 +129,7 @@ export default function View7({ data, setData }) {
 
                 {/* Выбор направления (отделения) */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={section}
                     onChange={e => setSection(e.target.value)}
                     options={opt(data.sections)}
@@ -156,7 +138,7 @@ export default function View7({ data, setData }) {
 
                 {/* Выбор пары */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={pair}
                     onChange={e => setPair(e.target.value)}
                     options={opt(data.pairs)}
@@ -164,7 +146,7 @@ export default function View7({ data, setData }) {
                 />
 
                 {/* Поиск */}
-                <div className="col-sm-4">
+                <div className="col-sm-auto">
                     <div className="input-group input-group-sm">
                         <span className="input-group-text">Поиск по ФИО</span>
                         {/* <input type="text" class="form-control" onChange={e => setSearch(e.target.value)} /> */}

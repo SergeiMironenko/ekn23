@@ -1,6 +1,8 @@
 // import logo from './logo.svg';
 // import './App.css';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import Links from './views/links';
+import Test from './views/test';
 import View1 from './views/view1';
 import View2 from './views/view2';
 import View3 from './views/view3';
@@ -10,19 +12,17 @@ import View6 from './views/view6';
 import View7 from './views/view7';
 import View8 from './views/view8';
 import View9 from './views/view9';
-import Links from './views/links';
-import Test from './views/test';
 import View10 from './views/view10';
 import View11 from './views/view11';
 import { useEffect, useRef, useState } from 'react';
-import { getData, updateData } from './functions/data2';
+import { getData, updateData } from './functions/data';
 const logo = require('./NSTU_Logo_grey.png');
 
 export default function App() {
     const [data, setData] = useState(getData());
     const [testData, setTestData] = useState({ main: [{ id: 1, dt: "root" }, { id: 2, dt: "door" }], other: 45 });
 
-    const header =
+    const header = (
         <header style={{ position: "sticky", top: 0 }}>
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
@@ -50,7 +50,8 @@ export default function App() {
                     </div>
                 </div>
             </nav>
-        </header>;
+        </header>
+    )
 
     let firstRender = useRef(true);
     useEffect(() => {
@@ -59,6 +60,25 @@ export default function App() {
         else firstRender.current = false;
     }, [data])
 
+    // Получение списка для select
+    function opt(list) {
+        return list.map((elem, i) => {
+            return <option key={i}>{elem}</option>
+        })
+    }
+
+    // Обновление значений
+    function upd(updKey, i) {
+        return (updValue) => {
+            setData({
+                ...data, students: data.students.map((item, idx) => {
+                    if (idx === i) return { ...item, [updKey]: updValue };
+                    else return item;
+                })
+            })
+        }
+    }
+
     return (
         <div>
             {header}
@@ -66,16 +86,16 @@ export default function App() {
                 <HashRouter>
                     <Routes>
                         <Route path='/' element={<></>} />
+                        <Route path='/test' element={<Test testData={testData} setTestData={setTestData} />} />
                         <Route path='/view1' element={<View1 />} />
-                        <Route path='/view2' element={<View2 data={data} setData={setData} />} />
+                        <Route path='/view2' element={<View2 data={data} setData={setData} opt={opt} upd={upd} />} />
                         <Route path='/view3' element={<View3 />} />
                         <Route path='/view4' element={<View4 />} />
                         <Route path='/view5' element={<View5 />} />
-                        <Route path='/view6' element={<View6 data={data} setData={setData} />} />
-                        <Route path='/view7' element={<View7 data={data} setData={setData} />} />
+                        <Route path='/view6' element={<View6 data={data} setData={setData} opt={opt} upd={upd} />} />
+                        <Route path='/view7' element={<View7 data={data} setData={setData} opt={opt} upd={upd} />} />
                         <Route path='/view8' element={<View8 />} />
-                        <Route path='/view9' element={<View9 data={data} setData={setData} />} />
-                        <Route path='/test' element={<Test testData={testData} setTestData={setTestData} />} />
+                        <Route path='/view9' element={<View9 data={data} setData={setData} opt={opt} upd={upd} />} />
                         <Route path='/view10' element={<View10 data={data} setData={setData} />} />
                         <Route path='/view11' element={<View11 />} />
                     </Routes>

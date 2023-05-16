@@ -1,4 +1,6 @@
-import { useState } from 'react';
+// Единый контрольный норматив (ЕКН)
+import React from 'react';
+import { useState, useRef, useEffect } from 'react';
 import SelectPanel from '../components/SelectPanel';
 import Checkbox from '../components/Checkbox';
 import Th from '../components/Th';
@@ -9,7 +11,7 @@ import Table from '../components/Table';
 import Panel from '../components/Panel';
 
 
-export default function View2({ data, setData }) {
+export default function View2({ data, setData, opt, upd }) {
     const [year, setYear] = useState(data.years[0]);
     const [semester, setSemester] = useState(data.semesters[0]);
     const [faculty, setFaculty] = useState(data.faculties[0]);
@@ -18,25 +20,6 @@ export default function View2({ data, setData }) {
     const [onlyNormatives, setOnlyNormatives] = useState(false);
     const [onlySections, setOnlySections] = useState(false);
     const [section] = useState(data.sections[0]);
-
-    // Получение списка для select
-    function opt(list) {
-        return list.map((elem, i) => {
-            return <option key={i}>{elem}</option>
-        })
-    }
-
-    // Обновление значений
-    function upd(updKey, i) {
-        return (updValue) => {
-            setData({
-                ...data, students: data.students.map((item, idx) => {
-                    if (idx === i) return { ...item, [updKey]: updValue };
-                    else return item;
-                })
-            })
-        }
-    }
 
     // Заглавная часть таблицы
     const tableHead = [
@@ -104,13 +87,27 @@ export default function View2({ data, setData }) {
             else return null;
         })
 
+    const [height, setHeight] = useState(0);
+    const refPanel = useRef(null);
+
+    useEffect(() => {
+        setHeight(refPanel.current?.clientHeight);
+    }, [height]);
+
+    const PanelWithRef = React.createRef((props, ref) => {
+        <Panel ref={ref}>
+            {props.children}
+        </Panel>
+    })
+
     return (
         <div>
+            {/* '{height}' */}
             {/* <!-- Панель выбора студентов --> */}
             <Panel>
                 {/* Выбор года */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={year}
                     onChange={e => setYear(e.target.value)}
                     options={opt(data.years)}
@@ -119,7 +116,7 @@ export default function View2({ data, setData }) {
 
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
                     options={opt(data.semesters)}
@@ -128,7 +125,7 @@ export default function View2({ data, setData }) {
 
                 {/* Выбор факультета */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={faculty}
                     onChange={e => setFaculty(e.target.value)}
                     options={opt(data.faculties)}
@@ -137,7 +134,7 @@ export default function View2({ data, setData }) {
 
                 {/* Выбор курса */}
                 <SelectPanel
-                    outerDivClassName="col-sm-1"
+                    outerDivClassName="col-sm-auto"
                     value={course}
                     onChange={e => setCourse(e.target.value)}
                     options={opt(data.courses)}
@@ -146,14 +143,14 @@ export default function View2({ data, setData }) {
 
                 {/* Выбор группы */}
                 <SelectPanel
-                    outerDivClassName="col-sm-2"
+                    outerDivClassName="col-sm-auto"
                     value={group}
                     onChange={e => setGroup(e.target.value)}
                     options={opt(data.groups)}
                     label="Группа"
                 />
 
-                <div className="col-sm-3">
+                <div className="col-sm-auto">
                     {/* Чекбокс "Только мое отделение" */}
                     <Checkbox
                         value={onlySections}
@@ -165,7 +162,7 @@ export default function View2({ data, setData }) {
                     <Checkbox
                         value={onlyNormatives}
                         onChange={() => setOnlyNormatives(value => !value)}
-                        label="Показывать только нормативы"
+                        label="Только нормативы"
                     />
                 </div>
             </Panel>

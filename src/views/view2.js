@@ -72,7 +72,7 @@ export default function View2({ data, setData, opt, upd }) {
                         hide={onlyNormatives}
                         className="col-md-2"
                     >
-                        {<SelectDiv id={i} list={opt(data.teachers)} upd={upd("PERSON", i)} value={student.PERSON} />}
+                        {<SelectDiv id={i} list={opt(data.teachers, "FIO")} upd={upd("PERSON", i)} value={student.PERSON.FIO} />}
                     </Td>
                     <Td>{<InputDiv id={i} upd={upd("Norm1", i)} value={student.Norm1} />}</Td>
                     <Td>{<InputDiv id={i} upd={upd("Norm2", i)} value={student.Norm2} />}</Td>

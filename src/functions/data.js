@@ -16,9 +16,6 @@ const groups = ["ПМ-72", "ПМ-91"];
 // Отделения
 const sections = ["Легкая атлетика", "Баскетбол"];
 
-// Преподаватели
-const teachers = ["teacher1", "teacher2"];
-
 // EKN_STATUS
 const eknStatuses = ["Осн", "Спец", "Подг", "СМГА"];
 
@@ -29,19 +26,49 @@ const eknStatuses = ["Осн", "Спец", "Подг", "СМГА"];
 // const zachetNames = ['зачет', 'незачет'];
 
 // Пары
-const pairs = ["8:30", "12:00", "14:00"];
+const pairs = [
+    { id: 0, value: "8:30" },
+    { id: 1, value: "10:15" },
+    { id: 2, value: "12:00" },
+    { id: 3, value: "14:00" },
+    { id: 4, value: "15:45" },
+    { id: 5, value: "17:30" }
+];
 
 // Зачет
 const zachets = ["да", "нет", "не определено"];
+
+// Дни недели
+const days = [
+    { id: 0, value: "пн" },
+    { id: 1, value: "вт" },
+    { id: 2, value: "ср" },
+    { id: 3, value: "чт" },
+    { id: 4, value: "пт" },
+    { id: 5, value: "сб" },
+    { id: 6, value: "вс" }
+];
 
 // Случайное целое число
 function getRandomInt(i) {
     return Math.floor(Math.random() * i);
 }
 
+
+// Преподаватели
+let teachersList = [];
+for (let i = 0; i < 2; i++) {
+    teachersList.push({
+        "FIO": "teacher " + i,
+        "DAYS": [...days].sort(() => Math.random() - 0.5).slice(getRandomInt(days.length + 1)),
+        "PAIRS": [...pairs].sort(() => Math.random() - 0.5).slice(getRandomInt(pairs.length + 1)),
+    })
+}
+const teachers = teachersList;
+
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 10653; i++) {
+for (let i = 0; i < 106; i++) {
     studentsList.push({
         "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",
         "SEX": getRandomInt(2) ? "М" : "Ж",
@@ -88,7 +115,6 @@ for (let i = 0; i < 10653; i++) {
         "ZACHET_DATE": "date",  // НАСТРОИТЬ ФОРМАТ ДАТЫ и ВРЕМЕНИ
     })
 }
-
 const students = studentsList;
 
 const data = {
@@ -103,6 +129,7 @@ const data = {
     eknStatuses: eknStatuses,
     pairs: pairs,
     zachets: zachets,
+    days: days,
 };
 
 function getData() {

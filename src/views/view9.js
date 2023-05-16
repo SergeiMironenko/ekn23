@@ -87,7 +87,7 @@ export default function View9({ data, setData, opt, upd }) {
                         </div>
                     </Td>
                     <Td className="col-md-1">{student.SECTION || "Не определено"}</Td>
-                    <Td className="col-md-1">{student.PERSON || "Не определено"}</Td>
+                    <Td className="col-md-1">{student.PERSON.FIO || "Не определено"}</Td>
                     <Td className="col-md-1">
                         {student.PAY_SUMM}
                         <br />

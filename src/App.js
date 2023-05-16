@@ -61,17 +61,19 @@ export default function App() {
     }, [data])
 
     // Получение списка для select
-    function opt(list) {
+    function opt(list, prop = null) {
+        // console.log(list, prop);
         return list.map((elem, i) => {
-            return <option key={i}>{elem}</option>
+            // console.log(elem, elem[prop]);
+            return <option key={i}>{prop ? elem[prop] : elem}</option>
         })
     }
 
     // Обновление значений
-    function upd(updKey, i) {
+    function upd(updKey, i, prop = "students") {
         return (updValue) => {
             setData({
-                ...data, students: data.students.map((item, idx) => {
+                ...data, [prop]: data[prop].map((item, idx) => {
                     if (idx === i) return { ...item, [updKey]: updValue };
                     else return item;
                 })
@@ -92,11 +94,11 @@ export default function App() {
                         <Route path='/view3' element={<View3 />} />
                         <Route path='/view4' element={<View4 />} />
                         <Route path='/view5' element={<View5 />} />
-                        <Route path='/view6' element={<View6 data={data} setData={setData} opt={opt} upd={upd} />} />
+                        {/* <Route path='/view6' element={<View6 data={data} setData={setData} opt={opt} upd={upd} />} /> */}
                         <Route path='/view7' element={<View7 data={data} setData={setData} opt={opt} upd={upd} />} />
                         <Route path='/view8' element={<View8 />} />
                         <Route path='/view9' element={<View9 data={data} setData={setData} opt={opt} upd={upd} />} />
-                        <Route path='/view10' element={<View10 data={data} setData={setData} />} />
+                        <Route path='/view10' element={<View10 data={data} setData={setData} opt={opt} upd={upd} />} />
                         <Route path='/view11' element={<View11 />} />
                     </Routes>
                 </HashRouter>

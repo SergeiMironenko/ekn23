@@ -1,45 +1,12 @@
-import { useState } from "react";
-
+// Тест
 export default function Test({ testData, setTestData }) {
-    const subelem = Array(15)
-        .fill()
-        .map(
-            (el, i) =>
-                <div key={i} className="col">
-                    Col
-                </div>
-        );
-
-    const elem = (
-        <div className="container text-center">
-            <div className="row">
-                {subelem}
-            </div>
-        </div>
-    );
-
-    const [value, setValue] = useState("");
-
-    function onKeyDown(e) {
-        // console.log(`keyDown; ${e.target.value}, ${value}`);
-        // console.log(typeof ());
-    }
-
-    function onKeyUp(e) {
-        // console.log(`keyUp; ${e.target.value}`);
-    }
-
+    const init = [10, 20, 30, 40, 50];
+    const count = Math.floor(Math.random() * (init.length + 1));
+    const elem = [...init].sort(() => Math.random() - 0.5).slice(count);
+    console.log(elem, count);
     return (
         <>
             {elem}
-            {/* <button onClick={() => { alert("ppp") }}>but</button> */}
-            <input
-                type="number"
-                onKeyDown={onKeyDown}
-                onKeyUp={onKeyUp}
-                value={value}
-                onChange={(e) => { if (e.target.value < 100) setValue(e.target.value); else console.log('if'); }}
-            />
         </>
     )
 }

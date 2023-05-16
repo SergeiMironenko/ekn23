@@ -14,7 +14,7 @@ import Button from '../components/Button';
 export default function View7({ data, setData, opt, upd }) {
     const [semester, setSemester] = useState(data.semesters[0]);
     const [section, setSection] = useState(data.sections[0]);
-    const [pair, setPair] = useState(data.pairs[0]);
+    const [pair, setPair] = useState(data.pairs[0].value);
     const [search, setSearch] = useState('');
     const [checkbox, setCheckbox] = useState(false);
 
@@ -60,10 +60,10 @@ export default function View7({ data, setData, opt, upd }) {
             >
                 <Td className="col-md-1">{i + 1}</Td>
                 <Td className="col-md-1">
-                    <SelectDivMod1 id={i} list={opt(data.pairs)} upd={upd("PAIR1", i)} value={student.PAIR1} />
+                    <SelectDivMod1 id={i} list={opt(data.pairs, "value")} upd={upd("PAIR1", i)} value={student.PAIR1.value} />
                 </Td>
                 <Td className="col-md-1">
-                    <SelectDivMod1 id={i} list={opt(data.pairs)} upd={upd("PAIR2", i)} value={student.PAIR2} />
+                    <SelectDivMod1 id={i} list={opt(data.pairs, "value")} upd={upd("PAIR2", i)} value={student.PAIR2.value} />
                 </Td>
                 <Td className="col-md-1">{student.FACULTET}</Td>
                 <Td className="col-md-1">{student.COURSE}</Td>
@@ -76,14 +76,14 @@ export default function View7({ data, setData, opt, upd }) {
                 <Td className="col-md-1">{student.FK_EKN_STATUS}</Td>
                 <Td className="col-md-1">
                     <SelectDiv id={i} list={opt(data.zachets)} upd={upd("ZACHET", i)} value={student.ZACHET} />
-                    {student.PERSON}
+                    {student.PERSON.FIO}
                     <br />
                     {student.ZACHET_DATE}
                 </Td>
                 {/* <td className="col-md-1">11 x.LETTER 22</td> */}
                 <Td className="col-md-1">
                     <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR1", i)("")} value="Отмена1" />
-                    <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")} value="Отмена2" />
+                    {/* <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")} value="Отмена2" /> */}
                 </Td>
                 <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
                 <Td className="col-md-1">{student.WEEK_MARK_12}</Td>
@@ -139,9 +139,9 @@ export default function View7({ data, setData, opt, upd }) {
                 {/* Выбор пары */}
                 <SelectPanel
                     outerDivClassName="col-sm-auto"
-                    value={pair}
+                    value={pair.value}
                     onChange={e => setPair(e.target.value)}
-                    options={opt(data.pairs)}
+                    options={opt(data.pairs, "value")}
                     label="Пара"
                 />
 

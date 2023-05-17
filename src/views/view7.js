@@ -49,10 +49,11 @@ export default function View7({ data, setData, opt, upd }) {
     });
 
     const tableBody = data.students.map((student, i) => {
+        // console.log(student.SEMESTER, semester);
         if (
-            student.FIO.toLowerCase().match(search.toLowerCase()) &&
-            student.SEMESTER === semester &&
-            student.SECTION === section
+            // student.FIO.toLowerCase().match(search.toLowerCase()) &&
+            student.SEMESTER.id === semester.id
+            // student.SECTION === section
             // (student.PAIR1 === pair || student.PAIR2 === pair)
         ) return (
             <tr key={i}
@@ -80,10 +81,9 @@ export default function View7({ data, setData, opt, upd }) {
                     <br />
                     {student.ZACHET_DATE}
                 </Td>
-                {/* <td className="col-md-1">11 x.LETTER 22</td> */}
                 <Td className="col-md-1">
                     <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR1", i)("")} value="Отмена1" />
-                    {/* <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")} value="Отмена2" /> */}
+                    <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")} value="Отмена2" />
                 </Td>
                 <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
                 <Td className="col-md-1">{student.WEEK_MARK_12}</Td>
@@ -94,7 +94,7 @@ export default function View7({ data, setData, opt, upd }) {
                 </Td>
             </tr>
         )
-        else return null;
+        else { console.log(student.SEMESTER.id, semester.id); return null; }
     })
 
     const journalAndPrint = checkbox ? "" :
@@ -123,7 +123,7 @@ export default function View7({ data, setData, opt, upd }) {
                     outerDivClassName="col-sm-auto"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
-                    options={opt(data.semesters)}
+                    options={opt(data.semesters, "value")}
                     label="Семестр"
                 />
 

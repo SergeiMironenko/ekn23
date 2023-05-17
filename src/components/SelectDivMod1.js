@@ -4,35 +4,44 @@ import Select from "./Select";
 // Смена div на select при изменении данных
 export default function SelectDiv(props) {
     const [selectValue, setValue] = useState(props.value);
-    const [idx, setIdx] = useState(0);
+    const [editMode, setEditMode] = useState(false);
 
-    // idx: 0 (div), 1 (select)
-    function changeIdx() {
-        if (!props.value) {
-            setIdx(idx => (idx + 1) % 2);
-            setValue(props.list[0]);
-        }
+    // console.log(props.list, props.upd, props.value);
+
+    // // idx: 0 (div), 1 (select)
+    // function changeIdx() {
+    //     if (!props.value) {
+    //         setIdx(idx => (idx + 1) % 2);
+    //         setValue(props.list[0]);
+    //     }
+    // }
+
+    // Сценарий при клике вне границ выпадающего списка
+    function onBlur() {
+        setEditMode(prev => !prev);
+        props.upd?.(selectValue);
     }
 
     // Сценарий при нажатии "esc" или "enter"
-    function stopFocusOnKey(event) {
+    function onKeyDown(event) {
         if (event.keyCode === 27 || event.keyCode === 13) {
-            setIdx(idx => (idx + 1) % 2);
-            props.upd?.(selectValue);
+            setEditMode(prev => !prev);
+            console.log(JSON.parse(event.target.value));
+            props.upd?.(JSON.parse(event.target.value));
         }
     }
 
-    if (idx)
+    if (editMode)
         return (
             <div>
                 <Select
-                    value={selectValue}
+                    // value={selectValue}
                     onChange={e => setValue(e.target.value)}
-                    onBlur={() => { setIdx(idx => (idx + 1) % 2); props.upd?.(selectValue); }}
-                    onKeyDown={stopFocusOnKey}
+                    onBlur={onBlur}
+                    onKeyDown={onKeyDown}
                     autoFocus={true}
                     options={props.list}
-                    style={{ "minWidth": 100 }}
+                // style={{ "minWidth": 100 }}
                 />
             </div>
         )
@@ -41,7 +50,7 @@ export default function SelectDiv(props) {
             <div style={{ display: "flex" }}>
                 <div
                     style={{ borderBottom: props.value ? "" : "1px dashed black", cursor: "pointer" }}
-                    onClick={changeIdx}
+                    onClick={() => { if (!props.value) setEditMode(prev => !prev); }}
                 >
                     {props.value || "Записать"}
                 </div>

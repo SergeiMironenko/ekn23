@@ -63,10 +63,7 @@ export default function App() {
     // Получение списка для select
     function opt(list, prop = null) {
         // console.log(list, prop);
-        return list.map((elem, i) => {
-            // console.log(elem, elem[prop]);
-            return <option key={i}>{prop ? elem[prop] : elem}</option>
-        })
+        return list.map((elem, i) => <option key={i} value={JSON.stringify(elem)} label={prop ? elem[prop] : elem} />)
     }
 
     // Обновление значений

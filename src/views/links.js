@@ -1,6 +1,6 @@
-export default function Links(props) {
+export default function Links({ className }) {
     return (
-        <ul className={props.className}>
+        <ul className={className}>
             <li className="nav-item"><a href="#/test" className="nav-link">test</a></li>
             {/* <li><a href="#/view1">view1</a></li> */}
             <li className="nav-item"><a href="#/view2" className="nav-link">view2(ЕКН)</a></li>

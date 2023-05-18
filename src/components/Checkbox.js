@@ -1,21 +1,15 @@
-export default function Checkbox(props) {
-    const checkboxFormClassName = "form-check";
-    const checkboxInputClassName = "form-check-input";
-    const checkboxLabelClassName = "form-check-label";
-
+export default function Checkbox({ value, label, onChange }) {
     return (
-        <div className={props.outerDivClassName}>
-            <div className={checkboxFormClassName}>
-                <input
-                    type="checkbox"
-                    onChange={props.onChange}
-                    className={checkboxInputClassName}
-                    checked={props.value}
-                />
-                <label className={checkboxLabelClassName}>
-                    {props.label}
-                </label>
-            </div>
+        <div className="form-check">
+            <input
+                type="checkbox"
+                onChange={onChange}
+                className="form-check-input"
+                checked={value}
+            />
+            <label className="form-check-label">
+                {label}
+            </label>
         </div>
     )
 }

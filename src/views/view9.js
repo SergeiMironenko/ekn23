@@ -10,7 +10,7 @@ import SelectDiv from '../components/SelectDiv'
 import InputDiv from '../components/InputDiv'
 import Datepicker from '../components/Datepicker'
 
-export default function View9({ data, setData, opt, upd }) {
+export default function View9({ data, getOptions, updateData }) {
     const [year, setYear] = useState(data.years[0]);
     const [semester, setSemester] = useState(data.semesters[0]);
     const [faculty, setFaculty] = useState(data.faculties[0]);
@@ -18,8 +18,7 @@ export default function View9({ data, setData, opt, upd }) {
     const [group, setGroup] = useState(data.groups[0]);
     const [onlyResults, setOnlyResults] = useState(false);
     const [onlySportsmen, setOnlySportsmen] = useState(false);
-    const [zach, setZach] = useState("2017-06-01");
-    const [onlyRead] = useState(false);
+    const [onlyRead, setOnlyRead] = useState(false);
 
     const tableHead =
         <tr>
@@ -59,23 +58,31 @@ export default function View9({ data, setData, opt, upd }) {
             {/* <Th>e-mail</Th> */}
         </tr>;
 
-    const tableBody = Array(0);
-    data.students.forEach((student, i) => {
-        if (student.YEAR === year &&
-            student.SEMESTER === semester &&
-            student.FACULTET === faculty &&
-            student.COURSE === course &&
-            student.STUDY_GROUP === group &&
-            !onlySportsmen)  // проверка отдельного студента, является ли он спортсменом
-            tableBody.push(
-                <tr key={i}>
+    const tableBody = data.students
+        .filter(student =>
+            student.YEAR.id === year.id
+            && student.SEMESTER.id === semester.id
+            && student.FACULTET.id === faculty.id
+            && student.COURSE.id === course.id
+            && student.STUDY_GROUP.id === group.id
+            && !onlySportsmen
+        )
+        .map((student, i) => {
+            return (
+                <tr key={student.ID}>
                     {/* ng-if="x.RN==1" для 4 следующих,  ng-if="only_sport" для 1 следующей */}
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td className="col-md-1">{student.SEX}</Td>
                     <Td className="col-md-1">
                         <div ng-if="x.RN==1">
                             <span className="mo_classes[x.FK_EKN_STATUS || 0]">
-                                <SelectDiv id={i} list={opt(data.eknStatuses)} upd={upd("FK_EKN_STATUS", i)} value={student.FK_EKN_STATUS || "Не определено"} disabled={onlyRead} />
+                                <SelectDiv
+                                    value={student.FK_EKN_STATUS || "Не определено"}
+                                    prop="value"
+                                    options={getOptions(data.eknStatuses, "value")}
+                                    updateData={updateData("students", student.ID, "FK_EKN_STATUS")}
+                                    disabled={onlyRead}
+                                />
                                 {/* <br /> */}
                                 {student.DATE_STATUS}
                             </span>
@@ -86,28 +93,32 @@ export default function View9({ data, setData, opt, upd }) {
                             {student.IS_DIST ? "Дист." : "-"}
                         </div>
                     </Td>
-                    <Td className="col-md-1">{student.SECTION || "Не определено"}</Td>
+                    <Td className="col-md-1">{student.SECTION.value || "Не определено"}</Td>
                     <Td className="col-md-1">{student.PERSON.FIO || "Не определено"}</Td>
                     <Td className="col-md-1">
                         {student.PAY_SUMM}
                         <br />
                         {student.PAY_DATE}
                     </Td>
-
-                    {/* ng-if="showg_attend  && !only_sections" */}
                     <Td
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("ATTEND", i)} value={student.ATTEND || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.ATTEND}
+                            updateData={updateData("students", student.ID, "ATTEND")}
+                            disabled={onlyRead}
+                        />
                     </Td>
-
-                    {/* ng-if="showg_referat && !only_sections" */}
                     <Td
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("REFERAT", i)} value={student.REFERAT || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.REFERAT}
+                            updateData={updateData("students", student.ID, "REFERAT")}
+                            disabled={onlyRead}
+                        />
                     </Td>
 
                     {/* ng-if="showg_normative1 && !only_sections" */}
@@ -115,7 +126,11 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("NORMATIVE1", i)} value={student.NORMATIVE1 || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.NORMATIVE1}
+                            updateData={updateData("students", student.ID, "NORMATIVE1")}
+                            disabled={onlyRead}
+                        />
                     </Td>
 
                     {/* ng-if="showg_normative2 && !only_sections" */}
@@ -123,7 +138,11 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("NORMATIVE2", i)} value={student.NORMATIVE2 || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.NORMATIVE2}
+                            updateData={updateData("students", student.ID, "NORMATIVE2")}
+                            disabled={onlyRead}
+                        />
                     </Td>
 
                     {/* ng-if="showg_ekn_ball && !only_sections" */}
@@ -131,7 +150,10 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("EKN_BALL", i)} value={student.EKN_BALL || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.EKN_BALL}
+                            updateData={updateData("students", student.ID, "EKN_BALL")}
+                            disabled={onlyRead} />
                     </Td>
 
                     {/* ng-if="showg_gto_ball && !only_sections" */}
@@ -139,7 +161,10 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("GTO_BALL", i)} value={student.GTO_BALL || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.GTO_BALL}
+                            updateData={updateData("students", student.ID, "GTO_BALL")}
+                            disabled={onlyRead} />
                     </Td>
 
                     {/* ng-if="showg_theory && !only_sections" */}
@@ -147,7 +172,10 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("THEORY", i)} value={student.THEORY || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.THEORY}
+                            updateData={updateData("students", student.ID, "THEORY")}
+                            disabled={onlyRead} />
                     </Td>
 
                     {/* ng-if="showg_test_ball  && !only_sections" */}
@@ -155,7 +183,10 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("TEST", i)} value={student.TEST || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.TEST}
+                            updateData={updateData("students", student.ID, "TEST")}
+                            disabled={onlyRead} />
                     </Td>
 
                     {/* ng-if="showg_compl_ball && !only_sections" */}
@@ -163,23 +194,30 @@ export default function View9({ data, setData, opt, upd }) {
                         hide={onlyResults}
                         className="col-md-1"
                     >
-                        <InputDiv id={i} upd={upd("COMPLEX", i)} value={student.COMPLEX || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.COMPLEX}
+                            updateData={updateData("students", student.ID, "COMPLEX")}
+                            disabled={onlyRead} />
                     </Td>
 
                     {/* ng-if="showg_admit" */}
                     <Td className="col-md-1">ADMIT ??
-                        {/* <SelectDiv id={i} list={opt(data.admits)} upd={upd("ADMIT", i)} value={student.ADMIT} /> */}
+                        {/* <SelectDiv id={i} list={getOptions(data.admits)} updateData={updateData("ADMIT", i)} value={student.ADMIT} /> */}
                     </Td>
 
                     {/* ng-if="!only_sections" */}
                     <Td hide={onlyResults} className="col-md-1" >TOTAL</Td>
 
                     <Td className="col-md-1">
-                        <InputDiv id={i} upd={upd("ALL_BALLS", i)} value={student.ALL_BALLS || "Не определено"} disabled={onlyRead} />
+                        <InputDiv
+                            value={student.ALL_BALLS}
+                            updateData={updateData("students", student.ID, "ALL_BALLS")}
+                            disabled={onlyRead}
+                        />
                     </Td>
 
                     <Td className="col-md-1">ZACHET_NAME
-                        {/* <SelectDiv id={i} list={data.zachetNamesOptions} upd={upd("ZACHET_NAME", i)}>{student.ZACHET_NAME}</SelectDiv> */}
+                        {/* <SelectDiv id={i} list={data.zachetNamesOptions} updateData={updateData("ZACHET_NAME", i)}>{student.ZACHET_NAME}</SelectDiv> */}
                     </Td>
 
                     {/* <Td className="col-md-1">{student.FINAL_ZACHET_NAME}</Td> */}
@@ -188,7 +226,7 @@ export default function View9({ data, setData, opt, upd }) {
                     {/* <Td className="col-md-1">{student.EMAIL}</Td> */}
                 </tr>
             );
-    });
+        });
 
     return (
         <div>
@@ -196,76 +234,79 @@ export default function View9({ data, setData, opt, upd }) {
             <Panel>
                 {/* Выбор года */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={year}
-                    onChange={e => setYear(e.target.value)}
-                    options={opt(data.years)}
                     label="Год"
+                    options={getOptions(data.years, "value")}
+                    onChange={e => setYear(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={semester}
-                    onChange={e => setSemester(e.target.value)}
-                    options={opt(data.semesters)}
                     label="Семестр"
+                    options={getOptions(data.semesters, "value")}
+                    onChange={e => setSemester(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор факультета */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={faculty}
-                    onChange={e => setFaculty(e.target.value)}
-                    options={opt(data.faculties)}
+                    options={getOptions(data.faculties, "value")}
+                    onChange={e => setFaculty(JSON.parse(e.target.value))}
                     label="Факультет"
                 />
 
                 {/* Выбор курса */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={course}
-                    onChange={e => setCourse(e.target.value)}
-                    options={opt(data.courses)}
                     label="Курс"
+                    options={getOptions(data.courses, "value")}
+                    onChange={e => setCourse(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор группы */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={group}
-                    onChange={e => setGroup(e.target.value)}
-                    options={opt(data.groups)}
                     label="Группа"
+                    options={getOptions(data.groups, "value")}
+                    onChange={e => setGroup(JSON.parse(e.target.value))}
                 />
 
                 <div className="col-sm-auto">
                     {/* Чекбокс "Только итоги" */}
                     <Checkbox
                         value={onlyResults}
-                        onChange={() => setOnlyResults(value => !value)}
                         label="Только итоги"
+                        onChange={() => setOnlyResults(value => !value)}
                     />
 
                     {/* Чекбокс "Только спортсмены" */}
                     <Checkbox
                         value={onlySportsmen}
-                        onChange={() => setOnlySportsmen(value => !value)}
                         label="Только спортсмены"
+                        onChange={() => setOnlySportsmen(value => !value)}
                     />
                 </div>
 
                 <Datepicker
-                    disabled={onlyRead}
-                    outerDivClassName="col-sm-auto"
-                    value={zach}
-                    onChange={e => setZach(e.target.value)}
+                    value={data.zach}
                     label="Дата зачета"
+                    onChange={e => updateData("zach")(e.target.value)}
+                    disabled={onlyRead}
+                />
+
+                <Checkbox
+                    value={onlyRead}
+                    label="Режим редактирования"
+                    onChange={() => setOnlyRead(prev => !prev)}
                 />
             </Panel>
 
             {/* Список студентов */}
-            <Table thead={tableHead} tbody={tableBody} />
+            <Table
+                thead={tableHead}
+                tbody={tableBody}
+            />
         </div>
     )
 }

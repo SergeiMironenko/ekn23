@@ -10,8 +10,7 @@ import SelectDiv from '../components/SelectDiv';
 import Table from '../components/Table';
 import Panel from '../components/Panel';
 
-
-export default function View2({ data, setData, opt, upd }) {
+export default function View2({ data, getOptions, updateData }) {
     const [year, setYear] = useState(data.years[0]);
     const [semester, setSemester] = useState(data.semesters[0]);
     const [faculty, setFaculty] = useState(data.faculties[0]);
@@ -45,16 +44,17 @@ export default function View2({ data, setData, opt, upd }) {
 
     // Объявление массива студентов, тело таблицы
     const tableBody = data.students
-        .map((student, i) => {
-            if (
-                student.YEAR === year &&
-                student.SEMESTER === semester &&
-                student.FACULTET === faculty &&
-                student.COURSE === course &&
-                student.STUDY_GROUP === group &&
-                (!onlySections || student.SECTION === section)
-            ) return (
-                <tr key={i}>
+        .filter(student =>
+            student.YEAR.id === year.id
+            && student.SEMESTER.id === semester.id
+            && student.FACULTET.id === faculty.id
+            && student.COURSE.id === course.id
+            && student.STUDY_GROUP.id === group.id
+            && (!onlySections || student.SECTION.id === section.id)
+        )
+        .map(student => {
+            return (
+                <tr key={student.ID}>
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td
                         hide={onlyNormatives}
@@ -66,25 +66,34 @@ export default function View2({ data, setData, opt, upd }) {
                         hide={onlyNormatives}
                         className="col-md-1"
                     >
-                        <SelectDiv id={i} list={opt(data.sections)} upd={upd("SECTION", i)} value={student.SECTION} />
+                        <SelectDiv
+                            value={student.SECTION}
+                            prop="value"
+                            options={getOptions(data.sections, "value")}
+                            updateData={updateData("students", student.ID, "SECTION")}
+                        />
                     </Td>
                     <Td
                         hide={onlyNormatives}
                         className="col-md-2"
                     >
-                        {<SelectDiv id={i} list={opt(data.teachers, "FIO")} upd={upd("PERSON", i)} value={student.PERSON.FIO} />}
+                        <SelectDiv
+                            value={student.PERSON}
+                            prop="FIO"
+                            options={getOptions(data.teachers, "FIO")}
+                            updateData={updateData("students", student.ID, "PERSON")}
+                        />
                     </Td>
-                    <Td>{<InputDiv id={i} upd={upd("Norm1", i)} value={student.Norm1} />}</Td>
-                    <Td>{<InputDiv id={i} upd={upd("Norm2", i)} value={student.Norm2} />}</Td>
-                    <Td>{<InputDiv id={i} upd={upd("Norm3", i)} value={student.Norm3} />}</Td>
-                    <Td>{<InputDiv id={i} upd={upd("Norm4", i)} value={student.Norm4} />}</Td>
-                    <Td>{<InputDiv id={i} upd={upd("Norm5", i)} value={student.Norm5} />}</Td>
-                    <Td className="col-md-1">{<InputDiv id={i} upd={upd("H", i)} value={student.H} />}</Td>
-                    <Td className="col-md-1">{<InputDiv id={i} upd={upd("W", i)} value={student.W} />}</Td>
+                    <Td><InputDiv value={student.Norm1} updateData={updateData("students", student.ID, "Norm1")} /></Td>
+                    <Td><InputDiv value={student.Norm2} updateData={updateData("students", student.ID, "Norm2")} /></Td>
+                    <Td><InputDiv value={student.Norm3} updateData={updateData("students", student.ID, "Norm3")} /></Td>
+                    <Td><InputDiv value={student.Norm4} updateData={updateData("students", student.ID, "Norm4")} /></Td>
+                    <Td><InputDiv value={student.Norm5} updateData={updateData("students", student.ID, "Norm5")} /></Td>
+                    <Td className="col-md-1"><InputDiv value={student.H} updateData={updateData("students", student.ID, "H")} /> </Td>
+                    <Td className="col-md-1"><InputDiv value={student.W} updateData={updateData("students", student.ID, "W")} /></Td>
                     <Td className="col-md-1">{(student.W / (student.H * student.H)).toFixed(4)}</Td>
                 </tr>
             )
-            else return null;
         })
 
     const [height, setHeight] = useState(0);
@@ -107,68 +116,67 @@ export default function View2({ data, setData, opt, upd }) {
             <Panel>
                 {/* Выбор года */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={year}
-                    onChange={e => setYear(e.target.value)}
-                    options={opt(data.years)}
                     label="Год"
+                    options={getOptions(data.years, "value")}
+                    onChange={e => setYear(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={semester}
-                    onChange={e => setSemester(e.target.value)}
-                    options={opt(data.semesters)}
                     label="Семестр"
+                    options={getOptions(data.semesters, "value")}
+                    onChange={e => setSemester(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор факультета */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={faculty}
-                    onChange={e => setFaculty(e.target.value)}
-                    options={opt(data.faculties)}
                     label="Факультет"
+                    options={getOptions(data.faculties, "value")}
+                    onChange={e => setFaculty(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор курса */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={course}
-                    onChange={e => setCourse(e.target.value)}
-                    options={opt(data.courses)}
                     label="Курс"
+                    options={getOptions(data.courses, "value")}
+                    onChange={e => setCourse(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор группы */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={group}
-                    onChange={e => setGroup(e.target.value)}
-                    options={opt(data.groups)}
                     label="Группа"
+                    options={getOptions(data.groups, "value")}
+                    onChange={e => setGroup(JSON.parse(e.target.value))}
                 />
 
                 <div className="col-sm-auto">
                     {/* Чекбокс "Только мое отделение" */}
                     <Checkbox
                         value={onlySections}
-                        onChange={() => setOnlySections(value => !value)}
                         label="Только мое отделение"
+                        onChange={() => setOnlySections(value => !value)}
                     />
 
                     {/* Чекбокс "Показывать только нормативы" */}
                     <Checkbox
                         value={onlyNormatives}
-                        onChange={() => setOnlyNormatives(value => !value)}
                         label="Только нормативы"
+                        onChange={() => setOnlyNormatives(value => !value)}
                     />
                 </div>
             </Panel>
 
             {/* <!-- Список студентов --> */}
-            <Table thead={tableHead} tbody={tableBody} />
+            <Table
+                thead={tableHead}
+                tbody={tableBody}
+
+            />
         </div>
     )
 }

@@ -61,20 +61,24 @@ export default function App() {
     }, [data])
 
     // Получение списка для select
-    function opt(list, prop = null) {
-        // console.log(list, prop);
-        return list.map((elem, i) => <option key={i} value={JSON.stringify(elem)} label={prop ? elem[prop] : elem} />)
+    function getOptions(arr, label = null) {
+        return arr.map((elem, i) => <option key={i} value={JSON.stringify(elem)} label={label ? elem[label] : elem} />)
     }
 
-    // Обновление значений
-    function upd(updKey, i, prop = "students") {
-        return (updValue) => {
-            setData({
-                ...data, [prop]: data[prop].map((item, idx) => {
-                    if (idx === i) return { ...item, [updKey]: updValue };
-                    else return item;
+    // Обновление значений !!! переделать с индексом
+    function updateData(key1, i = null, key2 = null) {
+        return (value) => {
+            if (i != null)
+                setData({
+                    ...data, [key1]: data[key1].map(item => {
+                        if (item.ID === i) return { ...item, [key2]: value };
+                        else return item;
+                    })
                 })
-            })
+            else
+                setData({
+                    ...data, [key1]: value
+                })
         }
     }
 
@@ -87,15 +91,15 @@ export default function App() {
                         <Route path='/' element={<></>} />
                         <Route path='/test' element={<Test testData={testData} setTestData={setTestData} />} />
                         <Route path='/view1' element={<View1 />} />
-                        <Route path='/view2' element={<View2 data={data} setData={setData} opt={opt} upd={upd} />} />
+                        <Route path='/view2' element={<View2 data={data} getOptions={getOptions} updateData={updateData} />} />
                         <Route path='/view3' element={<View3 />} />
                         <Route path='/view4' element={<View4 />} />
                         <Route path='/view5' element={<View5 />} />
-                        {/* <Route path='/view6' element={<View6 data={data} setData={setData} opt={opt} upd={upd} />} /> */}
-                        <Route path='/view7' element={<View7 data={data} setData={setData} opt={opt} upd={upd} />} />
+                        {/* <Route path='/view6' element={<View6 data={data} setData={setData} getOptions={getOptions} updateData={updateData} />} /> */}
+                        <Route path='/view7' element={<View7 data={data} getOptions={getOptions} updateData={updateData} />} />
                         <Route path='/view8' element={<View8 />} />
-                        <Route path='/view9' element={<View9 data={data} setData={setData} opt={opt} upd={upd} />} />
-                        <Route path='/view10' element={<View10 data={data} setData={setData} opt={opt} upd={upd} />} />
+                        <Route path='/view9' element={<View9 data={data} getOptions={getOptions} updateData={updateData} />} />
+                        <Route path='/view10' element={<View10 data={data} getOptions={getOptions} updateData={updateData} />} />
                         <Route path='/view11' element={<View11 />} />
                     </Routes>
                 </HashRouter>

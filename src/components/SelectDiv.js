@@ -1,49 +1,49 @@
+// Смена div на select при изменении данных
 import { useState } from "react";
 import Select from "./Select";
 
-// Смена div на select при изменении данных
-export default function SelectDiv(props) {
-    const [value, setValue] = useState(props.value);
-    const [idx, setIdx] = useState(0);
-    const style = props.disabled ? null : { borderBottom: "1px dashed black", cursor: "pointer" };
+export default function SelectDiv({ value, prop, options, updateData }) {
+    const [selectValue, setSelectValue] = useState(JSON.stringify(value));
+    const [editMode, setEditMode] = useState(false);
 
-    // idx: 0 (div), 1 (input)
-    function changeIdx() {
-        setIdx(idx => (idx + 1) % 2);
-
+    // Сценарий при клике на другом объекте
+    function onBlur() {
+        setEditMode(prev => !prev);
+        updateData(JSON.parse(selectValue));
     }
 
     // Сценарий при нажатии "esc" или "enter"
-    function stopFocusOnKey(event) {
-        if (event.keyCode === 27 || event.keyCode === 13) {
-            changeIdx();
-            props.upd?.(value || "не введено");
+    function onKeyDown(e) {
+        if (e.keyCode === 27 || e.keyCode === 13) {
+            setEditMode(prev => !prev);
+            updateData(JSON.parse(selectValue));
         }
     }
 
-    return (
-        idx ?
-            <div>
-                <Select
-                    value={value}
-                    onChange={e => setValue(e.target.value)}
-                    onBlur={() => { changeIdx(); props.upd?.(value || "не введено"); }}
-                    onKeyDown={stopFocusOnKey}
-                    autoFocus={true}
-                    // className="form-control"
-                    // style={{ minWidth: 70 }}
-                    options={props.list}
-                    style={{ "minWidth": 100 }}
-                />
-            </div>
-            :
+    function onChange(e) {
+        setSelectValue(e.target.value);
+    }
+
+    if (editMode)
+        return (
+            <Select
+                value={selectValue}
+                options={options}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onBlur={onBlur}
+                autoFocus={true}
+            />
+        )
+    else
+        return (
             <div style={{ display: "flex" }}>
                 <div
-                    style={style}
-                    onClick={() => { if (!props.disabled) changeIdx() }}
+                    style={{ borderBottom: "1px dashed black", cursor: "pointer" }}
+                    onClick={() => { setEditMode(prev => !prev); }}
                 >
-                    {value || "не введено"}
+                    {value[prop] || "не введено"}
                 </div>
             </div>
-    )
+        )
 }

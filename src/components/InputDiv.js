@@ -1,55 +1,56 @@
+// Смена div на input при изменении данных
 import { useState } from "react";
 
-// Смена div на input при изменении данных
-export default function InputDiv(props) {
-    const [value, setValue] = useState(props.value);
-    const [idx, setIdx] = useState(0);
-    const style = props.disabled ? null : { borderBottom: "1px dashed black", cursor: "pointer" };
-    const min = 0, max = 50;
+export default function InputDiv({ value, updateData, disabled }) {
+    const [inputValue, setInputValue] = useState(value);
+    const [editMode, setEditMode] = useState(false);
+    const min = 0, max = 500;
+    const style = !disabled ? { borderBottom: "1px dashed black", cursor: "pointer" } : null;
 
-    // idx: 0 (div), 1 (input)
-    function changeIdx() {
-        setIdx(idx => (idx + 1) % 2);
+    // Сценарий по клику на другом элементе
+    function onBlur() {
+        setEditMode(prev => !prev);
+        updateData(inputValue);
     }
 
     // Сценарий при нажатии "esc" или "enter"
-    function stopFocusOnKey(event) {
-        if (event.keyCode === 27 || event.keyCode === 13) {
-            changeIdx();
-            props.upd?.(value || "не введено");
+    function onKeyDown(e) {
+        if (e.keyCode === 27 || e.keyCode === 13) {
+            setEditMode(prev => !prev);
+            updateData(inputValue);
         }
     }
 
     // Сценарий при отпускании клавиши
     function onChange(e) {
         if (e.target.value >= min && e.target.value <= max)
-            setValue(e.target.value);
+            setInputValue(e.target.value);
         else
             alert(`Значение должно быть в диапазоне от ${min} до ${max}`);
     }
 
-    return (
-        idx ?
-            <div>
-                <input
-                    type="number"
-                    onBlur={changeIdx}
-                    onKeyDown={stopFocusOnKey}
-                    onChange={onChange}
-                    autoFocus={true}
-                    value={value}
-                    className="form-control"
-                    style={{ minWidth: 70 }}
-                />
-            </div>
-            :
+    if (editMode)
+        return (
+            <input
+                type="number"
+                value={inputValue}
+                onChange={onChange}
+                onKeyDown={onKeyDown}
+                onBlur={onBlur}
+                autoFocus={true}
+                className="form-control"
+                style={{ minWidth: 70 }}
+            />
+        )
+    else
+        return (
             <div style={{ display: "flex" }}>
                 <div
                     style={style}
-                    onClick={() => { if (!props.disabled) changeIdx() }}
+                    onClick={() => { if (!disabled) setEditMode(prev => !prev) }}
                 >
-                    {value || "не введено"}
+                    {inputValue === null || inputValue === undefined || !inputValue ? "не введено" : inputValue}
                 </div>
             </div>
-    )
+        )
 }

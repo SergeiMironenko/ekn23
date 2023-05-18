@@ -20,14 +20,14 @@ export default function View6({ data, setData }) {
     const [zach, setZach] = useState("2017-06-01");
 
     // Получение списка для select
-    function opt(list) {
+    function getOptions(list) {
         return list.map((elem, i) => {
             return <option key={i}>{elem}</option>
         })
     }
 
     // Обновление значений
-    function upd(updKey, i) {
+    function updateData(updKey, i) {
         return (updValue) => {
             setData({
                 ...data, students: data.students.map((item, idx) => {
@@ -87,14 +87,14 @@ export default function View6({ data, setData }) {
                     <Td className="col-md-2">{student.FIO}</Td>
                     <Td className="col-md-1">{student.SEX}</Td>
                     <Td className="col-md-1">
-                        {<SelectDiv id={i} list={opt(data.sections)} upd={upd("SECTION", i)} value={student.SECTION} />}
+                        {<SelectDiv id={i} list={getOptions(data.sections)} updateData={updateData("SECTION", i)} value={student.SECTION} />}
                     </Td>
                     <Td className="col-md-1">
-                        {<SelectDiv id={i} list={opt(data.teachers)} upd={upd("PERSON", i)} value={student.PERSON} />}
+                        {<SelectDiv id={i} list={getOptions(data.teachers)} updateData={updateData("PERSON", i)} value={student.PERSON} />}
                     </Td>
                     <Td className="col-md-1">
                         <span className="mo_classes[x.FK_EKN_STATUS || 0]">
-                            <SelectDiv id={i} list={opt(data.eknStatuses)} upd={upd("FK_EKN_STATUS", i)} value={student.FK_EKN_STATUS} />
+                            <SelectDiv id={i} list={getOptions(data.eknStatuses)} updateData={updateData("FK_EKN_STATUS", i)} value={student.FK_EKN_STATUS} />
                             <br />
                             {student.DATE_STATUS}
                         </span>
@@ -102,7 +102,7 @@ export default function View6({ data, setData }) {
                         {/* checkbox edit */}
                         <CheckboxDiv
                             id={i}
-                            upd={upd("IS_SPORT", i)}
+                            updateData={updateData("IS_SPORT", i)}
                             value={student.IS_SPORT}
                         />
                     </Td>
@@ -175,7 +175,7 @@ export default function View6({ data, setData }) {
                     outerDivClassName="col-sm-2"
                     value={year}
                     onChange={e => setYear(e.target.value)}
-                    options={opt(data.years)}
+                    options={getOptions(data.years)}
                     label="Год"
                 />
 
@@ -184,7 +184,7 @@ export default function View6({ data, setData }) {
                     outerDivClassName="col-sm-2"
                     value={semester}
                     onChange={e => setSemester(e.target.value)}
-                    options={opt(data.semesters)}
+                    options={getOptions(data.semesters)}
                     label="Семестр"
                 />
 
@@ -193,7 +193,7 @@ export default function View6({ data, setData }) {
                     outerDivClassName="col-sm-2"
                     value={faculty}
                     onChange={e => setFaculty(e.target.value)}
-                    options={opt(data.faculties)}
+                    options={getOptions(data.faculties)}
                     label="Факультет"
                 />
 
@@ -202,7 +202,7 @@ export default function View6({ data, setData }) {
                     outerDivClassName="col-sm-1"
                     value={course}
                     onChange={e => setCourse(e.target.value)}
-                    options={opt(data.courses)}
+                    options={getOptions(data.courses)}
                     label="Курс"
                 />
 
@@ -211,7 +211,7 @@ export default function View6({ data, setData }) {
                     outerDivClassName="col-sm-2"
                     value={group}
                     onChange={e => setGroup(e.target.value)}
-                    options={opt(data.groups)}
+                    options={getOptions(data.groups)}
                     label="Группа"
                 />
 

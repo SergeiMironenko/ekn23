@@ -11,10 +11,10 @@ import Input from '../components/Input';
 import Checkbox from '../components/Checkbox';
 import Button from '../components/Button';
 
-export default function View7({ data, setData, opt, upd }) {
+export default function View7({ data, getOptions, updateData }) {
     const [semester, setSemester] = useState(data.semesters[0]);
     const [section, setSection] = useState(data.sections[0]);
-    const [pair, setPair] = useState(data.pairs[0].value);
+    const [pair, setPair] = useState(data.pairs[0]);
     const [search, setSearch] = useState('');
     const [checkbox, setCheckbox] = useState(false);
 
@@ -48,56 +48,66 @@ export default function View7({ data, setData, opt, upd }) {
         return comp(a.FACULTET, b.FACULTET) || comp(a.COURSE, b.COURSE) || comp(a.STUDY_GROUP, b.STUDY_GROUP);
     });
 
-    const tableBody = data.students.map((student, i) => {
-        // console.log(student.SEMESTER, semester);
-        if (
-            // student.FIO.toLowerCase().match(search.toLowerCase()) &&
+    const tableBody = data.students
+        .filter(student =>
             student.SEMESTER.id === semester.id
-            // student.SECTION === section
-            // (student.PAIR1 === pair || student.PAIR2 === pair)
-        ) return (
-            <tr key={i}
-            // className={(() => { if (tableBody.length === 0 && false) return "table-danger" })()}
-            >
-                <Td className="col-md-1">{i + 1}</Td>
-                <Td className="col-md-1">
-                    <SelectDivMod1 id={i} list={opt(data.pairs, "value")} upd={upd("PAIR1", i)} value={student.PAIR1.value} />
-                </Td>
-                <Td className="col-md-1">
-                    <SelectDivMod1 id={i} list={opt(data.pairs, "value")} upd={upd("PAIR2", i)} value={student.PAIR2.value} />
-                </Td>
-                <Td className="col-md-1">{student.FACULTET}</Td>
-                <Td className="col-md-1">{student.COURSE}</Td>
-                <Td className="col-md-1">
-                    <a href={"https://www.nstu.ru/studies/schedule/schedule_classes/schedule?group=" + student.STUDY_GROUP}>{student.STUDY_GROUP}</a>
-                </Td>
-                <Td className="col-md-2">{student.FIO}</Td>
-                <Td hide={checkbox} className="col-md-2">{student.IS_DIST ? "Дист." : "-"}</Td>
-                <Td className="col-md-1">{student.SEX}</Td>
-                <Td className="col-md-1">{student.FK_EKN_STATUS}</Td>
-                <Td className="col-md-1">
-                    <SelectDiv id={i} list={opt(data.zachets)} upd={upd("ZACHET", i)} value={student.ZACHET} />
-                    {student.PERSON.FIO}
-                    <br />
-                    {student.ZACHET_DATE}
-                </Td>
-                <Td className="col-md-1">
-                    <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR1", i)("")} value="Отмена1" />
-                    <Button className="btn btn-primary btn-sm" onClick={() => upd("PAIR2", i)("")} value="Отмена2" />
-                </Td>
-                <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
-                <Td className="col-md-1">{student.WEEK_MARK_12}</Td>
-                <Td hide={checkbox} className="col-md-1">
-                    {student.PAY_SUMM}
-                    <br />
-                    {student.PAY_DATE}
-                </Td>
-            </tr>
+            && student.SECTION.id === section.id
+            // && (student.PAIR1 === pair || student.PAIR2 === pair)
+            && student.FIO.toLowerCase().match(search.toLowerCase())
         )
-        else { console.log(student.SEMESTER.id, semester.id); return null; }
-    })
+        .map((student, i) => {
+            return (
+                <tr key={student.ID}
+                // className={(() => { if (tableBody.length === 0 && false) return "table-danger" })()}
+                >
+                    <Td className="col-md-1">{i + 1}</Td>
+                    <Td className="col-md-1">
+                        <SelectDivMod1
+                            value={student.PAIR1}
+                            prop="value"
+                            options={getOptions(data.pairs, "value")}
+                            updateData={updateData("students", student.ID, "PAIR1")}
+                        />
+                    </Td>
+                    <Td className="col-md-1">
+                        <SelectDivMod1
+                            value={student.PAIR2}
+                            prop="value"
+                            options={getOptions(data.pairs, "value")}
+                            updateData={updateData("students", student.ID, "PAIR2")}
+                        />
+                    </Td>
+                    <Td className="col-md-1">{student.FACULTET.value}</Td>
+                    <Td className="col-md-1">{student.COURSE.value}</Td>
+                    <Td className="col-md-1">
+                        <a href={"https://www.nstu.ru/studies/schedule/schedule_classes/schedule?group=" + student.STUDY_GROUP.value}>{student.STUDY_GROUP.value}</a>
+                    </Td>
+                    <Td className="col-md-2">{student.FIO}</Td>
+                    <Td hide={checkbox} className="col-md-2">{student.IS_DIST ? "Дист." : "-"}</Td>
+                    <Td className="col-md-1">{student.SEX}</Td>
+                    <Td className="col-md-1">{student.FK_EKN_STATUS.value}</Td>
+                    <Td className="col-md-1">
+                        <SelectDiv value={student.ZACHET} prop="value" options={getOptions(data.zachets, "value")} updateData={updateData("students", student.ID, "ZACHET")} />
+                        {student.PERSON.FIO}
+                        <br />
+                        {student.ZACHET_DATE}
+                    </Td>
+                    <Td className="col-md-1">
+                        <Button className="btn btn-primary btn-sm" onClick={() => updateData("students", student.ID, "PAIR1")("")} value="Отмена1" />
+                        <Button className="btn btn-primary btn-sm" onClick={() => updateData("students", student.ID, "PAIR2")("")} value="Отмена2" />
+                    </Td>
+                    <Td className="col-md-1">{student.WEEK_MARK_7}</Td>
+                    <Td className="col-md-1">{student.WEEK_MARK_12}</Td>
+                    <Td hide={checkbox} className="col-md-1">
+                        {student.PAY_SUMM}
+                        <br />
+                        {student.PAY_DATE}
+                    </Td>
+                </tr>
+            )
+        })
 
-    const journalAndPrint = checkbox ? "" :
+    const journalAndPrint = //checkbox ? "" :
         <div className="col-sm-1" style={{ display: "block" }}>
             {/* Журнал */}
             <div className="col-sm-1">
@@ -120,43 +130,38 @@ export default function View7({ data, setData, opt, upd }) {
             <Panel>
                 {/* Выбор семестра */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={semester}
-                    onChange={e => setSemester(e.target.value)}
-                    options={opt(data.semesters, "value")}
                     label="Семестр"
+                    options={getOptions(data.semesters, "value")}
+                    onChange={e => setSemester(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор направления (отделения) */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
                     value={section}
-                    onChange={e => setSection(e.target.value)}
-                    options={opt(data.sections)}
                     label="Направление"
+                    options={getOptions(data.sections, "value")}
+                    onChange={e => setSection(JSON.parse(e.target.value))}
                 />
 
                 {/* Выбор пары */}
                 <SelectPanel
-                    outerDivClassName="col-sm-auto"
-                    value={pair.value}
-                    onChange={e => setPair(e.target.value)}
-                    options={opt(data.pairs, "value")}
+                    value={pair}
                     label="Пара"
+                    options={getOptions(data.pairs, "value")}
+                    onChange={e => setPair(e.target.value)}
                 />
 
                 {/* Поиск */}
                 <div className="col-sm-auto">
                     <div className="input-group input-group-sm">
                         <span className="input-group-text">Поиск по ФИО</span>
-                        {/* <input type="text" class="form-control" onChange={e => setSearch(e.target.value)} /> */}
                         <Input type="text" className="form-control" onChange={e => setSearch(e.target.value)} />
                     </div>
 
                     <Checkbox
-                        value={checkbox}
-                        onChange={() => setCheckbox(checkbox => !checkbox)}
                         label="Скрыть столбцы"
+                        onChange={() => setCheckbox(checkbox => !checkbox)}
                     />
                 </div>
 

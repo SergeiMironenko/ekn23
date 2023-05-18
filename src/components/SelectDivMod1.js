@@ -1,58 +1,37 @@
+// Смена div на select при изменении данных
+// Mod1 - изменить можно только один раз, отменять через кнопку
 import { useState } from "react";
 import Select from "./Select";
 
-// Смена div на select при изменении данных
-export default function SelectDiv(props) {
-    const [selectValue, setValue] = useState(props.value);
+export default function SelectDiv({ value, prop, options, updateData }) {
     const [editMode, setEditMode] = useState(false);
 
-    // console.log(props.list, props.upd, props.value);
-
-    // // idx: 0 (div), 1 (select)
-    // function changeIdx() {
-    //     if (!props.value) {
-    //         setIdx(idx => (idx + 1) % 2);
-    //         setValue(props.list[0]);
-    //     }
-    // }
-
-    // Сценарий при клике вне границ выпадающего списка
-    function onBlur() {
-        setEditMode(prev => !prev);
-        props.upd?.(selectValue);
-    }
-
     // Сценарий при нажатии "esc" или "enter"
-    function onKeyDown(event) {
-        if (event.keyCode === 27 || event.keyCode === 13) {
+    function onKeyDown(e) {
+        if (e.keyCode === 27 || e.keyCode === 13) {
             setEditMode(prev => !prev);
-            console.log(JSON.parse(event.target.value));
-            props.upd?.(JSON.parse(event.target.value));
         }
     }
 
     if (editMode)
         return (
-            <div>
-                <Select
-                    // value={selectValue}
-                    onChange={e => setValue(e.target.value)}
-                    onBlur={onBlur}
-                    onKeyDown={onKeyDown}
-                    autoFocus={true}
-                    options={props.list}
-                // style={{ "minWidth": 100 }}
-                />
-            </div>
+            <Select
+                value={JSON.stringify(value)}
+                options={options}
+                onChange={e => updateData(JSON.parse(e.target.value))}
+                onBlur={() => setEditMode(prev => !prev)}
+                onKeyDown={onKeyDown}
+                autoFocus={true}
+            />
         )
     else
         return (
             <div style={{ display: "flex" }}>
                 <div
-                    style={{ borderBottom: props.value ? "" : "1px dashed black", cursor: "pointer" }}
-                    onClick={() => { if (!props.value) setEditMode(prev => !prev); }}
+                    style={{ borderBottom: value ? "" : "1px dashed black", cursor: "pointer" }}
+                    onClick={() => { if (!value) setEditMode(prev => !prev); }}
                 >
-                    {props.value || "Записать"}
+                    {value[prop] || "Записать"}
                 </div>
             </div>
         )

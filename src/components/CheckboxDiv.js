@@ -22,7 +22,7 @@ export default function CheckboxDiv(props) {
         return (
             <div>
                 <Checkbox
-                    onChange={() => props.upd?.(!props.value)}
+                    onChange={() => props.updateData?.(!props.value)}
                     label="Спортсмен"
                     value={props.value}
                 />

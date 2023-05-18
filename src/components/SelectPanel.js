@@ -1,15 +1,15 @@
+// Выпадающий список на панели инструментов
 import Select from "./Select";
 
-// Выпадающий список на панели инструментов
-export default function SelectPanel(props) {
+export default function SelectPanel({ value, label, options, onChange }) {
     return (
-        <div className={props.outerDivClassName}>
-            <label style={{ marginLeft: 10 }}>{props.label}</label>
+        <div className="col-sm-auto">
+            <label style={{ marginLeft: 10 }}>{label}</label>
             <div className="col">
                 <Select
-                    value={props.value}
-                    onChange={props.onChange}
-                    options={props.options}
+                    value={JSON.stringify(value)}
+                    options={options}
+                    onChange={onChange}
                 />
             </div>
         </div>

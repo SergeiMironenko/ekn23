@@ -1,29 +1,64 @@
 // Года
-const years = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"];
+const years = [
+    { id: 0, value: "2015" },
+    { id: 1, value: "2016" },
+    { id: 2, value: "2017" },
+    { id: 3, value: "2018" },
+    { id: 4, value: "2019" },
+    { id: 5, value: "2020" },
+    { id: 6, value: "2021" },
+    { id: 7, value: "2022" },
+    { id: 8, value: "2023" },
+];
 
 // Семестры
-const semesters = [{ id: 1, value: "Весенний" }, { id: 2, value: "Осенний" }];
+const semesters = [
+    { id: 0, value: "Весенний" },
+    { id: 1, value: "Осенний" },
+];
 
 // Факультеты
-const faculties = ["ФМА", "ФБ", "АВТФ", "РЭФ", "МТФ", "ФЛА", "ФПМИ", "ФТФ", "ФЭН", "ФГО", "ЮФ",];
+const faculties = [
+    { id: 0, value: "ФМА" },
+    { id: 1, value: "ФБ" },
+    { id: 2, value: "АВТФ" },
+    { id: 3, value: "РЭФ" },
+    { id: 4, value: "МТФ" },
+    { id: 5, value: "ФЛА" },
+    { id: 6, value: "ФПМИ" },
+    { id: 7, value: "ФТФ" },
+    { id: 8, value: "ФЭН" },
+    { id: 9, value: "ФГО" },
+    { id: 10, value: "ЮФ" },
+];
 
 // Курсы
-const courses = ["1", "2", "3", "4"];
+const courses = [
+    { id: 0, value: "1" },
+    { id: 1, value: "2" },
+    { id: 2, value: "3" },
+    { id: 3, value: "4" },
+];
 
 // Группы
-const groups = ["ПМ-72", "ПМ-91"];
+const groups = [
+    { id: 0, value: "ПМ-72" },
+    { id: 1, value: "ПМ-91" },
+];
 
 // Отделения
-const sections = ["Легкая атлетика", "Баскетбол"];
+const sections = [
+    { id: 0, value: "Легкая атлетика" },
+    { id: 1, value: "Баскетбол" },
+];
 
 // EKN_STATUS
-const eknStatuses = ["Осн", "Спец", "Подг", "СМГА"];
-
-// ADMIT
-// const admits = ["да", "перезачет"];
-
-// ZACHET_NAME
-// const zachetNames = ['зачет', 'незачет'];
+const eknStatuses = [
+    { id: 0, value: "Осн" },
+    { id: 1, value: "Спец" },
+    { id: 2, value: "Подг" },
+    { id: 3, value: "СМГА" },
+];
 
 // Пары
 const pairs = [
@@ -32,11 +67,15 @@ const pairs = [
     { id: 2, value: "12:00" },
     { id: 3, value: "14:00" },
     { id: 4, value: "15:45" },
-    { id: 5, value: "17:30" }
+    { id: 5, value: "17:30" },
 ];
 
 // Зачет
-const zachets = ["да", "нет", "не определено"];
+const zachets = [
+    { id: 0, value: "да" },
+    { id: 1, value: "нет" },
+    { id: 2, value: "не определено" },
+];
 
 // Дни недели
 const days = [
@@ -46,7 +85,7 @@ const days = [
     { id: 3, value: "чт" },
     { id: 4, value: "пт" },
     { id: 5, value: "сб" },
-    { id: 6, value: "вс" }
+    { id: 6, value: "вс" },
 ];
 
 // Случайное целое число
@@ -59,6 +98,7 @@ function getRandomInt(i) {
 let teachersList = [];
 for (let i = 0; i < 2; i++) {
     teachersList.push({
+        "ID": i,
         "FIO": "teacher " + i,
         "DAYS": [...days].sort(() => Math.random() - 0.5).slice(getRandomInt(days.length + 1)),
         "PAIRS": [...pairs].sort(() => Math.random() - 0.5).slice(getRandomInt(pairs.length + 1)),
@@ -68,8 +108,9 @@ const teachers = teachersList;
 
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 106; i++) {
+for (let i = 0; i < 10635; i++) {
     studentsList.push({
+        "ID": i,
         "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",
         "SEX": getRandomInt(2) ? "М" : "Ж",
         "SECTION": sections[getRandomInt(sections.length)],
@@ -88,7 +129,7 @@ for (let i = 0; i < 106; i++) {
         "PAY_SUMM": 299,
         "PAY_DATE": "01.05.2023",
         "ATTEND": 0,
-        "REFERAT": 0,
+        "REFERAT": 33,
         "NORMATIVE1": 1,
         "NORMATIVE2": 2,
         "EKN_BALL": 0,
@@ -112,10 +153,11 @@ for (let i = 0; i < 106; i++) {
         "YEAR": years[getRandomInt(years.length)],
         "SEMESTER": semesters[i % semesters.length],
         "ZACHET": zachets[getRandomInt(zachets.length)],
-        "ZACHET_DATE": "date",  // НАСТРОИТЬ ФОРМАТ ДАТЫ и ВРЕМЕНИ
     })
 }
 const students = studentsList;
+
+const zach = "2023-12-23";
 
 const data = {
     years: years,
@@ -130,6 +172,7 @@ const data = {
     pairs: pairs,
     zachets: zachets,
     days: days,
+    zach: zach,
 };
 
 function getData() {

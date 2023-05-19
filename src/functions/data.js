@@ -108,7 +108,7 @@ const teachers = teachersList;
 
 // Студенты
 let studentsList = [];
-for (let i = 0; i < 10635; i++) {
+for (let i = 0; i < 10365; i++) {
     studentsList.push({
         "ID": i,
         "FIO": "fio " + i + " aSdad dasdasdasdasd dasfweewwgw",

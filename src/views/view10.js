@@ -14,7 +14,7 @@ export default function View10({ data, getOptions, updateData }) {
     }
 
     const daysPicker =
-        <tr>
+        <tr key={0}>
             <Td>Дни</Td>
             <Td>
                 {data.days.map(day => {
@@ -52,7 +52,7 @@ export default function View10({ data, getOptions, updateData }) {
         </tr>
 
     const pairsPicker =
-        <tr>
+        <tr key={1}>
             <Td>Время</Td>
             <Td>
                 {data.pairs.map(pair => {

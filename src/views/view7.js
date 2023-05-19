@@ -49,11 +49,12 @@ export default function View7({ data, getOptions, updateData }) {
     });
 
     const tableBody = data.students
-        .filter(student =>
+        .filter((student, i) =>
             student.SEMESTER.id === semester.id
             && student.SECTION.id === section.id
             // && (student.PAIR1 === pair || student.PAIR2 === pair)
             && student.FIO.toLowerCase().match(search.toLowerCase())
+            && i < 105
         )
         .map((student, i) => {
             return (

@@ -11,7 +11,7 @@ export default function Links({ className }) {
             <li className="nav-item"><a href="#/view7" className="nav-link">view7(Запись студентов)</a></li>
             {/* <li><a href="/#/view8">view8</a></li> */}
             <li className="nav-item"><a href="#/view9" className="nav-link">view9(Ведомости)</a></li>
-            <li className="nav-item"><a href="#/view10" className="nav-link">view10</a></li>
+            <li className="nav-item"><a href="#/view10" className="nav-link">view10(Расписание преподавателей)</a></li>
             {/* <li className="nav-item"><a href="#/view11" className="nav-link">view11(форма для студентов)</a></li> */}
         </ul>
     )

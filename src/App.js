@@ -16,6 +16,7 @@ import View10 from './views/view10';
 import View11 from './views/view11';
 import { useEffect, useRef, useState } from 'react';
 import { getData, updateData } from './functions/data';
+import axios from 'axios';
 const logo = require('./NSTU_Logo_grey.png');
 
 export default function App() {
@@ -82,6 +83,11 @@ export default function App() {
         }
     }
 
+    // axios.get(`http://217.71.129.139:4785/connect`)
+    //     .then(res => {
+    //         console.log(res.data);
+    //     })
+
     return (
         <div>
             {header}
@@ -100,7 +106,7 @@ export default function App() {
                         <Route path='/view8' element={<View8 />} />
                         <Route path='/view9' element={<View9 data={data} getOptions={getOptions} updateData={updateData} />} />
                         <Route path='/view10' element={<View10 data={data} getOptions={getOptions} updateData={updateData} />} />
-                        <Route path='/view11' element={<View11 />} />
+                        <Route path='/view11' element={<View11 data={data} getOptions={getOptions} updateData={updateData} />} />
                     </Routes>
                 </HashRouter>
             </div>
